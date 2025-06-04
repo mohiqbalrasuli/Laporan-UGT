@@ -42,7 +42,7 @@
                         width="100px">
                 </div>
                 <div id="navbar-nav" class="navbar-nav w-100" style="gap: 5px">
-                    <a href="{{ url('PJGT/profile') }}" class="nav-item nav-link {{ Request::is('PJGT/profile') ? 'active' : '' }}"><i class="fa fa-user-tie me-2"></i>Profile</a>
+                    <a href="{{ url('GT/profile') }}" class="nav-item nav-link {{ Request::is('GT/profile') ? 'active' : '' }}"><i class="fa fa-user-tie me-2"></i>Profile</a>
                     <a href="" class="nav-item nav-link "><i class="fa fa-pen me-2"></i>Input Laporan</a>
                     <a href="" class="nav-item nav-link "><i class="fa fa-file-alt me-2"></i>Data Laporan</a>
                     <a href="" class="nav-item nav-link "><i class="fa fa-edit me-2"></i>Ubah Password</a>

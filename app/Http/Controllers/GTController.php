@@ -10,4 +10,9 @@ class GTController extends Controller
     {
         return view('admin.data-GT.data-GT');
     }
+
+    public function profile()
+    {
+        return view('GT.profile');
+    }
 }

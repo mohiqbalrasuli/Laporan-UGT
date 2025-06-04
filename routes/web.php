@@ -22,3 +22,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [GTController::class, 'index']);
     });
 });
+Route::prefix('PJGT')->group(function () {
+    Route::get('/profile', [PJGTController::class, 'profile']);
+});
+Route::prefix('GT')->group(function () {
+    Route::get('/profile', [GTController::class, 'profile']);
+});

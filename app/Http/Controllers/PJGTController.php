@@ -10,4 +10,9 @@ class PJGTController extends Controller
     {
         return view('admin.data-PJGT.data-PJGT');
     }
+
+    public function profile()
+    {
+        return view('PJGT.profile');
+    }
 }
