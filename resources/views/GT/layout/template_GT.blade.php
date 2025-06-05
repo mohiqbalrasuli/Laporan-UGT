@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
-    <title>Dashboard Laporan PJGT dan GT</title>
+    <title>@yield('title', 'Default Title')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -43,9 +43,9 @@
                 </div>
                 <div id="navbar-nav" class="navbar-nav w-100" style="gap: 5px">
                     <a href="{{ url('GT/profile') }}" class="nav-item nav-link {{ Request::is('GT/profile') ? 'active' : '' }}"><i class="fa fa-user-tie me-2"></i>Profile</a>
-                    <a href="" class="nav-item nav-link "><i class="fa fa-pen me-2"></i>Input Laporan</a>
-                    <a href="" class="nav-item nav-link "><i class="fa fa-file-alt me-2"></i>Data Laporan</a>
-                    <a href="" class="nav-item nav-link "><i class="fa fa-edit me-2"></i>Ubah Password</a>
+                    <a href="{{ url('GT/input-laporan') }}" class="nav-item nav-link {{ Request::is('GT/input-laporan') ? 'active' : '' }}   "><i class="fa fa-pen me-2"></i>Input Laporan</a>
+                    <a href="{{ url('GT/data-laporan-GT') }}" class="nav-item nav-link {{ Request::is('GT/data-laporan-GT') ? 'active' : '' }}"><i class="fa fa-file-alt me-2"></i>Data Laporan</a>
+                    <a href="{{ url('GT/ubah-password') }}" class="nav-item nav-link  {{ Request::is('GT/ubah-password') ? 'active' : '' }} "><i class="fa fa-edit me-2"></i>Ubah Password</a>
                 </div>
             </nav>
         </div>
@@ -61,7 +61,7 @@
                 </a>
                 <img src="{{ asset('assets/img/logo.png') }}" class="logo-mini" alt="Logo MMU" style="margin-left: 10px"
                     width="35px">
-                <form class="d-none d-md-flex ms-4">
+                <form class="d-none d-md-flex ms-4 mt-3">
                     <input class="form-control border-0" type="search" placeholder="Search">
                 </form>
                 <div class="navbar-nav align-items-center ms-auto">
@@ -123,6 +123,8 @@
         </div>
         <!-- Content End -->
 
+        <!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-success btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
     </div>
 

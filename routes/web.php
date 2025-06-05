@@ -20,6 +20,7 @@ Route::prefix('admin')->group(function () {
     });
     Route::prefix('data-GT')->group(function () {
         Route::get('/', [GTController::class, 'index']);
+        Route::get('/data-laporan-GT', [GTController::class, 'data_laporan']);
     });
 });
 Route::prefix('PJGT')->group(function () {
@@ -27,4 +28,7 @@ Route::prefix('PJGT')->group(function () {
 });
 Route::prefix('GT')->group(function () {
     Route::get('/profile', [GTController::class, 'profile']);
+    Route::get('/input-laporan',[GTController::class,'input_laporan']);
+    Route::get('/data-laporan-GT',[GTController::class,'laporan']);
+    Route::get('/ubah-password',[GTController::class,'ubah_password']);
 });

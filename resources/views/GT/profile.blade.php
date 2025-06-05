@@ -1,5 +1,7 @@
 @extends('GT.layout.template_GT')
 
+@section('title','Profile Guru Tugas')
+
 @section('content')
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
@@ -85,5 +87,3 @@
         </div>
     </div>
 @endsection
-<!-- Back to Top -->
-<a href="#" class="btn btn-lg btn-success btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

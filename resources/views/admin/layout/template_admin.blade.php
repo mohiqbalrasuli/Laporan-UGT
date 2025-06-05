@@ -75,7 +75,9 @@
                         </div>
                     </div>
 
-
+                    <a href="{{ url('admin/data-GT/data-laporan-GT') }}"
+                        class="nav-item nav-link {{ Request::is('admin/data-GT/data-laporan-GT') ? 'active' : '' }}"><i
+                            class="fa fa-clipboard-list me-2"></i>Laporan GT</a>
                     <a href="#" class="nav-item nav-link "><i class="fa fa-cogs me-2"></i>Pengaturan</a>
                 </div>
             </nav>
