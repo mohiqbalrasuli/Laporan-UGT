@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Dashboard Laporan PJGT dan GT</title>
+    <title>@yield('title','title default')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -43,9 +43,9 @@
                 </div>
                 <div id="navbar-nav" class="navbar-nav w-100" style="gap: 5px">
                     <a href="{{ url('PJGT/profile') }}" class="nav-item nav-link {{ Request::is('PJGT/profile') ? 'active' : '' }}"><i class="fa fa-user-tie me-2"></i>Profile</a>
-                    <a href="" class="nav-item nav-link "><i class="fa fa-pen me-2"></i>Input Laporan</a>
-                    <a href="" class="nav-item nav-link "><i class="fa fa-file-alt me-2"></i>Data Laporan</a>
-                    <a href="" class="nav-item nav-link "><i class="fa fa-edit me-2"></i>Ubah Password</a>
+                    <a href="{{ url('PJGT/input-laporan') }}" class="nav-item nav-link {{ Request::is('PJGT/input-laporan') ? 'active' : '' }} "><i class="fa fa-pen me-2"></i>Input Laporan</a>
+                    <a href="{{ url('PJGT/data-laporan-PJGT') }}" class="nav-item nav-link {{ Request::is('PJGT/data-laporan-PJGT') ? 'active' : '' }}"><i class="fa fa-file-alt me-2"></i>Data Laporan</a>
+                    <a href="{{ url('PJGT/ubah-password') }}" class="nav-item nav-link {{ Request::is('PJGT/ubah-password') ? 'active' : '' }}"><i class="fa fa-edit me-2"></i>Ubah Password</a>
                 </div>
             </nav>
         </div>

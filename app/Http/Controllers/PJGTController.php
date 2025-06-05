@@ -15,4 +15,9 @@ class PJGTController extends Controller
     {
         return view('PJGT.profile');
     }
+
+    public function input_laporan()
+    {
+        return view('PJGT.input-laporan-PJGT');
+    }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GTController;
 use App\Http\Controllers\MadrasahController;
 use App\Http\Controllers\PJGTController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,9 +23,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [GTController::class, 'index']);
         Route::get('/data-laporan-GT', [GTController::class, 'data_laporan']);
     });
+    Route::get('/setting',[SettingController::class,'setting']);
 });
 Route::prefix('PJGT')->group(function () {
     Route::get('/profile', [PJGTController::class, 'profile']);
+    Route::get('/input-laporan',[PJGTController::class,'input_laporan']);
 });
 Route::prefix('GT')->group(function () {
     Route::get('/profile', [GTController::class, 'profile']);

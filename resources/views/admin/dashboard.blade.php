@@ -1,4 +1,5 @@
 @extends('admin.layout.template_admin')
+@section('title','Dashboard Laporan PJGT dan GT')
 @section('content')
 <!-- Spinner Start -->
         <div id="spinner"

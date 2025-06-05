@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Dashboard Laporan PJGT dan GT</title>
+    <title>@yield('title','Default Title')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -78,7 +78,10 @@
                     <a href="{{ url('admin/data-GT/data-laporan-GT') }}"
                         class="nav-item nav-link {{ Request::is('admin/data-GT/data-laporan-GT') ? 'active' : '' }}"><i
                             class="fa fa-clipboard-list me-2"></i>Laporan GT</a>
-                    <a href="#" class="nav-item nav-link "><i class="fa fa-cogs me-2"></i>Pengaturan</a>
+                    <a href="{{ url('admin/data-GT/data-laporan-GT') }}"
+                        class="nav-item nav-link {{ Request::is('admin/data-GT/data-laporan-GT') ? 'active' : '' }}"><i
+                            class="fa fa-clipboard-list me-2"></i>Laporan PJGT</a>
+                    <a href="{{ url('admin/setting') }}" class="nav-item nav-link {{ Request::is('admin/setting') ? 'active' : '' }} "><i class="fa fa-cogs me-2"></i>Pengaturan</a>
                 </div>
             </nav>
         </div>

@@ -1,5 +1,7 @@
 @extends('PJGT.layout.template_PJGT')
 
+@section('title','Profile Penanggung Jawab Guru Tugas')
+
 @section('content')
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
