@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GTModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class GTController extends Controller
@@ -10,7 +12,10 @@ class GTController extends Controller
     {
         return view('admin.data-GT.data-GT');
     }
-
+    public function validasi()
+    {
+        return view('admin.data-GT.validasi-GT');
+    }
     public function data_laporan()
     {
         return view('admin.data-GT.data-laporan-gt');

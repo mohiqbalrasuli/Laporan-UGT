@@ -76,7 +76,7 @@
                                 <td>Akh. Ainur Rasyidi</td>
                             </tr>
                             <tr>
-                                <th>Alamat Lengkap</th>
+                                <th>Alamat Madrasah</th>
                                 <th> : </th>
                                 <td>Batuputih Laok Batuputih sumenep</td>
                             </tr>

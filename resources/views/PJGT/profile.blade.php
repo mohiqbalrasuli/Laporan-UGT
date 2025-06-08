@@ -37,6 +37,11 @@
                                 <td>Ach. Hamzah Ilahi Maulana Muhammadi</td>
                             </tr>
                             <tr>
+                                <th>Alamat</th>
+                                <th> : </th>
+                                <td>Batuputih Laok Batuputih sumenep</td>
+                            </tr>
+                            <tr>
                                 <th>Nama Madrasah</th>
                                 <th> : </th>
                                 <td>MDT Al-Barokah</td>
@@ -47,7 +52,7 @@
                                 <td>Akh. Ainur Rasyidi</td>
                             </tr>
                             <tr>
-                                <th>Alamat Lengkap</th>
+                                <th>Alamat Madrasah</th>
                                 <th> : </th>
                                 <td>Batuputih Laok Batuputih sumenep</td>
                             </tr>

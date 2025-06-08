@@ -120,7 +120,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-control">Guru Kelas</label>
+                            <div class="mb-0">Guru Kelas</div>
                             <div class="form-chek">
                                 <input type="checkbox" class="form-check-input" id="GuruKelas1">
                                 <label class="form-check-label" for="GuruKelas1">1 Ibtidaiyah</label><br>
@@ -272,7 +272,7 @@
                     <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4">Kegiatan Luar Madrasah</h6>
                         <div class="mb-3">
-                            <label class="form-control">Kegiatan GT Di Luar Kelas</label>
+                            <div class="mb-0">Kegiatan GT Di Luar Kelas</div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="kegiatan1">
                                 <label class="form-check-label" for="kegiatan1">Mengajar Al-Qur'an Bit-Tartil</label><br>
@@ -348,7 +348,7 @@
                     <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4">Bisyaroh GT</h6>
                         <div class="mb-3">
-                            <label class="form-control">Bisyaroh Bulan Ini</label>
+                            <div class="mb-0">Bisyaroh Bulan Ini</div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions"
                                     id="inlineRadio1" value="option1">

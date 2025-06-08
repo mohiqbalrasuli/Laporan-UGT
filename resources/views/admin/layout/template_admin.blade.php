@@ -49,38 +49,35 @@
                         class="nav-item nav-link {{ Request::is('admin/data-madrasah') ? 'active' : '' }}"><i
                             class="fa fa-school me-2"></i>Data Madrasah</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle {{ Request::is('admin/data-PJGT') || Request::is('admin/data-PJGT') ? 'active' : '' }}"
+                        <a href="#" class="nav-link dropdown-toggle {{ Request::is('admin/data-PJGT') || Request::is('admin/data-PJGT/PJGT-tidak-aktif') ||Request::is('admin/data-PJGT/data-laporan-PJGT') ? 'active' : '' }}"
                             data-bs-toggle="dropdown"><i class="fa fa-users me-2"></i>PJGT</a>
                         <div class="dropdown-menu bg-transparent border-0 rounded-0 rounded-bottom m-0">
                             <a href="{{ url('admin/data-PJGT') }}"
                                 class="dropdown-item nav-link {{ Request::is('admin/data-PJGT') ? 'active' : '' }}"><i
                                     class="fa fa-user-tie me-2"></i>Data PJGT</a>
-                            <a href="{{ url('admin/data-PJGT') }}"
-                                class="dropdown-item nav-link {{ Request::is('admin/data-PJGT') ? 'active' : '' }}"><i
+                            <a href="{{ url('admin/data-PJGT/PJGT-tidak-aktif') }}"
+                                class="dropdown-item nav-link {{ Request::is('admin/data-PJGT/PJGT-tidak-aktif') ? 'active' : '' }}"><i
                                     class="fa fa-user me-2"></i>Validasi PJGT</a>
-                            <a href="#" class="dropdown-item nav-link "><i class="fa fa-file-alt me-2"></i>Laporan PJGT</a>
+                                    <a href="{{ url('admin/data-PJGT/data-laporan-PJGT') }}"
+                                    class="nav-item nav-link {{ Request::is('admin/data-PJGT/data-laporan-PJGT') ? 'active' : '' }}"><i
+                                        class="fa fa-clipboard-list me-2"></i>Laporan PJGT</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle {{ Request::is('admin/data-GT') || Request::is('admin/data-GT') ? 'active' : '' }}"
+                        <a href="#" class="nav-link dropdown-toggle {{ Request::is('admin/data-GT') || Request::is('admin/data-GT/GT-tidak-aktif') || Request::is('admin/data-GT/data-laporan-GT') ? 'active' : '' }}"
                             data-bs-toggle="dropdown"><i class="fa fa-users me-2"></i>GT</a>
                         <div class="dropdown-menu bg-transparent border-0 rounded-0 rounded-bottom m-0">
                             <a href="{{ url('admin/data-GT') }}"
                                 class="dropdown-item nav-link {{ Request::is('admin/data-GT') ? 'active' : '' }}"><i
                                     class="fa fa-user-tie me-2"></i>Data GT</a>
-                            <a href="{{ url('admin/data-GT') }}"
-                                class="dropdown-item nav-link {{ Request::is('admin/data-GT') ? 'active' : '' }}"><i
+                            <a href="{{ url('admin/data-GT/GT-tidak-aktif') }}"
+                                class="dropdown-item nav-link {{ Request::is('admin/data-GT/GT-tidak-aktif') ? 'active' : '' }}"><i
                                     class="fa fa-user me-2"></i>Validasi GT</a>
-                            <a href="#" class="dropdown-item nav-link "><i class="fa fa-clipboard-list me-2"></i>Laporan GT</a>
+                            <a href="{{ url('admin/data-GT/data-laporan-GT') }}"
+                         class="nav-item nav-link {{ Request::is('admin/data-GT/data-laporan-GT') ? 'active' : '' }}"><i
+                            class="fa fa-clipboard-list me-2"></i>Laporan GT</a>
                         </div>
                     </div>
-
-                    <a href="{{ url('admin/data-GT/data-laporan-GT') }}"
-                        class="nav-item nav-link {{ Request::is('admin/data-GT/data-laporan-GT') ? 'active' : '' }}"><i
-                            class="fa fa-clipboard-list me-2"></i>Laporan GT</a>
-                    <a href="{{ url('admin/data-GT/data-laporan-GT') }}"
-                        class="nav-item nav-link {{ Request::is('admin/data-GT/data-laporan-GT') ? 'active' : '' }}"><i
-                            class="fa fa-clipboard-list me-2"></i>Laporan PJGT</a>
                     <a href="{{ url('admin/setting') }}" class="nav-item nav-link {{ Request::is('admin/setting') ? 'active' : '' }} "><i class="fa fa-cogs me-2"></i>Pengaturan</a>
                 </div>
             </nav>
@@ -145,7 +142,7 @@
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a class=" text-success" href="#">MMU B-01 Terate</a>, All Right Reserved.
+                            &copy; <a class=" text-success" href="#">Pondok Pesantren Al-Usymuni</a>, All Right Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->

@@ -25,12 +25,9 @@
                                     <th>Bulan / Tahun</th>
                                     <th>Nama</th>
                                     <th>Alamat</th>
-                                    <th>Asal Kelas</th>
-                                    <th>Status Tugas</th>
                                     <th>Nama Madrasah</th>
                                     <th>Alamat Madrasah</th>
-                                    <th>Kepala Madrasah</th>
-                                    <th>PJGT</th>
+                                    <th>Nama PJGT</th>
                                     <th>Tanggal Laporan</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -42,11 +39,8 @@
                                     <td>Syawal-Dzul Qo'dah 1446</td>
                                     <td>Nama GT</td>
                                     <td>Alamat GT</td>
-                                    <td>MMU Ibtidaiyah</td>
-                                    <td>Wajib</td>
                                     <td>Nama Madrasah</td>
                                     <td>Alamat Madrasah</td>
-                                    <td>Nama Kepala</td>
                                     <td>Nama PJGT</td>
                                     <td>15 Dzul Qo'dah 1446</td>
                                     <td>

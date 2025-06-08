@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MadrasahModel;
 use Illuminate\Http\Request;
 
 class MadrasahController extends Controller

@@ -17,7 +17,7 @@
                             <i class="fa fa-school fa-3x text-success"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Madrasah</p>
-                                <h6 class="mb-0">14</h6>
+                                <h6 class="mb-0">10</h6>
                             </div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                             <i class="fa fa-user-tie fa-3x text-success"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Total PJGT</p>
-                                <h6 class="mb-0">14</h6>
+                                <h6 class="mb-0">10</h6>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                             <i class="fa fa-user fa-3x text-success"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Today GT</p>
-                                <h6 class="mb-0">14</h6>
+                                <h6 class="mb-0">10</h6>
                             </div>
                         </div>
                     </div>
