@@ -20,13 +20,17 @@ Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::prefix('data-madrasah')->group(function () {
         Route::get('/', [MadrasahController::class, 'index']);
-        // Route::post('/store', [MadrasahController::class, 'store']);
-        // Route::post('/update/{id}', [MadrasahController::class, 'update']);
-        // Route::get('/delete/{id}', [MadrasahController::class, 'delete']);
+        Route::post('/store', [MadrasahController::class, 'store']);
+        Route::post('/update/{id}', [MadrasahController::class, 'update']);
+        Route::get('/delete/{id}', [MadrasahController::class, 'delete']);
     });
     Route::prefix('data-PJGT')->group(function () {
         Route::get('/', [PJGTController::class, 'index']);
+        Route::post('/store', [PJGTController::class, 'store']);
+        Route::post('/update/{id}', [PJGTController::class, 'update']);
+        Route::get('/delete/{id}', [PJGTController::class, 'delete']);
         Route::get('/PJGT-tidak-aktif',[PJGTController::class,'validasi']);
+        Route::post('/validasi/{id}', [PJGTController::class, 'validasi_aktif']);
         Route::get('data-laporan-PJGT',[PJGTController::class,'data_laporan']);
     });
     Route::prefix('data-GT')->group(function () {
@@ -47,4 +51,10 @@ Route::prefix('GT')->group(function () {
     Route::get('/input-laporan',[GTController::class,'input_laporan']);
     Route::get('/data-laporan-GT',[GTController::class,'laporan']);
     Route::get('/ubah-password',[UbahPasswordController::class,'ubah_password']);
+});
+
+Route::get('/test-email', function () {
+    $user = App\Models\User::find(7); // Ganti sesuai user kamu
+
+    return 'Email test berhasil dikirim ke ' . $user->email;
 });

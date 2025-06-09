@@ -16,18 +16,18 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Nama Madrasah</th>
-                                <th scope="col">Nama Kepala </th>
+                                <th scope="col">Nama Kepala Madrasah</th>
                                 <th scope="col">Alamat</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($madrasah as $key => $data) --}}
-                                {{-- <tr>
-                                    <th scope="row">{{ $key + 1 }}</th>
+                            @foreach ($madrasah as $key => $data)
+                                <tr>
+                                    <td scope="row">{{ $key + 1 }}</td>
                                     <td>{{ $data->nama_madrasah }}</td>
                                     <td>{{ $data->nama_kepala_madrasah }}</td>
-                                    <td>{{ $data->alamat }}</td>
+                                    <td>{{ $data->alamat_madrasah }}</td>
                                     <td>
                                         <div class="dropdown d-flex justify-content-center mt-3">
                                             <button class="btn btn-link p-0 border-0 text-dark" type="button"
@@ -45,91 +45,89 @@
                                             </ul>
                                         </div>
                                     </td>
-                                    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false"
-                                        tabindex="-1" id="offcanvasScrolling{{ $data->id }}"
-                                        aria-labelledby="offcanvasScrollingLabel">
-                                        <div class="offcanvas-header">
-                                            <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Edit Madrasah</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                                aria-label="Close"></button>
+                                </tr>
+                                <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false"
+                                    tabindex="-1" id="offcanvasScrolling{{ $data->id }}"
+                                    aria-labelledby="offcanvasScrollingLabel">
+                                    <div class="offcanvas-header">
+                                        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Edit Madrasah</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        <div class="bg-light rounded h-100 p-4">
+                                            <h6 class="mb-4">Form Edit Data Madrasah</h6>
+                                            <form action="{{ url('admin/data-madrasah/update', $data->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                <div class="mb-3">
+                                                    <label for="exampleInputMadrasah" class="form-label">Nama
+                                                        Madrasah</label>
+                                                    <input type="text" class="form-control"
+                                                        value="{{ $data->nama_madrasah }}" name="nama_madrasah"
+                                                        id="exampleInputMadrasah">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleInputKepMad" class="form-label">Nama Kepala
+                                                        Madrasah</label>
+                                                    <input type="text" class="form-control "
+                                                        value="{{ $data->nama_kepala_madrasah }}"
+                                                        name="nama_kepala_madrasah" id="exampleInputKepMad">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleInputAlamat" class="form-label">Alamat
+                                                        Madrasah</label>
+                                                    <input type="text" class="form-control "
+                                                        value="{{ $data->alamat_madrasah }}" name="alamat_madrasah"
+                                                        id="exampleInputAlamat">
+                                                </div>
+                                                <div class="mb-3 form-check">
+                                                    <input type="checkbox" class="form-check-input"
+                                                        id="exampleCheck{{ $data->id }}">
+                                                    <label class="form-check-label"
+                                                        for="exampleCheck{{ $data->id }}">Yakin ??</label>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-success"
+                                                    id="submitBtn{{ $data->id }}" disabled>Simpan</button>
+                                            </form>
                                         </div>
-                                        <div class="offcanvas-body">
-                                            <div class="bg-light rounded h-100 p-4">
-                                                <h6 class="mb-4">Form Edit Data Madrasah</h6>
-                                                <form action="{{ url('admin/data-madrasah/update', $data->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputMadrasah" class="form-label">Nama
-                                                            Madrasah</label>
-                                                        <input type="text" class="form-control"
-                                                            value="{{ $data->nama_madrasah }}" name="nama_madrasah"
-                                                            id="exampleInputMadrasah">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputKepMad" class="form-label">Nama Kepala
-                                                            Madrasah</label>
-                                                        <input type="text" class="form-control "
-                                                            value="{{ $data->nama_kepala_madrasah }}"
-                                                            name="nama_kepala_madrasah" id="exampleInputKepMad">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputAlamat" class="form-label">Alamat
-                                                            Madrasah</label>
-                                                        <input type="text" class="form-control "
-                                                            value="{{ $data->alamat }}" name="alamat"
-                                                            id="exampleInputAlamat">
-                                                    </div>
-                                                    <div class="mb-3 form-check">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            id="exampleCheck{{ $data->id }}">
-                                                        <label class="form-check-label"
-                                                            for="exampleCheck{{ $data->id }}">Yakin ??</label>
-                                                    </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const checkbox = document.getElementById('exampleCheck{{ $data->id }}');
+                                        const button = document.getElementById('submitBtn{{ $data->id }}');
 
-                                                    <button type="submit" class="btn btn-success"
-                                                        id="submitBtn{{ $data->id }}" disabled>Simpan</button>
-
-                                                    <script>
-                                                        document.addEventListener('DOMContentLoaded', function() {
-                                                            const checkbox = document.getElementById('exampleCheck{{ $data->id }}');
-                                                            const button = document.getElementById('submitBtn{{ $data->id }}');
-
-                                                            checkbox.addEventListener('change', function() {
-                                                                button.disabled = !this.checked;
-                                                            });
-                                                        });
-                                                    </script>
-                                                </form>
+                                        checkbox.addEventListener('change', function() {
+                                            button.disabled = !this.checked;
+                                        });
+                                    });
+                                </script>
+                                <div class="modal fade" id="exampleModal{{ $data->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <img src="{{ asset('assets/img/logo.png') }}" width="30px"
+                                                    style="margin-right: 20px" alt="">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus Madrasah</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Yakin Menghapus <span class="fw-bold">{{ $data->nama_madrasah }}</span> ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Tutup</button>
+                                                <a href="{{ url('admin/data-madrasah/delete/' . $data->id) }}"
+                                                    type="button" class="btn btn-success">Hapus</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal fade" id="exampleModal{{ $data->id }}" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <img src="{{ asset('assets/img/logo.png') }}" width="30px"
-                                                        style="margin-right: 20px" alt="">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus Madrasah</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Yakin Menghapus <span
-                                                        class="fw-bold">{{ $data->nama_madrasah }}</span> ?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Tutup</button>
-                                                    <a href="{{ url('admin/data-madrasah/delete/' . $data->id) }}"
-                                                        type="button" class="btn btn-success">Hapus</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </tr> --}}
-                            {{-- @endforeach --}}
+                                </div>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -150,8 +148,8 @@
     <div class="offcanvas-body">
         <div class="bg-light rounded h-100 p-4">
             <h6 class="mb-4">Form Tambah Data Madrasah</h6>
-            {{-- <form action="{{ url('admin/data-madrasah/store') }}" method="POST">
-                @csrf --}}
+            <form action="{{ url('admin/data-madrasah/store') }}" method="POST">
+                @csrf
                 <div class="mb-3">
                     <label for="exampleInputMadrasah" class="form-label">Nama Madrasah</label>
                     <input type="text" class="form-control" name="nama_madrasah" id="exampleInputMadrasah">
@@ -162,11 +160,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputAlamat" class="form-label">Alamat Madrasah</label>
-                    <input type="text" class="form-control " name="alamat" id="exampleInputAlamat">
+                    <input type="text" class="form-control " name="alamat_madrasah" id="exampleInputAlamat">
                 </div>
                 <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Yakin ??</label>
+                    <input type="checkbox" class="form-check-input" id="exampleCheck">
+                    <label class="form-check-label" for="exampleCheck">Yakin ??</label>
                 </div>
                 <button type="submit" class="btn btn-success" id="submitBtn" disabled>Simpan</button>
             </form>
@@ -176,7 +174,7 @@
 {{-- script button submit --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const checkbox = document.getElementById('exampleCheck1');
+        const checkbox = document.getElementById('exampleCheck');
         const button = document.getElementById('submitBtn');
 
         checkbox.addEventListener('change', function() {
