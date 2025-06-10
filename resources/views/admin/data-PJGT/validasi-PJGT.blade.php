@@ -34,7 +34,7 @@
                                             <div class="modal-header">
                                                 <img src="{{ asset('assets/img/logo.png') }}" width="30px"
                                                     style="margin-right: 20px" alt="">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">mvalidasi PJGT
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Validasi PJGT
                                                 </h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
@@ -55,7 +55,6 @@
                                     </div>
                                 </div>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>

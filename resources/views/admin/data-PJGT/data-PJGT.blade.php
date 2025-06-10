@@ -31,8 +31,8 @@
                                     <td>{{ $value->pjgt->no_induk ?? '-' }}</td>
                                     <td>{{ $value->name }}</td>
                                     <td>{{ $value->pjgt->madrasah->nama_madrasah ?? '-' }}</td>
-                                    <td>{{ $value->pjgt->alamat }}</td>
-                                    <td>{{ $value->pjgt->gt->name ?? '-' }}</td>
+                                    <td>{{ $value->pjgt->alamat ??'-' }}</td>
+                                    <td>{{ $value->pjgt->gt->user->name ?? '-' }}</td>
                                     <td><span class="btn btn-success">{{ $value->status }}</span></td>
                                     <td>
                                         <div class="dropdown d-flex justify-content-center mt-3">
@@ -73,7 +73,10 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Tutup</button>
-                                                <a href="" type="button" class="btn btn-success">Nonaktifkan</a>
+                                                <form action="{{ url('admin/data-PJGT/nonaktif/'.$value->id) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success">Nonaktifkan</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -138,8 +141,8 @@
                                                     <select class="form-select" name="gt_id" id="exampleInput{{ $value->pjgt->gt_id }}">
                                                         <option disabled selected>Pilih Guru Tugas</option>
                                                         @foreach ($gt as $item)
-                                                            <option value="{{ $item->id }}"
-                                                                {{ $item->id == $value->pjgt->gt_id ? 'selected' : '' }}>
+                                                            <option value="{{ $item->gt->id }}"
+                                                                {{ $item->gt->id == $value->pjgt->gt_id ? 'selected' : '' }}>
                                                                 {{ $item->name }}
                                                             </option>
                                                         @endforeach
@@ -213,7 +216,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputpassword" class="form-label">Password</label>
-                    <input type="password" class="form-control " name="npassword" id="exampleInputpassword">
+                    <input type="password" class="form-control " name="password" id="exampleInputpassword">
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputAlamat" class="form-label">Alamat</label>
@@ -224,7 +227,7 @@
                     <select class="form-select" name="gt_id" id="exampleInputGT">
                         <option selected disabled>Pilih Guru Tugas</option>
                         @foreach ($gt as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            <option value="{{ $item->gt->id }}">{{ $item->name }}</option>
                         @endforeach
                     </select>
                 </div>

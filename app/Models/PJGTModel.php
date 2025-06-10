@@ -24,4 +24,8 @@ class PJGTModel extends Model
     {
         return $this->belongsTo(GTModel::class, 'gt_id');
     }
+    public function pjgts()
+    {
+        return $this->hasMany(GTModel::class, 'pjgt_id');
+    }
 }

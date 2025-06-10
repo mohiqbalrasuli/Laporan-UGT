@@ -10,6 +10,16 @@
             </div>
         </div>
     </div>
+    {{-- @if (!$dalamRentang)
+        <div class="alert alert-warning">
+            Laporan bulan ini <strong>belum dibuka</strong>.<br>
+            Jadwal akses: {{ $mulai }} sampai {{ $akhir }}.
+        </div>
+    @elseif ($sudahLapor)
+        <div class="alert alert-info">
+            Anda sudah melakukan laporan bulan ini.
+        </div>
+    @else --}}
     <form action="" method="POST">
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
@@ -149,7 +159,7 @@
                             <input type="text" class="form-control" id="GuruFan">
                         </div>
                         <div class="mb-3">
-                            <label class="form-control">Jenis Kelamin Murid</label>
+                            <div class="mb-0">Jenis Kelamin Murid</label>
                             <div class="form-chek">
                                 <input type="checkbox" class="form-check-input" id="JKmurid1">
                                 <label class="form-check-label" for="JKmurid1">Banin/Putra</label><br>
@@ -447,5 +457,6 @@
             </div>
         </div>
     </form>
+    {{-- @endif --}}
 @endsection
 

@@ -24,15 +24,15 @@
                     Pengaturan Form Laporan PJGT
                 </div>
                 <div class="card-body">
-                    {{-- <form action="{{ route('admin.setting.updatePJGT') }}" method="POST">
-                        @csrf --}}
+                    <form action="{{ url('admin/simpan-tanggal-pjgt/'.$aksesForm->id) }}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label for="pjgt_start" class="form-label">Tanggal Mulai</label>
-                            <input type="date" class="form-control" name="pjgt_start" required>
+                            <input type="date" class="form-control" name="tanggal_mulai_pjgt" required>
                         </div>
                         <div class="mb-3">
                             <label for="pjgt_end" class="form-label">Tanggal Berakhir</label>
-                            <input type="date" class="form-control" name="pjgt_end" required>
+                            <input type="date" class="form-control" name="tanggal_berakhir_pjgt" required>
                         </div>
                         <button type="submit" class="btn btn-success">Simpan PJGT</button>
                     </form>
@@ -47,15 +47,15 @@
                     Pengaturan Form Laporan GT
                 </div>
                 <div class="card-body">
-                    {{-- <form action="{{ route('admin.setting.updateGT') }}" method="POST">
-                        @csrf --}}
+                    <form action="{{ url('admin/simpan-tanggal-gt/'.$aksesForm->id) }}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label for="gt_start" class="form-label">Tanggal Mulai</label>
-                            <input type="date" class="form-control" name="gt_start" required>
+                            <input type="date" class="form-control" name="tanggal_mulai_gt" required>
                         </div>
                         <div class="mb-3">
                             <label for="gt_end" class="form-label">Tanggal Berakhir</label>
-                            <input type="date" class="form-control" name="gt_end" required>
+                            <input type="date" class="form-control" name="tanggal_berakhir_gt" required>
                         </div>
                         <button type="submit" class="btn btn-success">Simpan GT</button>
                     </form>

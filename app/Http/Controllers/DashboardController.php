@@ -10,6 +10,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $madrasah = MadrasahModel::count();
+        $gt = User::where('role','GT')->where('status','aktif')->count();
+        $pjgt = User::where('role','PJGT')->where('status','aktif')->count();
+        return view('admin.dashboard',compact('gt','pjgt','madrasah'));
     }
 }

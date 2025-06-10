@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AktivasiPJGT;
+use App\Models\AksesFormModel;
+use App\Models\LaporanPJGTModel;
 use App\Models\MadrasahModel;
 use App\Models\PJGTModel;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -15,12 +19,12 @@ class PJGTController extends Controller
     public function index()
     {
         $pjgt = User::with(['pjgt.madrasah', 'pjgt.gt'])
-            ->where('role', 'pjgt')
+            ->where('role', 'PJGT')
             ->where('status', 'aktif')
             ->get();
 
         $madrasah = MadrasahModel::all();
-        $gt = User::where('role', 'gt')->where('status', 'aktif')->get();
+        $gt = User::where('role', 'GT')->with('gt')->where('status', 'aktif')->get();
         return view('admin.data-PJGT.data-PJGT', compact('pjgt', 'madrasah', 'gt'));
     }
     public function store(Request $request)
@@ -80,9 +84,7 @@ class PJGTController extends Controller
 
     public function validasi()
     {
-        $pjgt = User::where('role', 'pjgt')
-            ->where('status', 'tidak_aktif')
-            ->get();
+        $pjgt = User::where('role', 'pjgt')->where('status', 'tidak_aktif')->get();
         return view('admin.data-PJGT.validasi-PJGT', compact('pjgt'));
     }
 
@@ -109,7 +111,20 @@ class PJGTController extends Controller
 
     public function input_laporan()
     {
-        return view('PJGT.input-laporan-PJGT');
+        $user = Auth::user();
+        $today = Carbon::today();
+
+        $mulai = AksesFormModel::where('key', 'tanggal_mulai_pjgt')->value('value');
+        $akhir = AksesFormModel::where('key', 'tanggal_berakhir_pjgt')->value('value');
+
+        $dalamRentang = $mulai && $akhir && $today->between(Carbon::parse($mulai), Carbon::parse($akhir));
+
+        $sudahLapor = LaporanPJGTModel::where('user_id', $user->id)
+            ->where('tipe', 'pjgt')
+            ->where('created_at', '>=', $today->copy()->subMonths(3))
+            ->exists();
+
+        return view('PJGT.input-laporan-PJGT', compact('user', 'dalamRentang', 'sudahLapor'));
     }
 
     public function laporan()

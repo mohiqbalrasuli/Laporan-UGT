@@ -29,16 +29,24 @@ Route::prefix('admin')->group(function () {
         Route::post('/store', [PJGTController::class, 'store']);
         Route::post('/update/{id}', [PJGTController::class, 'update']);
         Route::get('/delete/{id}', [PJGTController::class, 'delete']);
+        Route::post('/nonaktif/{id}',[PJGTController::class,'nonaktif']);
         Route::get('/PJGT-tidak-aktif',[PJGTController::class,'validasi']);
         Route::post('/validasi/{id}', [PJGTController::class, 'validasi_aktif']);
         Route::get('data-laporan-PJGT',[PJGTController::class,'data_laporan']);
     });
     Route::prefix('data-GT')->group(function () {
         Route::get('/', [GTController::class, 'index']);
+        Route::post('/store', [GTController::class, 'store']);
+        Route::post('/update/{id}', [GTController::class, 'update']);
+        Route::get('/delete/{id}', [GTController::class, 'delete']);
+        Route::post('/nonaktif/{id}',[GTController::class,'nonaktif']);
         Route::get('/GT-tidak-aktif',[GTController::class,'validasi']);
+        Route::post('/validasi/{id}', [GTController::class, 'validasi_aktif']);
         Route::get('/data-laporan-GT', [GTController::class, 'data_laporan']);
     });
     Route::get('/setting',[SettingController::class,'setting']);
+    Route::post('/simpan-tanggal-pjgt/{id}', [SettingController::class, 'simpanTanggalPJGT']);
+    Route::post('/simpan-tanggal-gt/{id}', [SettingController::class, 'simpanTanggalGT']);
 });
 Route::prefix('PJGT')->group(function () {
     Route::get('/profile', [PJGTController::class, 'profile']);

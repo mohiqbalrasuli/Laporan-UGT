@@ -45,4 +45,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(PJGTModel::class,'user_id');
     }
+    public function gt()
+    {
+        return $this->hasOne(GTModel::class,'user_id');
+    }
 }

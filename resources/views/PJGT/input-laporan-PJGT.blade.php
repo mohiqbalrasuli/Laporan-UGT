@@ -10,6 +10,16 @@
             </div>
         </div>
     </div>
+    {{-- @if (!$dalamRentang)
+        <div class="alert alert-warning">
+            Laporan triwulan ini <strong>belum dibuka</strong>.<br>
+            Jadwal akses: {{ $mulai }} sampai {{ $akhir }}.
+        </div>
+    @elseif ($sudahLapor)
+        <div class="alert alert-info">
+            Anda sudah melakukan laporan triwulan ini.
+        </div>
+    @else --}}
     <form action="">
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
@@ -834,4 +844,5 @@
             </div>
         </div>
     </form>
+    {{-- @endif --}}
 @endsection

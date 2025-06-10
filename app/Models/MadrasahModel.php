@@ -9,7 +9,7 @@ class MadrasahModel extends Model
     protected $table = 'table_madrasah';
     protected $guarded = [];
 
-    public function gt()
+    public function gts()
     {
         return $this->hasMany(GTModel::class, 'madrasah_id');
     }
