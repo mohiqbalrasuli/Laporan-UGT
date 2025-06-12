@@ -120,10 +120,10 @@ class GTController extends Controller
     {
         $gt = User::with(['gt.madrasah', 'gt.pjgt'])
             ->where('role', 'GT')
-            ->where('id',Auth::user()->id)
+            ->where('id', Auth::user()->id)
             ->where('status', 'aktif')
             ->first();
-        return view('GT.profile',compact('gt'));
+        return view('GT.profile', compact('gt'));
     }
 
     public function input_laporan()
@@ -141,56 +141,120 @@ class GTController extends Controller
 
         // Cek apakah user sudah pernah mengisi laporan bulan ini
         // Ambil pjgt_id berdasarkan user yang login
-    $gt = DB::table('table_gt')->where('user_id', $user->id)->first();
+        $gt = DB::table('table_gt')->where('user_id', $user->id)->first();
 
-    $sudahLapor = false;
-    if ($gt) {
-        $sudahLapor = DB::table('table_laporan_gt')
-            ->where('gt_id', $gt->id)
-            ->whereMonth('created_at', $today->month)
-            ->whereYear('created_at', $today->year)
-            ->exists();
-    }
+        $sudahLapor = false;
+        if ($gt) {
+            $sudahLapor = DB::table('table_laporan_gt')->where('gt_id', $gt->id)->whereMonth('created_at', $today->month)->whereYear('created_at', $today->year)->exists();
+        }
         return view('GT.input-laporan-GT', compact('user', 'dalamRentang', 'sudahLapor'));
     }
 
     public function laporan_store(Request $request)
     {
-        $user = Auth::user();
-        $gt = DB::table('table_gt')->where('user_id', $user->id)->first();
-        $data=[
-            'gt_id'=>$gt,
-            'laporan_ke'=>$request->laporan_ke,
-            'bulan_tahun'=>$request->bulan_tahun,
-            'wali_kelas'=>$request->wali_kelas,
-            'guru_kelas'=>$request->guru_kelas,
-            'guru_fan'=>$request->guru_fan,
-            'jenis_kelamin_murid'=>$request->jenis_kelamin_murid,
-            'jumlah_mengajar_satu_minggu'=>$request->jumlah_mengajar_satu_minggu,
-            'jumlah_mengajar_satu_bulan'=>$request->jumlah_mengajar_satu_bulan,
-            'alasan_tidak_masuk'=>$request->alasan_tidak_masuk,
-            'jumlah_hari_sakit'=>$request->jumlah_hari_sakit,
-            'jumlah_hari_pulang'=>$request->jumlah_hari_pulang,
-            'jumlah_alasan_lain'=>$request->jumlah_alasan_lain,
-            'kegiatan_gt_Diluar_kelas'=>$request->kegiatan_gt_Diluar_kelas,
-            'interaksi_dengan_pjgt'=>$request->interaksi_dengan_pjgt,
-            'interaksi_dengan_kepmad'=>$request->interaksi_dengan_kepmad,
-            'interaksi_dengan_guru'=>$request->interaksi_dengan_guru,
-            'bisyaroh_bulan_ini'=>$request->bisyaroh_bulan_ini,
-            'bisyaroh_bulan_ini_sebanyak'=>$request->bisyaroh_bulan_ini_sebanyak,
-            'kendala_bulan_ini'=>$request->kendala_bulan_ini,
-            'langkah_pemecahan_kendala'=>$request->langkah_pemecahan_kendala,
-            'tugas_dari_km_pjgt'=>$request->tugas_dari_km_pjgt,
-            'tugas_belum_terlaksana'=>$request->tugas_belum_terlaksana,
-            'usulan'=>$request->usulan,
-        ];
-        LaporanGTModel::create($data);
-        return redirect()->back()->with('success', 'Laporan berhasil disimpan');
+        try {
+            $user = Auth::user();
+            $gt = GTModel::where('user_id', $user->id)->first();
+            if (!$gt) {
+                return redirect()->back()->with('error', 'Data GT tidak ditemukan');
+            }
+            $guru_kelas = $request->input('guru_kelas', []);
+            $jenis_kelamin_murid = $request->input('jenis_kelamin_murid', []);
+            $alasan_tidak_masuk = $request->input('alasan_tidak_masuk', []);
+            $kegiatan_gt_Diluar_kelas = $request->input('kegiatan_gt_Diluar_kelas', []);
+
+            $request->validate([
+                'laporan_ke' => 'required|integer',
+                'bulan_tahun' => 'required|string',
+                'wali_kelas' => 'required|string',
+                'guru_kelas' => 'array',
+                'guru_fan' => 'required|string',
+                'jenis_kelamin_murid' => 'array',
+                'jumlah_mengajar_satu_minggu' => 'required|integer',
+                'jumlah_mengajar_satu_bulan' => 'required|integer',
+                'alasan_tidak_masuk' => 'array',
+                'jumlah_hari_sakit' => 'nullable|integer',
+                'jumlah_hari_pulang' => 'nullable|integer',
+                'jumlah_alasan_lain' => 'nullable|integer',
+                'kegiatan_gt_Diluar_kelas' => 'array',
+                'interaksi_dengan_pjgt' => 'required|string|in:jarang,sering,tidak pernah',
+                'interaksi_dengan_kepmad' => 'required|string|in:jarang,sering,tidak pernah',
+                'interaksi_dengan_guru' => 'required|string|in:jarang,sering,tidak pernah',
+                'bisyaroh_bulan_ini' => 'required|in:ya,tidak',
+                'bisyaroh_bulan_ini_sebanyak' => 'nullable|numeric|min:0|required_if:bisyaroh_bulan_ini,ya',
+                'kendala_bulan_ini' => 'required|string',
+                'langkah_pemecahan_kendala' => 'required|string',
+                'tugas_dari_km_pjgt' => 'required|string',
+                'tugas_belum_terlaksana' => 'required|string',
+                'usulan' => 'required|string',
+                'tanggal_laporan' => 'required|string',
+            ]);
+
+            $laporan = [
+                'gt_id' => $gt->id,
+                'laporan_ke' => $request->laporan_ke,
+                'bulan_tahun' => $request->bulan_tahun,
+                'wali_kelas' => $request->wali_kelas,
+                'guru_kelas' => json_encode($guru_kelas),
+                'guru_fan' => $request->guru_fan,
+                'jenis_kelamin_murid' => json_encode($jenis_kelamin_murid),
+                'jumlah_mengajar_satu_minggu' => $request->jumlah_mengajar_satu_minggu,
+                'jumlah_mengajar_satu_bulan' => $request->jumlah_mengajar_satu_bulan,
+                'alasan_tidak_masuk' => json_encode($alasan_tidak_masuk),
+                'jumlah_hari_sakit' => $request->jumlah_hari_sakit,
+                'jumlah_hari_pulang' => $request->jumlah_hari_pulang,
+                'jumlah_alasan_lain' => $request->jumlah_alasan_lain,
+                'kegiatan_gt_Diluar_kelas' => json_encode($kegiatan_gt_Diluar_kelas),
+                'interaksi_dengan_pjgt' => $request->interaksi_dengan_pjgt,
+                'interaksi_dengan_kepmad' => $request->interaksi_dengan_kepmad,
+                'interaksi_dengan_guru' => $request->interaksi_dengan_guru,
+                'bisyaroh_bulan_ini' => $request->bisyaroh_bulan_ini,
+                'bisyaroh_bulan_ini_sebanyak' => $request->bisyaroh_bulan_ini_sebanyak,
+                'kendala_bulan_ini' => $request->kendala_bulan_ini,
+                'langkah_pemecahan_kendala' => $request->langkah_pemecahan_kendala,
+                'tugas_dari_km_pjgt' => $request->tugas_dari_km_pjgt,
+                'tugas_belum_terlaksana' => $request->tugas_belum_terlaksana,
+                'usulan' => $request->usulan,
+                'tanggal_laporan' => $request->tanggal_laporan,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+
+            LaporanGTModel::create($laporan);
+            return back()->with('success','Laporan berhasil dikirim');
+
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function laporan()
     {
-        return view('GT.laporan-GT');
-    }
+        $user = Auth::user();
+        $gt = GTModel::where('user_id', $user->id)->first();
 
+        if (!$gt) {
+            return redirect()->back()->with('error', 'Laporan GT tidak ditemukan');
+        }
+
+        $laporan = LaporanGTModel::where('gt_id', $gt->id)
+            ->latest()
+            ->first();
+
+        if (!$laporan) {
+            return redirect()->back()->with('error', 'Laporan belum tersedia');
+        }
+
+        // Decode JSON fields with error checking
+        $laporan->guru_kelas = is_string($laporan->guru_kelas) ? json_decode($laporan->guru_kelas, true) ?? [] : [];
+        $laporan->jenis_kelamin_murid = is_string($laporan->jenis_kelamin_murid) ? json_decode($laporan->jenis_kelamin_murid, true) ?? [] : [];
+        $laporan->alasan_tidak_masuk = is_string($laporan->alasan_tidak_masuk) ? json_decode($laporan->alasan_tidak_masuk, true) ?? [] : [];
+        $laporan->kegiatan_gt_diluar_kelas = is_string($laporan->kegiatan_gt_diluar_kelas) ? json_decode($laporan->kegiatan_gt_diluar_kelas, true) ?? [] : [];
+
+        return view('GT.laporan-GT', compact('laporan', 'gt'));
+    }
 }

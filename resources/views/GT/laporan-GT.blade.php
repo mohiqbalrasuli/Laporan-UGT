@@ -22,187 +22,187 @@
                             <tr>
                                 <th>Laporan Ke</th>
                                 <th> : </th>
-                                <td>1</td>
+                                <td>{{ $laporan->laporan_ke }}</td>
                             </tr>
                             <tr>
                                 <th>Bulan / Tahun</th>
                                 <th> : </th>
-                                <td>Syawal-Dzul Qo'dah 1446</td>
+                                <td>{{ $laporan->bulan_tahun }}</td>
                             </tr>
                             <tr>
                                 <th>Nama</th>
                                 <th> : </th>
-                                <td>Moh. Wildan</td>
+                                <td>{{ $gt->user->name }}</td>
                             </tr>
                             <tr>
                                 <th>Alamat Lengkap</th>
                                 <th> : </th>
-                                <td>Batuputih Laok Batuputih sumenep</td>
+                                <td>{{ $gt->alamat }}</td>
                             </tr>
                             <tr>
                                 <th>Asal Kelas</th>
                                 <th> : </th>
-                                <td>MMU Ibtidaiyah</td>
+                                <td>{{ $gt->asal_kelas }}</td>
                             </tr>
                             <tr>
                                 <th>Status Tugas</th>
                                 <th> : </th>
-                                <td>Wajib</td>
+                                <td>{{ $gt->status_tugas }}</td>
                             </tr>
                             <tr>
                                 <th>Nama Madrasah</th>
                                 <th> : </th>
-                                <td>MI Nurul Huda</td>
+                                <td>{{ $gt->madrasah->nama_madrasah ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Alamat Madrasah</th>
                                 <th> : </th>
-                                <td>Jl. Raya Batuputih</td>
+                                <td>{{ $gt->madrasah->alamat_madrasah ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Nama Kepala Madrasah</th>
                                 <th> : </th>
-                                <td>Ustadz Ahmad</td>
+                                <td>{{ $gt->madrasah->nama_kepala_madrasah ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Nama PJGT</th>
                                 <th> : </th>
-                                <td>Ustadz Abdullah</td>
+                                <td>{{ $gt->pjgt->user->name ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Wali Kelas</th>
                                 <th> : </th>
-                                <td>6 Ibtidaiyah</td>
+                                <td>{{ $laporan->wali_kelas }}</td>
                             </tr>
                             <tr>
                                 <th>Guru Kelas</th>
                                 <th> : </th>
-                                <td>1 Ibtidaiyah, 2 Ibtidaiyah</td>
+                                <td>{{ implode(', ', $laporan->guru_kelas) }}</td>
                             </tr>
                             <tr>
                                 <th>Guru Fan</th>
                                 <th> : </th>
-                                <td>Matematika</td>
+                                <td>{{ $laporan->guru_fan }}</td>
                             </tr>
                             <tr>
                                 <th>Jenis Kelamin Murid</th>
                                 <th> : </th>
-                                <td>Banin - Banat</td>
+                                <td>{{ implode(', ', $laporan->jenis_kelamin_murid) }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Hari Mengajar 1 Pekan</th>
                                 <th> : </th>
-                                <td>5</td>
+                                <td>{{ $laporan->jumlah_mengajar_satu_minggu }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Jam Mengajar 1 Pekan</th>
                                 <th> : </th>
-                                <td>20</td>
+                                <td>{{ $laporan->jumlah_mengajar_satu_minggu * 4 }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Hari Mengajar 1 Bulan</th>
                                 <th> : </th>
-                                <td>20</td>
+                                <td>{{ $laporan->jumlah_mengajar_satu_bulan }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Jam Mengajar 1 Bulan</th>
                                 <th> : </th>
-                                <td>80</td>
+                                <td>{{ $laporan->jumlah_mengajar_satu_bulan * 4 }}</td>
                             </tr>
                             <tr>
                                 <th>Alasan Tidak Mengajar</th>
                                 <th> : </th>
-                                <td>Sakit</td>
+                                <td>{{ implode(', ', $laporan->alasan_tidak_masuk) }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Hari Sakit</th>
                                 <th> : </th>
-                                <td>2</td>
+                                <td>{{ $laporan->jumlah_hari_sakit }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Jam Sakit</th>
                                 <th> : </th>
-                                <td>8</td>
+                                <td>{{ $laporan->jumlah_hari_sakit * 4 }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Hari Pulang</th>
                                 <th> : </th>
-                                <td>0</td>
+                                <td>{{ $laporan->jumlah_hari_pulang }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Jam Pulang</th>
                                 <th> : </th>
-                                <td>0</td>
+                                <td>{{ $laporan->jumlah_hari_pulang * 4 }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Hari Lain</th>
                                 <th> : </th>
-                                <td>0</td>
+                                <td>{{ $laporan->jumlah_alasan_lain }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Jam Lain</th>
                                 <th> : </th>
-                                <td>0</td>
+                                <td>{{ $laporan->jumlah_alasan_lain * 4 }}</td>
                             </tr>
                             <tr>
                                 <th>Kegiatan GT Di Luar Kelas</th>
                                 <th> : </th>
-                                <td>Mengajar Al-Qur'an Bit-Tartil, Mengajar Kitabiyah</td>
+                                <td>{{ implode(', ', $laporan->kegiatan_gt_diluar_kelas) }}</td>
                             </tr>
                             <tr>
                                 <th>Interaksi Dengan PJGT</th>
                                 <th> : </th>
-                                <td>Sering</td>
+                                <td>{{ $laporan->interaksi_dengan_pjgt }}</td>
                             </tr>
                             <tr>
                                 <th>Interaksi Dengan Kepala Madrasah</th>
                                 <th> : </th>
-                                <td>Sering</td>
+                                <td>{{ $laporan->interaksi_dengan_kepmad }}</td>
                             </tr>
                             <tr>
                                 <th>Interaksi Dengan Guru</th>
                                 <th> : </th>
-                                <td>Sering</td>
+                                <td>{{ $laporan->interaksi_dengan_guru }}</td>
                             </tr>
                             <tr>
                                 <th>Bisyaroh Bulan Ini</th>
                                 <th> : </th>
-                                <td>Ya</td>
+                                <td>{{ $laporan->bisyaroh_bulan_ini }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Bisyaroh</th>
                                 <th> : </th>
-                                <td>Rp. 500000</td>
+                                <td>Rp. {{ number_format($laporan->bisyaroh_bulan_ini_sebanyak, 0, ',', '.') }}</td>
                             </tr>
                             <tr>
                                 <th>Kendala Bulan Ini</th>
                                 <th> : </th>
-                                <td>Tidak ada</td>
+                                <td>{{ $laporan->kendala_bulan_ini }}</td>
                             </tr>
                             <tr>
                                 <th>Langkah Pemecahan Kendala</th>
                                 <th> : </th>
-                                <td>Tidak ada</td>
+                                <td>{{ $laporan->langkah_pemecahan_kendala }}</td>
                             </tr>
                             <tr>
                                 <th>Tugas Baru Dari KM/PJGT</th>
                                 <th> : </th>
-                                <td>Tidak ada</td>
+                                <td>{{ $laporan->tugas_dari_km_pjgt }}</td>
                             </tr>
                             <tr>
                                 <th>Tugas Belum Terlaksana</th>
                                 <th> : </th>
-                                <td>Tidak ada</td>
+                                <td>{{ $laporan->tugas_belum_terlaksana }}</td>
                             </tr>
                             <tr>
                                 <th>Usulan/Saran</th>
                                 <th> : </th>
-                                <td>Tidak ada</td>
+                                <td>{{ $laporan->usulan }}</td>
                             </tr>
                             <tr>
                                 <th>Tanggal Laporan</th>
                                 <th> : </th>
-                                <td>15 Dzul Qo'dah 1446</td>
+                                <td>{{ $laporan->tanggal_laporan }}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -47,7 +47,7 @@
                             <i class="fa fa-file-alt fa-3x text-success"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Laporan PJGT/GT</p>
-                                <h6 class="mb-0">3/10</h6>
+                                <h6 class="mb-0">{{ $laporan_pjgt }} / {{ $laporan_gt }}</h6>
                             </div>
                         </div>
                     </div>

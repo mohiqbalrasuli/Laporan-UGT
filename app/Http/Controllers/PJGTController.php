@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class PJGTController extends Controller
 {
@@ -117,7 +118,12 @@ class PJGTController extends Controller
     }
     public function profile()
     {
-        return view('PJGT.profile');
+        $pjgt = User::with(['pjgt.madrasah', 'pjgt.gt'])
+            ->where('role', 'PJGT')
+            ->where('id',Auth::user()->id)
+            ->where('status', 'aktif')
+            ->first();
+        return view('PJGT.profile',compact('pjgt'));
     }
 
     public function input_laporan()
@@ -146,69 +152,169 @@ class PJGTController extends Controller
 
     public function laporan_store(Request $request)
     {
-        $data=[
-            'pjgt_id' => $request->pjgt_id,
-            'laporan_ke'=> $request->laporan_ke,
-            'laporan_bulan'=> $request->laporan_bulan,
-            'tahun'=> $request->tahun,
-            'wali_kelas'=> $request->wali_kelas,
-            'tingkat'=>$request->tingkat,
-            'guru_fak_kelas'=>$request->guru_fak_kelas,
-            'menjadi_guru'=>$request->menjadi_guru,
-            'gt_menjadi_guru'=>$request->gt_menjadi_guru,
-            'gt_masuk_madrasah'=>$request->gt_masuk_madrasah,
-            'murid_balighah'=>$request->murid_balighah,
-            'jenis_kegiatan'=>$request->jenis_kegiatan,
-            'waktu_kegiatan'=>$request->waktu_kegiatan,
-            'sifat_kegiatan'=>$request->sifat_kegiatan,
-            'rambut_gt'=>$request->rambut_gt,
-            'gt_bepergian'=>$request->gt_bepergian,
-            'berpergian_sebanyak'=>$request->berpergian_sebanyak,
-            'tujuan_bepergian'=>$request->tujuan_bepergian,
-            'gt_pernah_pulang_kampung'=>$request->gt_pernah_pulang_kampung,
-            'pulang_kampung_sebanyak'=>$request->pulang_kampung_sebanyak,
-            'gt_melakukan_pelanggaran'=>$request->gt_melakukan_pelanggaran,
-            'pelanggran_berupa'=>$request->pelanggran_berupa,
-            'pjgt_mengambil_tindakan'=>$request->pjgt_mengambil_tindakan,
-            'tindakan_berupa'=>$request->tindakan_berupa,
-            'surat_ijin_dipakai'=>$request->surat_ijin_dipakai,
-            'hubungan_dengan_pjgt'=>$request->hubungan_dengan_pjgt,
-            'hubungan_dengan_kepmad'=>$request->hubungan_dengan_kepmad,
-            'hubungan_dengan_guru'=>$request->hubungan_dengan_guru,
-            'hubungan_dengan_wali_murid_masyarakat'=>$request->hubungan_dengan_wali_murid_masyarakat,
-            'hubungan_dengan_murid_dikelas'=>$request->hubungan_dengan_murid_dikelas,
-            'hubungan_dengan_murid_diluar'=>$request->hubungan_dengan_murid_diluar,
-            'tanggapan_murid'=>$request->tanggapan_murid,
-            'tanggapan_masyarakat'=>$request->tanggapan_masyarakat,
-            'bisyaroh_satu'=>$request->bisyaroh_satu,
-            'bisyaroh_satu_sebanyak'=>$request->bisyaroh_satu_sebanyak,
-            'bisyaroh_dua'=>$request->bisyaroh_dua,
-            'bisyaroh_dua_sebanyak'=>$request->bisyaroh_dua_sebanyak,
-            'bisyaroh_tiga'=>$request->bisyaroh_tiga,
-            'bisyaroh_tiga_sebanyak'=>$request->bisyaroh_tiga_sebanyak,
-            'bisyaroh_empat'=>$request->bisyaroh_empat,
-            'bisyaroh_empat_sebanyak'=>$request->bisyaroh_empat_sebanyak,
-            'bisyaroh_lima'=>$request->bisyaroh_lima,
-            'bisyaroh_lima_sebanyak'=>$request->bisyaroh_lima_sebanyak,
-            'bisyaroh_enam'=>$request->bisyaroh_enam,
-            'bisyaroh_enam_sebanyak'=>$request->bisyaroh_enam_sebanyak,
-            'bisyaroh_tujuh'=>$request->bisyaroh_tujuh,
-            'bisyaroh_tujuh_sebanyak'=>$request->bisyaroh_tujuh_sebanyak,
-            'bisyaroh_delapan'=>$request->bisyaroh_delapan,
-            'bisyaroh_delapan_sebanyak'=>$request->bisyaroh_delapan_sebanyak,
-            'bisyaroh_sembilan'=>$request->bisyaroh_sembilan,
-            'bisyaroh_sembilan_sebanyak'=>$request->bisyaroh_sembilan_sebanyak,
-            'bisyaroh_sepuluh'=>$request->bisyaroh_sepuluh,
-            'bisyaroh_sepuluh_sebanyak'=>$request->bisyaroh_sepuluh_sebanyak,
-            'usulan' => $request->usulan,
-        ];
-        LaporanPJGTModel::create($data);
-        return redirect()
-            ->back()
-            ->with('success', 'Laporan berhasil disimpan');
+        try {
+            // Get authenticated user and their PJGT data
+            $user = Auth::user();
+            $pjgt = DB::table('table_pjgt')->where('user_id', $user->id)->first();
+
+            if (!$pjgt) {
+                return redirect()->back()->with('error', 'Data PJGT tidak ditemukan');
+            }
+
+            // Validate the request
+            $request->validate([
+                'laporan_ke' => 'required|numeric',
+                'laporan_bulan' => 'required|string|in:Muharram,Rabiul Awal,Jumadal Tsaniyah,Sya\'ban',
+                'tahun' => 'required|string',
+                'wali_kelas' => 'required|string|in:1,2,3,4,5,6',
+                'tingkat' => 'required|array',
+                'guru_fak_kelas' => 'required|array',
+                'menjadi_guru' => 'required|array',
+                'gt_masuk_madrasah' => 'required|string|in:Rajin,Tidak Rajin',
+                'murid_balighah' => 'required|string|in:Ya,Tidak',
+                'jenis_kegiatan' => 'required|string',
+                'waktu_kegiatan' => 'required|array',
+                'sifat_kegiatan' => 'required|string|in:Baru,Melanjutkan',
+                'rambut_gt' => 'required|string|in:Pendek,Melebihi Batas',
+                'gt_bepergian' => 'required|string|in:Ya,Tidak',
+                'berpergian_sebanyak' => 'required_if:gt_bepergian,Ya|nullable|numeric|in:1,2,3,4,5',
+                'tujuan_bepergian' => 'required_if:gt_bepergian,Ya|nullable|string',
+                'gt_pernah_pulang_kampung' => 'required|string|in:ya,tidak',
+                'pulang_kampung_sebanyak' => 'required_if:gt_pernah_pulang_kampung,ya|nullable|numeric|in:1,2,3,4,5',
+                'gt_melakukan_pelanggaran' => 'required|string|in:ya,tidak',
+                'pelanggran_berupa' => 'required_if:gt_melakukan_pelanggaran,ya|nullable|string',
+                'pjgt_mengambil_tindakan' => 'required_if:gt_melakukan_pelanggaran,ya|nullable|string|in:ya,tidak',
+                'tindakan_berupa' => 'required_if:pjgt_mengambil_tindakan,ya|nullable|string',
+                'surat_ijin_dipakai' => 'required|numeric|in:1,2,3,4,5',
+                'hubungan_dengan_pjgt' => 'required|string|in:jarang,sering,tidak_pernah',
+                'hubungan_dengan_kepmad' => 'required|string|in:jarang,sering,tidak_pernah',
+                'hubungan_dengan_guru' => 'required|string|in:jarang,sering,tidak_pernah',
+                'hubungan_dengan_wali_murid_masyarakat' => 'required|string|in:jarang,sering,tidak_pernah',
+                'hubungan_dengan_murid_dikelas' => 'required|string|in:aktif,pasif',
+                'hubungan_dengan_murid_diluar' => 'required|string|in:aktif,pasif',
+                'tanggapan_murid' => 'required|string|in:baik,tidak baik',
+                'tanggapan_masyarakat' => 'required|string|in:baik,tidak baik',
+                'bisyaroh_satu' => 'required|string|in:Ya,Tidak',
+                'bisyaroh_satu_sebanyak' => 'required_if:bisyaroh_satu,Ya|nullable|numeric',
+                'bisyaroh_dua' => 'required|string|in:Ya,Tidak',
+                'bisyaroh_dua_sebanyak' => 'required_if:bisyaroh_dua,Ya|nullable|numeric',
+                'bisyaroh_tiga' => 'required|string|in:Ya,Tidak',
+                'bisyaroh_tiga_sebanyak' => 'required_if:bisyaroh_tiga,Ya|nullable|numeric',
+                'bisyaroh_empat' => 'required|string|in:Ya,Tidak',
+                'bisyaroh_empat_sebanyak' => 'required_if:bisyaroh_empat,Ya|nullable|numeric',
+                'bisyaroh_lima' => 'required|string|in:Ya,Tidak',
+                'bisyaroh_lima_sebanyak' => 'required_if:bisyaroh_lima,Ya|nullable|numeric',
+                'bisyaroh_enam' => 'required|string|in:Ya,Tidak',
+                'bisyaroh_enam_sebanyak' => 'required_if:bisyaroh_enam,Ya|nullable|numeric',
+                'bisyaroh_tujuh' => 'required|string|in:Ya,Tidak',
+                'bisyaroh_tujuh_sebanyak' => 'required_if:bisyaroh_tujuh,Ya|nullable|numeric',
+                'bisyaroh_delapan' => 'required|string|in:Ya,Tidak',
+                'bisyaroh_delapan_sebanyak' => 'required_if:bisyaroh_delapan,Ya|nullable|numeric',
+                'bisyaroh_sembilan' => 'required|string|in:Ya,Tidak',
+                'bisyaroh_sembilan_sebanyak' => 'required_if:bisyaroh_sembilan,Ya|nullable|numeric',
+                'bisyaroh_sepuluh' => 'required|string|in:Ya,Tidak',
+                'bisyaroh_sepuluh_sebanyak' => 'required_if:bisyaroh_sepuluh,Ya|nullable|numeric',
+                'usulan' => 'required|string',
+            ]);
+
+            // Prepare data for storage
+            $data = [
+                'pjgt_id' => $pjgt->id,
+                'laporan_ke' => $request->laporan_ke,
+                'laporan_bulan' => $request->laporan_bulan,
+                'tahun' => $request->tahun,
+                'wali_kelas' => $request->wali_kelas,
+                'tingkat' => json_encode($request->tingkat),
+                'guru_fak_kelas' => json_encode($request->guru_fak_kelas),
+                'menjadi_guru' => json_encode($request->menjadi_guru),
+                'gt_masuk_madrasah' => $request->gt_masuk_madrasah,
+                'murid_balighah' => $request->murid_balighah,
+                'jenis_kegiatan' => $request->jenis_kegiatan,
+                'waktu_kegiatan' => json_encode($request->waktu_kegiatan),
+                'sifat_kegiatan' => $request->sifat_kegiatan,
+                'rambut_gt' => $request->rambut_gt,
+                'gt_bepergian' => $request->gt_bepergian,
+                'berpergian_sebanyak' => $request->berpergian_sebanyak,
+                'tujuan_bepergian' => $request->tujuan_bepergian,
+                'gt_pernah_pulang_kampung' => $request->gt_pernah_pulang_kampung,
+                'pulang_kampung_sebanyak' => $request->pulang_kampung_sebanyak,
+                'gt_melakukan_pelanggaran' => $request->gt_melakukan_pelanggaran,
+                'pelanggran_berupa' => $request->pelanggran_berupa,
+                'pjgt_mengambil_tindakan' => $request->pjgt_mengambil_tindakan,
+                'tindakan_berupa' => $request->tindakan_berupa,
+                'surat_ijin_dipakai' => $request->surat_ijin_dipakai,
+                'hubungan_dengan_pjgt' => $request->hubungan_dengan_pjgt,
+                'hubungan_dengan_kepmad' => $request->hubungan_dengan_kepmad,
+                'hubungan_dengan_guru' => $request->hubungan_dengan_guru,
+                'hubungan_dengan_wali_murid_masyarakat' => $request->hubungan_dengan_wali_murid_masyarakat,
+                'hubungan_dengan_murid_dikelas' => $request->hubungan_dengan_murid_dikelas,
+                'hubungan_dengan_murid_diluar' => $request->hubungan_dengan_murid_diluar,
+                'tanggapan_murid' => $request->tanggapan_murid,
+                'tanggapan_masyarakat' => $request->tanggapan_masyarakat,
+                'bisyaroh_satu' => $request->bisyaroh_satu,
+                'bisyaroh_satu_sebanyak' => $request->bisyaroh_satu_sebanyak,
+                'bisyaroh_dua' => $request->bisyaroh_dua,
+                'bisyaroh_dua_sebanyak' => $request->bisyaroh_dua_sebanyak,
+                'bisyaroh_tiga' => $request->bisyaroh_tiga,
+                'bisyaroh_tiga_sebanyak' => $request->bisyaroh_tiga_sebanyak,
+                'bisyaroh_empat' => $request->bisyaroh_empat,
+                'bisyaroh_empat_sebanyak' => $request->bisyaroh_empat_sebanyak,
+                'bisyaroh_lima' => $request->bisyaroh_lima,
+                'bisyaroh_lima_sebanyak' => $request->bisyaroh_lima_sebanyak,
+                'bisyaroh_enam' => $request->bisyaroh_enam,
+                'bisyaroh_enam_sebanyak' => $request->bisyaroh_enam_sebanyak,
+                'bisyaroh_tujuh' => $request->bisyaroh_tujuh,
+                'bisyaroh_tujuh_sebanyak' => $request->bisyaroh_tujuh_sebanyak,
+                'bisyaroh_delapan' => $request->bisyaroh_delapan,
+                'bisyaroh_delapan_sebanyak' => $request->bisyaroh_delapan_sebanyak,
+                'bisyaroh_sembilan' => $request->bisyaroh_sembilan,
+                'bisyaroh_sembilan_sebanyak' => $request->bisyaroh_sembilan_sebanyak,
+                'bisyaroh_sepuluh' => $request->bisyaroh_sepuluh,
+                'bisyaroh_sepuluh_sebanyak' => $request->bisyaroh_sepuluh_sebanyak,
+                'usulan' => $request->usulan,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            // Create new laporan
+            $laporan = LaporanPJGTModel::create($data);
+
+            if (!$laporan) {
+                throw new \Exception('Gagal menyimpan laporan');
+            }
+
+            return redirect()->route('pjgt.profile')->with('success', 'Laporan berhasil disimpan');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
     public function laporan()
     {
-        return view('PJGT.laporan-PJGT');
+        $user = Auth::user();
+        $pjgt = LaporanPJGTModel::where('user_id', $user->id)->first();
+
+        if (!$pjgt) {
+            return redirect()
+                ->back()
+                ->with('error', 'Data PJGT tidak ditemukan');
+        }
+
+        $laporan_pjgt = LaporanPJGTModel::where('pjgt_id', $pjgt->id)
+            ->with([
+                'pjgt.user',
+                'pjgt.madrasah',
+                'pjgt.gt.user'
+            ])
+            ->get();
+
+        if (!$laporan_pjgt) {
+            return redirect()
+                ->back()
+                ->with('error', 'Data laporan tidak ditemukan');
+        }
+
+        return view('PJGT.laporan-PJGT', compact('laporan_pjgt'));
     }
 }

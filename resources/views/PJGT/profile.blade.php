@@ -35,29 +35,34 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <th>No Induk PJGT</th>
+                                <th> : </th>
+                                <td>{{ $pjgt->pjgt->no_induk ?? '-' }}</td>
+                            </tr>
+                            <tr>
                                 <th>Nama PJGT</th>
                                 <th> : </th>
-                                <td>Ach. Hamzah Ilahi Maulana Muhammadi</td>
+                                <td>{{ $pjgt->name }}</td>
                             </tr>
                             <tr>
                                 <th>Alamat</th>
                                 <th> : </th>
-                                <td>Batuputih Laok Batuputih sumenep</td>
+                                <td>{{ $pjgt->pjgt->alamat ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Nama Madrasah</th>
                                 <th> : </th>
-                                <td>MDT Al-Barokah</td>
+                                <td>{{ $pjgt->pjgt->madrasah->nama_madrasah ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Kepala Madrasah</th>
                                 <th> : </th>
-                                <td>Akh. Ainur Rasyidi</td>
+                                <td>{{ $pjgt->pjgt->madrasah->nama_kepala_madrasah ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Alamat Madrasah</th>
                                 <th> : </th>
-                                <td>Batuputih Laok Batuputih sumenep</td>
+                                <td>{{ $pjgt->pjgt->madrasah->alamat_madrasah ?? '-' }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -84,17 +89,22 @@
                             <tr>
                                 <th>Nama GT</th>
                                 <th> : </th>
-                                <td>Moh. Wildan</td>
+                                <td>{{ $pjgt->pjgt->gt->user->name }}</td>
                             </tr>
                             <tr>
                                 <th>Alamat Lengkap</th>
                                 <th> : </th>
-                                <td>Batuputih Laok Batuputih sumenep</td>
+                                <td>{{ $pjgt->pjgt->gt->alamat }}</td>
                             </tr>
                             <tr>
                                 <th>Asal Kelas</th>
                                 <th> : </th>
-                                <td>6 Ibtidaiyah</td>
+                                <td>{{ $pjgt->pjgt->gt->asal_kelas }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status Tugas</th>
+                                <th> : </th>
+                                <td>{{ $pjgt->pjgt->gt->status_tugas }}</td>
                             </tr>
                         </tbody>
                     </table>
