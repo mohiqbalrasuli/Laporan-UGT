@@ -52,7 +52,11 @@
                                 width="50px">
                             <h3>Login</h3>
                             @if (session('error'))
-                                <div class="alert alert-danger mt-2">{{ session('error') }}</div>
+                                <div class="alert alert-danger mt-2" role="alert">{{ session('error') }}</div>
+                            @elseif (session('success_logout'))
+                                <div class="alert alert-success mt-2" role="alert">{{ session('success_logout') }}</div>
+                            @elseif (session('success_register'))
+                            <div class="alert alert-success mt-2" role="alert">{{ session('success_register') }}</div>
                             @endif
                         </div>
                         <form action="/login" method="POST">

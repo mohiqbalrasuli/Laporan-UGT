@@ -122,10 +122,10 @@
                                                 method="POST">
                                                 @csrf
                                                 <div class="mb-3">
-                                                    <abel for="exampleInput{{ $value->pjgt->no_induk }}" class="form-label">No. Induk</abel>
+                                                    <abel for="exampleInput{{ $value->pjgt?->no_induk ?? '' }}" class="form-label">No. Induk</abel>
                                                     <input type="number" class="form-control"
-                                                        value="{{ $value->pjgt->no_induk }}" name="no_induk"
-                                                        id="exampleInput{{ $value->pjgt->no_induk }}">
+                                                        value="{{ $value->pjgt?->no_induk ?? '' }}" name="no_induk"
+                                                        id="exampleInput{{ $value->pjgt?->no_induk ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <abel for="exampleInput{{ $value->name }}" class="form-label">Nama PJGT</abel>
@@ -134,31 +134,31 @@
                                                         id="exampleInput{{ $value->name }}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->pjgt->alamat }}" class="form-label">Alamat</label>
+                                                    <label for="exampleInput{{ $value->pjgt?->alamat ?? '' }}" class="form-label">Alamat</label>
                                                     <input type="text" class="form-control "
-                                                        value="{{ $value->pjgt->alamat }}" name="alamat"
-                                                        id="exampleInput{{ $value->pjgt->alamat }}">
+                                                        value="{{ $value->pjgt?->alamat ?? '' }}" name="alamat"
+                                                        id="exampleInput{{ $value->pjgt?->alamat ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->pjgt->gt_id }}" class="form-label">Guru Tugas</label>
-                                                    <select class="form-select" name="gt_id" id="exampleInput{{ $value->pjgt->gt_id }}">
+                                                    <label for="exampleInput{{ $value->pjgt?->gt_id }}" class="form-label">Guru Tugas</label>
+                                                    <select class="form-select" name="gt_id" id="exampleInput{{ $value->pjgt?->gt_id }}">
                                                         <option disabled selected>Pilih Guru Tugas</option>
                                                         @foreach ($gt as $item)
                                                             <option value="{{ $item->gt->id }}"
-                                                                {{ $item->gt->id == $value->pjgt->gt_id ? 'selected' : '' }}>
+                                                                {{ $item->gt->id == $value->pjgt?->gt_id ? 'selected' : '' }}>
                                                                 {{ $item->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->pjgt->madrasah_id }}" class="form-label">Madrasah</label>
+                                                    <label for="exampleInput{{ $value->pjgt?->madrasah_id }}" class="form-label">Madrasah</label>
                                                     <select class="form-select" name="madrasah_id"
-                                                        id="exampleInput{{ $value->pjgt->madrasah_id }}">
+                                                        id="exampleInput{{ $value->pjgt?->madrasah_id }}">
                                                         <option disabled selected>Pilih Madrasah</option>
                                                         @foreach ($madrasah as $item)
                                                             <option value="{{ $item->id }}"
-                                                                {{ $item->id == $value->pjgt->madrasah_id ? 'selected' : '' }}>
+                                                                {{ $item->id == $value->pjgt?->madrasah_id ? 'selected' : '' }}>
                                                                 {{ $item->nama_madrasah }}
                                                             </option>
                                                         @endforeach

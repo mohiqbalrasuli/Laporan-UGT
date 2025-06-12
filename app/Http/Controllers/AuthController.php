@@ -47,11 +47,11 @@ class AuthController extends Controller
             // Redirect berdasarkan role
             switch (Auth::user()->role) {
                 case 'admin':
-                    return redirect('admin/dashboard')->with('success', 'Berhasil masuk sebagai admin');
+                    return redirect('admin/dashboard')->with('success_login', 'Berhasil masuk sebagai admin');
                 case 'PJGT':
-                    return redirect('PJGT/profile')->with('success', 'Berhasil masuk sebagai PJGT');
+                    return redirect('PJGT/profile')->with('success_login', 'Berhasil masuk sebagai PJGT');
                 case 'GT':
-                    return redirect('GT/profile')->with('success', 'Berhasil masuk sebagai user');
+                    return redirect('GT/profile')->with('success_login', 'Berhasil masuk sebagai user');
                 default:
                     Auth::logout();
                     return back()->with('error', 'Role pengguna tidak dikenali.');
@@ -95,12 +95,12 @@ class AuthController extends Controller
             'role' => $request->role,
             'name' => $request->name,
             'email' => $request->email,
+            'email_verified_at'=>now(),
             'password' => Hash::make($request->password),
             'status' => 'tidak_aktif',
             'remember_token' => Str::random(10),
         ]);
-        $role = strtolower($request->role);
-        if ($role === 'GT') {
+        if ($request->role === 'GT') {
             GTModel::create([
                 'user_id' => $user->id,
                 'alamat' => null,
@@ -109,7 +109,7 @@ class AuthController extends Controller
                 'madrasah_id' => null,
                 'pjgt_id' => null,
             ]);
-        } elseif ($role === 'PJGT') {
+        } elseif ($request->role === 'PJGT') {
             PJGTModel::create([
                 'no_induk' => null,
                 'user_id' => $user->id,
@@ -119,7 +119,7 @@ class AuthController extends Controller
             ]);
         }
 
-        Session::flash('success', 'Registrasi berhasil, silakan masuk');
+        Session::flash('success_register', 'Registrasi berhasil, silakan masuk');
         return redirect('login');
     }
 
@@ -130,7 +130,7 @@ class AuthController extends Controller
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return redirect('login')->with('success', 'Berhasil keluar');
+            return redirect('login')->with('success_logout', 'Berhasil keluar');
         } catch (\Exception $e) {
             return redirect('/login');
         }

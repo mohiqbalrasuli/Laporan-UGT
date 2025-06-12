@@ -11,6 +11,9 @@
         <!-- Spinner End -->
      <!-- Sale & Revenue Start -->
             <div class="container-fluid pt-4 px-4">
+                @if (session('success_login'))
+                <div class="alert alert-success mt-2" role="alert">{{ session('success_login') }}</div>
+                @endif
                 <div class="row g-4">
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">

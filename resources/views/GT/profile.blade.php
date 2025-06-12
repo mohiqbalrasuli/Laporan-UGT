@@ -4,6 +4,9 @@
 
 @section('content')
     <div class="container-fluid pt-4 px-4">
+        @if (session('success_lohin'))
+                <div class="alert alert-success mt-2" role="alert">{{ session('success_login') }}</div>
+                @endif
         <div class="row g-4">
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
@@ -36,7 +39,12 @@
                             <tr>
                                 <th>Asal Kelas</th>
                                 <th> : </th>
-                                <td>{{ $gt->gt->asal_kelas '-' }}</td>
+                                <td>{{ $gt->gt->asal_kelas ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status Tugas</th>
+                                <th> : </th>
+                                <td>{{ $gt->gt->status_tugas ?? '-' }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -63,7 +71,7 @@
                             <tr>
                                 <th>Nama PJGT</th>
                                 <th> : </th>
-                                <td>{{ $gt->gt->pjgt->name ?? '-' }}</td>
+                                <td>{{ $gt->gt->pjgt->user->name ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Nama Madrasah</th>

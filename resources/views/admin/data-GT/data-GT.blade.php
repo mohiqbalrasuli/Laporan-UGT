@@ -136,11 +136,11 @@
                                                         id="exampleInput{{ $value->name }}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->gt->alamat ?? '-' }}"
+                                                    <label for="exampleInput{{ $value->gt->alamat ?? '' }}"
                                                         class="form-label">Alamat</label>
                                                     <input type="text" class="form-control "
-                                                        value="{{ $value->gt->alamat ?? '-' }}" name="alamat"
-                                                        id="exampleInput{{ $value->gt->alamat ?? '-' }}">
+                                                        value="{{ $value->gt->alamat ?? '' }}" name="alamat"
+                                                        id="exampleInput{{ $value->gt->alamat ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleInputstatustugas" class="form-label">Status
@@ -164,7 +164,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->gt->gt_id ?? '-' }}"
+                                                    <label for="exampleInput{{ $value->gt->gt_id ?? '' }}"
                                                         class="form-label">Guru Tugas</label>
                                                     <select class="form-select" name="pjgt_id"
                                                         id="exampleInput{{ $value->gt?->pjgt_id }}">

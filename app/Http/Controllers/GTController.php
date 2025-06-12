@@ -43,7 +43,7 @@ class GTController extends Controller
             'alamat' => $request->alamat,
             'status_tugas' => $request->status_tugas,
             'asal_kelas' => $request->asal_kelas,
-            'madrasah_id' => $request->madrasah_id,
+            'madrasah_id' => $request->madrasah_id ?? null,
             'pjgt_id' => $request->pjgt_id ?? null,
         ]);
 
@@ -63,7 +63,7 @@ class GTController extends Controller
             $gtModel->alamat = $request->alamat;
             $gtModel->status_tugas = $request->status_tugas;
             $gtModel->asal_kelas = $request->asal_kelas;
-            $gtModel->madrasah_id = $request->madrasah_id;
+            $gtModel->madrasah_id = $request->madrasah_id ?? null;
             $gtModel->pjgt_id = $request->pjgt_id ?? null;
             $gtModel->save();
         }
@@ -120,9 +120,9 @@ class GTController extends Controller
     {
         $gt = User::with(['gt.madrasah', 'gt.pjgt'])
             ->where('role', 'GT')
-            ->where(Auth::user()->id)
+            ->where('id',Auth::user()->id)
             ->where('status', 'aktif')
-            ->get();
+            ->first();
         return view('GT.profile',compact('gt'));
     }
 
