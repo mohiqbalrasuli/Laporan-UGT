@@ -113,7 +113,21 @@ class GTController extends Controller
     }
     public function data_laporan()
     {
-        return view('admin.data-GT.data-laporan-gt');
+        $laporan_gt = LaporanGTModel::all()
+            ->with([
+                'gt.user',
+                'gt.madrasah',
+                'gt.pjgt.user'
+            ])
+            ->get()
+            ->map(function($laporan_gt){
+                $laporan_gt->guru_kelas = json_decode($laporan_gt->guru_kelas, true) ?? [];
+                $laporan_gt->jenis_kelamin_murid = json_decode($laporan_gt->jenis_kelamin_murid, true) ?? [];
+                $laporan_gt->alasan_tidak_masuk = json_decode($laporan_gt->alasan_tidak_masuk, true) ?? [];
+                $laporan_gt->kegiatan_gt_Diluar_kelas = json_decode($laporan_gt->kegiatan_gt_Diluar_kelas, true) ?? [];
+                return $laporan_gt;
+            });
+        return view('admin.data-GT.data-laporan-gt',compact('laporan_gt'));
     }
 
     public function profile()
@@ -238,23 +252,26 @@ class GTController extends Controller
         $gt = GTModel::where('user_id', $user->id)->first();
 
         if (!$gt) {
-            return redirect()->back()->with('error', 'Laporan GT tidak ditemukan');
+            return redirect()
+            ->back()
+            ->with('error', 'Laporan GT tidak ditemukan');
         }
 
-        $laporan = LaporanGTModel::where('gt_id', $gt->id)
-            ->latest()
-            ->first();
+        $laporan_gt = LaporanGTModel::where('gt_id', $gt->id)
+            ->with([
+                'gt.user',
+                'gt.madrasah',
+                'gt.pjgt.user'
+            ])
+            ->get()
+            ->map(function($laporan_gt){
+                $laporan_gt->guru_kelas = json_decode($laporan_gt->guru_kelas, true) ?? [];
+                $laporan_gt->jenis_kelamin_murid = json_decode($laporan_gt->jenis_kelamin_murid, true) ?? [];
+                $laporan_gt->alasan_tidak_masuk = json_decode($laporan_gt->alasan_tidak_masuk, true) ?? [];
+                $laporan_gt->kegiatan_gt_Diluar_kelas = json_decode($laporan_gt->kegiatan_gt_Diluar_kelas, true) ?? [];
+                return $laporan_gt;
+            });
 
-        if (!$laporan) {
-            return redirect()->back()->with('error', 'Laporan belum tersedia');
-        }
-
-        // Decode JSON fields with error checking
-        $laporan->guru_kelas = is_string($laporan->guru_kelas) ? json_decode($laporan->guru_kelas, true) ?? [] : [];
-        $laporan->jenis_kelamin_murid = is_string($laporan->jenis_kelamin_murid) ? json_decode($laporan->jenis_kelamin_murid, true) ?? [] : [];
-        $laporan->alasan_tidak_masuk = is_string($laporan->alasan_tidak_masuk) ? json_decode($laporan->alasan_tidak_masuk, true) ?? [] : [];
-        $laporan->kegiatan_gt_diluar_kelas = is_string($laporan->kegiatan_gt_diluar_kelas) ? json_decode($laporan->kegiatan_gt_diluar_kelas, true) ?? [] : [];
-
-        return view('GT.laporan-GT', compact('laporan', 'gt'));
+        return view('GT.laporan-GT', compact('laporan_gt'));
     }
 }

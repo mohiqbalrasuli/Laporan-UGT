@@ -63,4 +63,9 @@ class LaporanPJGTModel extends Model
         'usulan',
         'tanggal_laporan'
     ];
+
+    public function pjgt()
+    {
+        return $this->belongsTo(PJGTModel::class, 'pjgt_id'); // sesuaikan foreign key-nya
+    }
 }

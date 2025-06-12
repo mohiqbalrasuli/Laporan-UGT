@@ -34,4 +34,8 @@ class LaporanGTModel extends Model
         'usulan',
         'tanggal_laporan'
     ];
+    public function gt()
+    {
+        return $this->belongsTo(GTModel::class, 'gt_id'); // sesuaikan foreign key-nya
+    }
 }

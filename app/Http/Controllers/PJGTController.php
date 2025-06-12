@@ -114,7 +114,21 @@ class PJGTController extends Controller
     }
     public function data_laporan()
     {
-        return view('admin.data-PJGT.data-laporan-PJGT');
+        $laporan_pjgt = LaporanPJGTModel::with([
+                'pjgt.user',
+                'pjgt.madrasah',
+                'pjgt.gt.user'
+            ])
+            ->get()
+            ->map(function ($laporan_pjgt) {
+                $laporan_pjgt->tingkat = json_decode($laporan_pjgt->tingkat, true) ?? [];
+                $laporan_pjgt->guru_fak_kelas = json_decode($laporan_pjgt->guru_fak_kelas, true) ?? [];
+                $laporan_pjgt->menjadi_guru = json_decode($laporan_pjgt->menjadi_guru, true) ?? [];
+                $laporan_pjgt->waktu_kegiatan = json_decode($laporan_pjgt->waktu_kegiatan, true) ?? [];
+                return $laporan_pjgt;
+            });
+
+        return view('admin.data-PJGT.data-laporan-PJGT',compact('laporan_pjgt'));
     }
     public function profile()
     {
@@ -155,8 +169,7 @@ class PJGTController extends Controller
         try {
             // Get authenticated user and their PJGT data
             $user = Auth::user();
-            $pjgt = DB::table('table_pjgt')->where('user_id', $user->id)->first();
-
+            $pjgt = PJGTModel::where('user_id', $user->id)->first();
             if (!$pjgt) {
                 return redirect()->back()->with('error', 'Data PJGT tidak ditemukan');
             }
@@ -276,14 +289,7 @@ class PJGTController extends Controller
                 'updated_at' => now(),
             ];
 
-            // Create new laporan
-            $laporan = LaporanPJGTModel::create($data);
-
-            if (!$laporan) {
-                throw new \Exception('Gagal menyimpan laporan');
-            }
-
-            return redirect()->route('pjgt.profile')->with('success', 'Laporan berhasil disimpan');
+            return redirect()->back()->with('success', 'Laporan berhasil disimpan');
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
@@ -293,7 +299,7 @@ class PJGTController extends Controller
     public function laporan()
     {
         $user = Auth::user();
-        $pjgt = LaporanPJGTModel::where('user_id', $user->id)->first();
+        $pjgt = PJGTModel::where('user_id', $user->id)->first();
 
         if (!$pjgt) {
             return redirect()
@@ -307,13 +313,14 @@ class PJGTController extends Controller
                 'pjgt.madrasah',
                 'pjgt.gt.user'
             ])
-            ->get();
-
-        if (!$laporan_pjgt) {
-            return redirect()
-                ->back()
-                ->with('error', 'Data laporan tidak ditemukan');
-        }
+            ->get()
+            ->map(function ($laporan_pjgt) {
+                $laporan_pjgt->tingkat = json_decode($laporan_pjgt->tingkat, true) ?? [];
+                $laporan_pjgt->guru_fak_kelas = json_decode($laporan_pjgt->guru_fak_kelas, true) ?? [];
+                $laporan_pjgt->menjadi_guru = json_decode($laporan_pjgt->menjadi_guru, true) ?? [];
+                $laporan_pjgt->waktu_kegiatan = json_decode($laporan_pjgt->waktu_kegiatan, true) ?? [];
+                return $laporan_pjgt;
+            });
 
         return view('PJGT.laporan-PJGT', compact('laporan_pjgt'));
     }
