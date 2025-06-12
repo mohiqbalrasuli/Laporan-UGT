@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('table_pjgt', function (Blueprint $table) {
             $table->id();
+            $table->string('no_induk')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('no_induk');
-            $table->string('nama');
-            $table->text('alamat');
-            $table->foreignId('madrasah_id')->constrained('table_madrasah')->onDelete('cascade');
+            $table->text('alamat')->nullable();
+            $table->unsignedBigInteger('madrasah_id')->nullable();
+            $table->foreign('madrasah_id')
+                  ->references('id')->on('table_madrasah')
+                  ->onDelete('set null');
             $table->timestamps();
         });
     }

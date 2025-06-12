@@ -3,6 +3,9 @@
 @section('content')
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
+            @if (session('success'))
+                <div class="alert alert-success mt-2">{{ session('success') }}</div>
+            @endif
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
@@ -133,21 +136,21 @@
                                                         id="exampleInput{{ $value->name }}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->gt->alamat }}"
+                                                    <label for="exampleInput{{ $value->gt->alamat ?? '-' }}"
                                                         class="form-label">Alamat</label>
                                                     <input type="text" class="form-control "
-                                                        value="{{ $value->gt->alamat }}" name="alamat"
-                                                        id="exampleInput{{ $value->gt->alamat }}">
+                                                        value="{{ $value->gt->alamat ?? '-' }}" name="alamat"
+                                                        id="exampleInput{{ $value->gt->alamat ?? '-' }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleInputstatustugas" class="form-label">Status
                                                         Tugas</label>
                                                     <select class="form-select" name="status_tugas"
                                                         id="exampleInputstatustugas">
-                                                        <option selected disabled>Pilih Status Tugas</option>
-                                                        <option value="Wajib" {{ $value->gt->status_tugas == 'Wajib' ? 'selected' : '' }}>Wajib</option>
-                                                        <option value="Qodla" {{ $value->gt->status_tugas == 'Qodla' ? 'selected' : '' }}>Qodla</option>
-                                                        <option value="Tathowwu" {{ $value->gt->status_tugas == 'Tathowwu' ? 'selected' : '' }}>Tathowwu</option>
+                                                        <option disabled {{ is_null($value->gt?->status_tugas) ? 'selected' : '' }}>Pilih Status Tugas</option>
+                                                        <option value="Wajib" {{ $value->gt?->status_tugas == 'Wajib' ? 'selected' : '' }}>Wajib</option>
+                                                        <option value="Qodla" {{ $value->gt?->status_tugas == 'Qodla' ? 'selected' : '' }}>Qodla</option>
+                                                        <option value="Tathowwu" {{ $value->gt?->status_tugas == 'Tathowwu' ? 'selected' : '' }}>Tathowwu</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
@@ -155,34 +158,34 @@
                                                         Kelas</label>
                                                     <select class="form-select" name="asal_kelas"
                                                         id="exampleInputasalkelas">
-                                                        <option selected disabled>Pilih Asal Kelas</option>
-                                                        <option value="MMU Ibtidaiyah"{{ $value->gt->asal_kelas == 'MMU Ibtidaiyah' ? 'selected' : '' }} >MMU Ibtidaiyah</option>
-                                                        <option value="MMU Tsanawiyah" {{ $value->gt->asal_kelas == 'MMU Tsanawiyah' ? 'selected' : '' }}>MMU Tsanawiyah</option>
+                                                        <option disabled {{ is_null($value->gt?->asal_kelas) ? 'selected' : '' }}>Pilih Asal Kelas</option>
+                                                        <option value="MMU Ibtidaiyah"{{ $value->gt?->asal_kelas == 'MMU Ibtidaiyah' ? 'selected' : '' }} >MMU Ibtidaiyah</option>
+                                                        <option value="MMU Tsanawiyah" {{ $value->gt?->asal_kelas == 'MMU Tsanawiyah' ? 'selected' : '' }}>MMU Tsanawiyah</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->gt->gt_id }}"
+                                                    <label for="exampleInput{{ $value->gt->gt_id ?? '-' }}"
                                                         class="form-label">Guru Tugas</label>
                                                     <select class="form-select" name="pjgt_id"
-                                                        id="exampleInput{{ $value->gt->pjgt_id }}">
+                                                        id="exampleInput{{ $value->gt?->pjgt_id }}">
                                                         <option disabled selected>Pilih PJGT</option>
                                                         @foreach ($pjgt as $item)
                                                             <option value="{{ $item->pjgt->id }}"
-                                                                {{ $item->pjgt->id == $value->gt->pjgt_id ? 'selected' : '' }}>
+                                                                {{ $item->pjgt->id == $value->gt?->pjgt_id ? 'selected' : '' }}>
                                                                 {{ $item->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->gt->madrasah_id }}"
+                                                    <label for="exampleInput{{ $value->gt?->madrasah_id }}"
                                                         class="form-label">Madrasah</label>
                                                     <select class="form-select" name="madrasah_id"
-                                                        id="exampleInput{{ $value->gt->madrasah_id }}">
+                                                        id="exampleInput{{ $value->gt?->madrasah_id }}">
                                                         <option disabled selected>Pilih Madrasah</option>
                                                         @foreach ($madrasah as $item)
                                                             <option value="{{ $item->id }}"
-                                                                {{ $item->id == $value->gt->madrasah_id ? 'selected' : '' }}>
+                                                                {{ $item->id == $value->gt?->madrasah_id ? 'selected' : '' }}>
                                                                 {{ $item->nama_madrasah }}
                                                             </option>
                                                         @endforeach

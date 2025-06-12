@@ -33,13 +33,13 @@
 
 <body>
     <div class="container-xxl position-relative bg-white d-flex p-0">
-        {{-- <!-- Spinner Start -->
+        <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-        <!-- Spinner End --> --}}
+        <!-- Spinner End -->
 
 
         <!-- Sign In Start -->
@@ -48,19 +48,28 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-block align-items-center mb-3">
-                            <img src="{{ asset('assets/img/logo.png') }}" alt="Logo MMU"
-                                style="margin: 10px" width="50px">
+                            <img src="{{ asset('assets/img/logo.png') }}" alt="Logo MMU" style="margin: 10px"
+                                width="50px">
                             <h3>Login</h3>
+                            @if (session('error'))
+                                <div class="alert alert-danger mt-2">{{ session('error') }}</div>
+                            @endif
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Email</label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Password</label>
-                        </div>
-                        <button type="submit" class="btn btn-success py-3 w-100 mb-4">Sign In</button>
+                        <form action="/login" method="POST">
+                            @csrf
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="floatingInput" name="email"
+                                    placeholder="name@example.com">
+                                <label for="floatingInput">Email</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="floatingPassword" name="password"
+                                    placeholder="Password">
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                            <button type="submit" class="btn btn-success py-3 w-100 mb-4">Login</button>
+                        </form>
+                        <p class="text-center mb-0">Belum Punya akun? <a class="text-success" href="/register">Register</a></p>
                     </div>
                 </div>
             </div>

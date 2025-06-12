@@ -9,7 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-        <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
+    <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,13 +33,14 @@
 
 <body>
     <div class="container-xxl position-relative bg-white d-flex p-0">
-        {{-- <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-        <!-- Spinner End -->  --}}
+        <!-- Spinner End -->
 
 
         <!-- Sign Up Start -->
@@ -48,36 +49,77 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-block align-items-center mb-3">
-                            <img src="{{ asset('assets/img/logo.png') }}" alt="Logo MMU"
-                                style="margin: 10px" width="50px">
+                            <img src="{{ asset('assets/img/logo.png') }}" alt="Logo MMU" style="margin: 10px"
+                                width="50px">
                             <h3>Registrasi</h3>
                         </div>
-                        <div class="mb-3">
-                            <select class="form-select" id="">
-                                <option selected disabled>--Jabatan--</option>
-                                <option value="GT">Guru Tugas</option>
-                                <option value="PJGT">PJGT</option>
-                            </select>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingText" placeholder="jhondoe">
-                            <label for="floatingText">Nama</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Email</label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Password</label>
-                        </div>
-                        <button type="submit" class="btn btn-success py-3 w-100 mb-4">Sign Up</button>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="/register" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <select class="form-select" id="" name="role" required>
+                                    <option selected disabled>--Jabatan--</option>
+                                    <option value="GT">Guru Tugas</option>
+                                    <option value="PJGT">PJGT</option>
+                                </select>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="name" id="floatingText"
+                                    placeholder="jhondoe" required>
+                                <label for="floatingText">Nama</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" name="email" id="floatingInput"
+                                    placeholder="name@example.com" required>
+                                <label for="floatingInput">Email</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" name="password" id="floatingPassword"
+                                    placeholder="Password" required>
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" name="password_confirmation"
+                                    id="floatingPassword" placeholder="Password" required>
+                                <label for="floatingPassword">Konfirmasi Password</label>
+                            </div>
+                            <button type="submit" id="submitBtn" class=" btn btn-success py-3 w-100 mb-4"
+                                disabled>Register</button>
+                            <p class="text-center mb-0">Sudah Punya Akun ? <a class="text-success"
+                                    href="/login">Login</a></p>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Sign Up End -->
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const password = document.querySelector('input[name="password"]');
+            const confirmPassword = document.querySelector('input[name="password_confirmation"]');
+            const submitBtn = document.getElementById('submitBtn');
+
+            function validatePasswords() {
+                if (password.value === confirmPassword.value && password.value !== '') {
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.disabled = true;
+                }
+            }
+
+            password.addEventListener('input', validatePasswords);
+            confirmPassword.addEventListener('input', validatePasswords);
+        });
+    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

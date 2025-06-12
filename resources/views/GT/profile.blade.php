@@ -26,17 +26,17 @@
                             <tr>
                                 <th>Nama GT</th>
                                 <th> : </th>
-                                <td>Moh. Wildan</td>
+                                <td>{{ $gt->name }}</td>
                             </tr>
                             <tr>
                                 <th>Alamat Lengkap</th>
                                 <th> : </th>
-                                <td>Batuputih Laok Batuputih sumenep</td>
+                                <td>{{ $gt->gt->alamat ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Asal Kelas</th>
                                 <th> : </th>
-                                <td>6 Ibtidaiyah</td>
+                                <td>{{ $gt->gt->asal_kelas '-' }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -63,22 +63,22 @@
                             <tr>
                                 <th>Nama PJGT</th>
                                 <th> : </th>
-                                <td>Ach. Hamzah Ilahi Maulana Muhammadi</td>
+                                <td>{{ $gt->gt->pjgt->name ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Nama Madrasah</th>
                                 <th> : </th>
-                                <td>MDT Al-Barokah</td>
+                                <td>{{ $gt->gt->madrasah->nama_madrasah ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Kepala Madrasah</th>
                                 <th> : </th>
-                                <td>Akh. Ainur Rasyidi</td>
+                                <td>{{ $gt->gt->madrasah->nama_kepala_madrasah ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Alamat Madrasah</th>
                                 <th> : </th>
-                                <td>Batuputih Laok Batuputih sumenep</td>
+                                <td>{{ $gt->gt->madrasah->alamat_madrasah ?? '-' }}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -44,7 +45,9 @@ class PJGTController extends Controller
             'madrasah_id' => $request->madrasah_id,
             'gt_id' => $request->gt_id ?? null,
         ]);
-        return redirect()->back()->with('success', 'Data PJGT berhasil ditambahkan');
+        return redirect()
+            ->back()
+            ->with('success', 'Berhasil menambahkan' . $user->name . 'sebagai PJGT');
     }
 
     public function update(Request $request, $id)
@@ -63,7 +66,9 @@ class PJGTController extends Controller
             $pjgtModel->save();
         }
 
-        return redirect()->back()->with('success', 'Data PJGT berhasil diperbarui');
+        return redirect()
+            ->back()
+            ->with('success', 'Berhasil mengupdate PJGT ' . $pjgt->name);
     }
 
     public function nonaktif(Request $request, $id)
@@ -72,14 +77,18 @@ class PJGTController extends Controller
         $pjgt->status = 'tidak_aktif'; // Ubah status menjadi tidak aktif
         $pjgt->save();
 
-        return redirect()->back()->with('success', 'Data PJGT berhasil dinonaktifkan');
+        return redirect()
+            ->back()
+            ->with('success', $pjgt->name . ' berhasil dinonaktifkan');
     }
 
     public function delete($id)
     {
         $pjgt = User::findOrFail($id);
         $pjgt->delete(); // Hapus data PJGT terkait
-        return redirect()->back()->with('success', 'Data PJGT berhasil dihapus');
+        return redirect()
+            ->back()
+            ->with('success', $pjgt->name . ' berhasil dihapus');
     }
 
     public function validasi()
@@ -98,7 +107,9 @@ class PJGTController extends Controller
             Mail::to($pjgt->email)->send(new AktivasiPJGT($pjgt));
         }
 
-        return redirect()->back()->with('success', 'Data PJGT berhasil diaktifkan');
+        return redirect()
+            ->back()
+            ->with('success', $pjgt->name . ' berhasil diaktifkan');
     }
     public function data_laporan()
     {
@@ -114,19 +125,88 @@ class PJGTController extends Controller
         $user = Auth::user();
         $today = Carbon::today();
 
-        $mulai = AksesFormModel::where('key', 'tanggal_mulai_pjgt')->value('value');
-        $akhir = AksesFormModel::where('key', 'tanggal_berakhir_pjgt')->value('value');
+        $mulai = AksesFormModel::latest()->value('tanggal_mulai_pjgt');
+        $akhir = AksesFormModel::latest()->value('tanggal_akhir_pjgt');
 
-        $dalamRentang = $mulai && $akhir && $today->between(Carbon::parse($mulai), Carbon::parse($akhir));
+        $dalamRentang = false;
+        if ($mulai && $akhir) {
+            $dalamRentang = $today->between(Carbon::parse($mulai), Carbon::parse($akhir));
+        }
 
-        $sudahLapor = LaporanPJGTModel::where('user_id', $user->id)
-            ->where('tipe', 'pjgt')
-            ->where('created_at', '>=', $today->copy()->subMonths(3))
+        $pjgt = DB::table('table_pjgt')->where('user_id', $user->id)->first();
+        $sudahLapor = false;
+        if ($pjgt) {
+            $sudahLapor = DB::table('table_laporan_pjgt')->where('pjgt_id', $pjgt->id)
+            ->where('created_at', '>=', $today->copy()
+            ->subMonths(3))
             ->exists();
-
+        }
         return view('PJGT.input-laporan-PJGT', compact('user', 'dalamRentang', 'sudahLapor'));
     }
 
+    public function laporan_store(Request $request)
+    {
+        $data=[
+            'pjgt_id' => $request->pjgt_id,
+            'laporan_ke'=> $request->laporan_ke,
+            'laporan_bulan'=> $request->laporan_bulan,
+            'tahun'=> $request->tahun,
+            'wali_kelas'=> $request->wali_kelas,
+            'tingkat'=>$request->tingkat,
+            'guru_fak_kelas'=>$request->guru_fak_kelas,
+            'menjadi_guru'=>$request->menjadi_guru,
+            'gt_menjadi_guru'=>$request->gt_menjadi_guru,
+            'gt_masuk_madrasah'=>$request->gt_masuk_madrasah,
+            'murid_balighah'=>$request->murid_balighah,
+            'jenis_kegiatan'=>$request->jenis_kegiatan,
+            'waktu_kegiatan'=>$request->waktu_kegiatan,
+            'sifat_kegiatan'=>$request->sifat_kegiatan,
+            'rambut_gt'=>$request->rambut_gt,
+            'gt_bepergian'=>$request->gt_bepergian,
+            'berpergian_sebanyak'=>$request->berpergian_sebanyak,
+            'tujuan_bepergian'=>$request->tujuan_bepergian,
+            'gt_pernah_pulang_kampung'=>$request->gt_pernah_pulang_kampung,
+            'pulang_kampung_sebanyak'=>$request->pulang_kampung_sebanyak,
+            'gt_melakukan_pelanggaran'=>$request->gt_melakukan_pelanggaran,
+            'pelanggran_berupa'=>$request->pelanggran_berupa,
+            'pjgt_mengambil_tindakan'=>$request->pjgt_mengambil_tindakan,
+            'tindakan_berupa'=>$request->tindakan_berupa,
+            'surat_ijin_dipakai'=>$request->surat_ijin_dipakai,
+            'hubungan_dengan_pjgt'=>$request->hubungan_dengan_pjgt,
+            'hubungan_dengan_kepmad'=>$request->hubungan_dengan_kepmad,
+            'hubungan_dengan_guru'=>$request->hubungan_dengan_guru,
+            'hubungan_dengan_wali_murid_masyarakat'=>$request->hubungan_dengan_wali_murid_masyarakat,
+            'hubungan_dengan_murid_dikelas'=>$request->hubungan_dengan_murid_dikelas,
+            'hubungan_dengan_murid_diluar'=>$request->hubungan_dengan_murid_diluar,
+            'tanggapan_murid'=>$request->tanggapan_murid,
+            'tanggapan_masyarakat'=>$request->tanggapan_masyarakat,
+            'bisyaroh_satu'=>$request->bisyaroh_satu,
+            'bisyaroh_satu_sebanyak'=>$request->bisyaroh_satu_sebanyak,
+            'bisyaroh_dua'=>$request->bisyaroh_dua,
+            'bisyaroh_dua_sebanyak'=>$request->bisyaroh_dua_sebanyak,
+            'bisyaroh_tiga'=>$request->bisyaroh_tiga,
+            'bisyaroh_tiga_sebanyak'=>$request->bisyaroh_tiga_sebanyak,
+            'bisyaroh_empat'=>$request->bisyaroh_empat,
+            'bisyaroh_empat_sebanyak'=>$request->bisyaroh_empat_sebanyak,
+            'bisyaroh_lima'=>$request->bisyaroh_lima,
+            'bisyaroh_lima_sebanyak'=>$request->bisyaroh_lima_sebanyak,
+            'bisyaroh_enam'=>$request->bisyaroh_enam,
+            'bisyaroh_enam_sebanyak'=>$request->bisyaroh_enam_sebanyak,
+            'bisyaroh_tujuh'=>$request->bisyaroh_tujuh,
+            'bisyaroh_tujuh_sebanyak'=>$request->bisyaroh_tujuh_sebanyak,
+            'bisyaroh_delapan'=>$request->bisyaroh_delapan,
+            'bisyaroh_delapan_sebanyak'=>$request->bisyaroh_delapan_sebanyak,
+            'bisyaroh_sembilan'=>$request->bisyaroh_sembilan,
+            'bisyaroh_sembilan_sebanyak'=>$request->bisyaroh_sembilan_sebanyak,
+            'bisyaroh_sepuluh'=>$request->bisyaroh_sepuluh,
+            'bisyaroh_sepuluh_sebanyak'=>$request->bisyaroh_sepuluh_sebanyak,
+            'usulan' => $request->usulan,
+        ];
+        LaporanPJGTModel::create($data);
+        return redirect()
+            ->back()
+            ->with('success', 'Laporan berhasil disimpan');
+    }
     public function laporan()
     {
         return view('PJGT.laporan-PJGT');

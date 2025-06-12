@@ -10,13 +10,16 @@ use App\Http\Controllers\UbahPasswordController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/login',[AuthController::class,'ShowLogin']);
+Route::post('/login',[AuthController::class,'login']);
 Route::get('/register',[AuthController::class,'ShowRegister']);
+Route::post('/register',[AuthController::class,'register']);
+Route::get('/logout', [AuthController::class, 'logout']);
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth','admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::prefix('data-madrasah')->group(function () {
         Route::get('/', [MadrasahController::class, 'index']);
@@ -48,21 +51,15 @@ Route::prefix('admin')->group(function () {
     Route::post('/simpan-tanggal-pjgt/{id}', [SettingController::class, 'simpanTanggalPJGT']);
     Route::post('/simpan-tanggal-gt/{id}', [SettingController::class, 'simpanTanggalGT']);
 });
-Route::prefix('PJGT')->group(function () {
+Route::prefix('PJGT')->middleware('auth','PJGT')->group(function () {
     Route::get('/profile', [PJGTController::class, 'profile']);
     Route::get('/input-laporan',[PJGTController::class,'input_laporan']);
     Route::get('/data-laporan-PJGT',[PJGTController::class,'laporan']);
     Route::get('/ubah-password',[UbahPasswordController::class,'ubah_password']);
 });
-Route::prefix('GT')->group(function () {
+Route::prefix('GT')->middleware('auth','GT')->group(function () {
     Route::get('/profile', [GTController::class, 'profile']);
     Route::get('/input-laporan',[GTController::class,'input_laporan']);
     Route::get('/data-laporan-GT',[GTController::class,'laporan']);
     Route::get('/ubah-password',[UbahPasswordController::class,'ubah_password']);
-});
-
-Route::get('/test-email', function () {
-    $user = App\Models\User::find(7); // Ganti sesuai user kamu
-
-    return 'Email test berhasil dikirim ke ' . $user->email;
 });

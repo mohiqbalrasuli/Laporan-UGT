@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -46,7 +47,9 @@ class GTController extends Controller
             'pjgt_id' => $request->pjgt_id ?? null,
         ]);
 
-        return redirect()->back()->with('success', 'Data GT berhasil ditambahkan');
+        return redirect()
+            ->back()
+            ->with('success', $user->name . ' berhasil ditambahkan');
     }
 
     public function update(Request $request, $id)
@@ -65,7 +68,9 @@ class GTController extends Controller
             $gtModel->save();
         }
 
-        return redirect()->back()->with('success', 'Data GT berhasil diupdate');
+        return redirect()
+            ->back()
+            ->with('success', $gt->name . ' berhasil diupdate');
     }
     public function nonaktif(Request $request, $id)
     {
@@ -73,14 +78,18 @@ class GTController extends Controller
         $gt->status = 'tidak_aktif'; // Ubah status menjadi tidak aktif
         $gt->save();
 
-        return redirect()->back()->with('success', 'Data GT berhasil dinonaktifkan');
+        return redirect()
+            ->back()
+            ->with('success', $gt->name . ' berhasil dinonaktifkan');
     }
 
     public function delete($id)
     {
         $gt = User::findOrFail($id);
         $gt->delete();
-        return redirect()->back()->with('success', 'Data GT berhasil dihapus');
+        return redirect()
+            ->back()
+            ->with('success', $gt->name . ' berhasil dihapus');
     }
 
     public function validasi()
@@ -98,7 +107,9 @@ class GTController extends Controller
             Mail::to($gt->email)->send(new AktivasiGT($gt));
         }
 
-        return redirect()->back()->with('success', 'Data GT berhasil diaktifkan');
+        return redirect()
+            ->back()
+            ->with('success', $gt->name . ' berhasil diaktifkan');
     }
     public function data_laporan()
     {
@@ -107,7 +118,12 @@ class GTController extends Controller
 
     public function profile()
     {
-        return view('GT.profile');
+        $gt = User::with(['gt.madrasah', 'gt.pjgt'])
+            ->where('role', 'GT')
+            ->where(Auth::user()->id)
+            ->where('status', 'aktif')
+            ->get();
+        return view('GT.profile',compact('gt'));
     }
 
     public function input_laporan()
@@ -115,21 +131,66 @@ class GTController extends Controller
         $user = Auth::user();
         $today = Carbon::today();
 
-        $mulai = AksesFormModel::where('key', 'tanggal_mulai_gt')->value('value');
-        $akhir = AksesFormModel::where('key', 'tanggal_berakhir_gt')->value('value');
+        $mulai = AksesFormModel::latest()->value('tanggal_mulai_gt');
+        $akhir = AksesFormModel::latest()->value('tanggal_akhir_gt');
 
-        $dalamRentang = $mulai && $akhir && $today->between(Carbon::parse($mulai), Carbon::parse($akhir));
+        $dalamRentang = false;
+        if ($mulai && $akhir) {
+            $dalamRentang = $today->between(Carbon::parse($mulai), Carbon::parse($akhir));
+        }
 
-        $sudahLapor = LaporanGTModel::where('user_id', $user->id)->where('tipe', 'gt')->whereMonth('created_at', $today->month)->whereYear('created_at', $today->year)->exists();
+        // Cek apakah user sudah pernah mengisi laporan bulan ini
+        // Ambil pjgt_id berdasarkan user yang login
+    $gt = DB::table('table_gt')->where('user_id', $user->id)->first();
+
+    $sudahLapor = false;
+    if ($gt) {
+        $sudahLapor = DB::table('table_laporan_gt')
+            ->where('gt_id', $gt->id)
+            ->whereMonth('created_at', $today->month)
+            ->whereYear('created_at', $today->year)
+            ->exists();
+    }
         return view('GT.input-laporan-GT', compact('user', 'dalamRentang', 'sudahLapor'));
+    }
+
+    public function laporan_store(Request $request)
+    {
+        $user = Auth::user();
+        $gt = DB::table('table_gt')->where('user_id', $user->id)->first();
+        $data=[
+            'gt_id'=>$gt,
+            'laporan_ke'=>$request->laporan_ke,
+            'bulan_tahun'=>$request->bulan_tahun,
+            'wali_kelas'=>$request->wali_kelas,
+            'guru_kelas'=>$request->guru_kelas,
+            'guru_fan'=>$request->guru_fan,
+            'jenis_kelamin_murid'=>$request->jenis_kelamin_murid,
+            'jumlah_mengajar_satu_minggu'=>$request->jumlah_mengajar_satu_minggu,
+            'jumlah_mengajar_satu_bulan'=>$request->jumlah_mengajar_satu_bulan,
+            'alasan_tidak_masuk'=>$request->alasan_tidak_masuk,
+            'jumlah_hari_sakit'=>$request->jumlah_hari_sakit,
+            'jumlah_hari_pulang'=>$request->jumlah_hari_pulang,
+            'jumlah_alasan_lain'=>$request->jumlah_alasan_lain,
+            'kegiatan_gt_Diluar_kelas'=>$request->kegiatan_gt_Diluar_kelas,
+            'interaksi_dengan_pjgt'=>$request->interaksi_dengan_pjgt,
+            'interaksi_dengan_kepmad'=>$request->interaksi_dengan_kepmad,
+            'interaksi_dengan_guru'=>$request->interaksi_dengan_guru,
+            'bisyaroh_bulan_ini'=>$request->bisyaroh_bulan_ini,
+            'bisyaroh_bulan_ini_sebanyak'=>$request->bisyaroh_bulan_ini_sebanyak,
+            'kendala_bulan_ini'=>$request->kendala_bulan_ini,
+            'langkah_pemecahan_kendala'=>$request->langkah_pemecahan_kendala,
+            'tugas_dari_km_pjgt'=>$request->tugas_dari_km_pjgt,
+            'tugas_belum_terlaksana'=>$request->tugas_belum_terlaksana,
+            'usulan'=>$request->usulan,
+        ];
+        LaporanGTModel::create($data);
+        return redirect()->back()->with('success', 'Laporan berhasil disimpan');
     }
 
     public function laporan()
     {
         return view('GT.laporan-GT');
     }
-    public function ubah_password()
-    {
-        return view('GT.ubah-password');
-    }
+
 }

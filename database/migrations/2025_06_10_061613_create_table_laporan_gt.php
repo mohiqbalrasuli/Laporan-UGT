@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('table_laporan_gt', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pjgt_id')->nullable();
+            $table->unsignedBigInteger('gt_id')->nullable();
 
-            $table->foreign('pjgt_id')
-                  ->references('id')->on('table_pjgt')
+            $table->foreign('gt_id')
+                  ->references('id')->on('table_gt')
                   ->onDelete('set null');
             $table->integer('laporan_ke')->nullable();
             $table->string('bulan_tahun')->nullable();

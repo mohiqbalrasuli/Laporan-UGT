@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('table_gt', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('nama');
-            $table->text('alamat');
-            $table->string('asal_kelas');
-            $table->string('status_tugas');
-            $table->foreignId('madrasah_id')->constrained('table_madrasah')->onDelete('cascade');
+            $table->text('alamat')->nullable();
+            $table->string('asal_kelas')->nullable();
+            $table->string('status_tugas')->nullable();
+            $table->unsignedBigInteger('madrasah_id')->nullable();
+            $table->foreign('madrasah_id')
+                  ->references('id')->on('table_madrasah')
+                  ->onDelete('set null');
             $table->timestamps();
         });
     }
