@@ -63,8 +63,10 @@ class GTController extends Controller
             $gtModel->alamat = $request->alamat;
             $gtModel->status_tugas = $request->status_tugas;
             $gtModel->asal_kelas = $request->asal_kelas;
-            $gtModel->madrasah_id = $request->madrasah_id ?? null;
-            $gtModel->pjgt_id = $request->pjgt_id ?? null;
+            if (Auth::user()->role === 'admin') {
+                $gtModel->madrasah_id = $request->madrasah_id ?? null;
+                $gtModel->pjgt_id = $request->pjgt_id ?? null;
+            }
             $gtModel->save();
         }
 
@@ -113,21 +115,16 @@ class GTController extends Controller
     }
     public function data_laporan()
     {
-        $laporan_gt = LaporanGTModel::all()
-            ->with([
-                'gt.user',
-                'gt.madrasah',
-                'gt.pjgt.user'
-            ])
+        $laporan_gt = LaporanGTModel::with(['gt.user', 'gt.madrasah', 'gt.pjgt.user'])
             ->get()
-            ->map(function($laporan_gt){
+            ->map(function ($laporan_gt) {
                 $laporan_gt->guru_kelas = json_decode($laporan_gt->guru_kelas, true) ?? [];
                 $laporan_gt->jenis_kelamin_murid = json_decode($laporan_gt->jenis_kelamin_murid, true) ?? [];
                 $laporan_gt->alasan_tidak_masuk = json_decode($laporan_gt->alasan_tidak_masuk, true) ?? [];
                 $laporan_gt->kegiatan_gt_Diluar_kelas = json_decode($laporan_gt->kegiatan_gt_Diluar_kelas, true) ?? [];
                 return $laporan_gt;
             });
-        return view('admin.data-GT.data-laporan-gt',compact('laporan_gt'));
+        return view('admin.data-GT.data-laporan-gt', compact('laporan_gt'));
     }
 
     public function profile()
@@ -234,10 +231,8 @@ class GTController extends Controller
                 'updated_at' => now(),
             ];
 
-
             LaporanGTModel::create($laporan);
-            return back()->with('success','Laporan berhasil dikirim');
-
+            return back()->with('success', 'Laporan berhasil dikirim');
         } catch (\Exception $e) {
             return redirect()
                 ->back()
@@ -252,19 +247,13 @@ class GTController extends Controller
         $gt = GTModel::where('user_id', $user->id)->first();
 
         if (!$gt) {
-            return redirect()
-            ->back()
-            ->with('error', 'Laporan GT tidak ditemukan');
+            return redirect()->back()->with('error', 'Laporan GT tidak ditemukan');
         }
 
         $laporan_gt = LaporanGTModel::where('gt_id', $gt->id)
-            ->with([
-                'gt.user',
-                'gt.madrasah',
-                'gt.pjgt.user'
-            ])
+            ->with(['gt.user', 'gt.madrasah', 'gt.pjgt.user'])
             ->get()
-            ->map(function($laporan_gt){
+            ->map(function ($laporan_gt) {
                 $laporan_gt->guru_kelas = json_decode($laporan_gt->guru_kelas, true) ?? [];
                 $laporan_gt->jenis_kelamin_murid = json_decode($laporan_gt->jenis_kelamin_murid, true) ?? [];
                 $laporan_gt->alasan_tidak_masuk = json_decode($laporan_gt->alasan_tidak_masuk, true) ?? [];

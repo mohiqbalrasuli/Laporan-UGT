@@ -96,19 +96,9 @@
                             <td>{{ $laporan->jumlah_mengajar_satu_minggu }}</td>
                         </tr>
                         <tr>
-                            <th>Jumlah Jam Mengajar 1 Pekan</th>
-                            <th> : </th>
-                            <td>{{ $laporan->jumlah_mengajar_satu_minggu * 4 }}</td>
-                        </tr>
-                        <tr>
                             <th>Jumlah Hari Mengajar 1 Bulan</th>
                             <th> : </th>
                             <td>{{ $laporan->jumlah_mengajar_satu_bulan }}</td>
-                        </tr>
-                        <tr>
-                            <th>Jumlah Jam Mengajar 1 Bulan</th>
-                            <th> : </th>
-                            <td>{{ $laporan->jumlah_mengajar_satu_bulan * 4 }}</td>
                         </tr>
                         <tr>
                             <th>Alasan Tidak Mengajar</th>
@@ -121,29 +111,14 @@
                             <td>{{ $laporan->jumlah_hari_sakit }}</td>
                         </tr>
                         <tr>
-                            <th>Jumlah Jam Sakit</th>
-                            <th> : </th>
-                            <td>{{ $laporan->jumlah_hari_sakit * 4 }}</td>
-                        </tr>
-                        <tr>
                             <th>Jumlah Hari Pulang</th>
                             <th> : </th>
                             <td>{{ $laporan->jumlah_hari_pulang }}</td>
                         </tr>
                         <tr>
-                            <th>Jumlah Jam Pulang</th>
-                            <th> : </th>
-                            <td>{{ $laporan->jumlah_hari_pulang * 4 }}</td>
-                        </tr>
-                        <tr>
                             <th>Jumlah Hari Lain</th>
                             <th> : </th>
                             <td>{{ $laporan->jumlah_alasan_lain }}</td>
-                        </tr>
-                        <tr>
-                            <th>Jumlah Jam Lain</th>
-                            <th> : </th>
-                            <td>{{ $laporan->jumlah_alasan_lain * 4 }}</td>
                         </tr>
                         <tr>
                             <th>Kegiatan GT Di Luar Kelas</th>

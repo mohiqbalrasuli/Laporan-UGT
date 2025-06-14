@@ -60,10 +60,12 @@ class PJGTController extends Controller
         // Update data PJGTModel
         $pjgtModel = PJGTModel::where('user_id', $id)->first();
         if ($pjgtModel) {
-            $pjgtModel->no_induk = $request->no_induk;
             $pjgtModel->alamat = $request->alamat;
-            $pjgtModel->madrasah_id = $request->madrasah_id;
-            $pjgtModel->gt_id = $request->gt_id ?? null;
+            if (Auth::user()->role == 'admin') {
+                $pjgtModel->no_induk = $request->no_induk;
+                $pjgtModel->madrasah_id = $request->madrasah_id ?? null;
+                $pjgtModel->gt_id = $request->gt_id ?? null;
+            }
             $pjgtModel->save();
         }
 
@@ -114,11 +116,7 @@ class PJGTController extends Controller
     }
     public function data_laporan()
     {
-        $laporan_pjgt = LaporanPJGTModel::with([
-                'pjgt.user',
-                'pjgt.madrasah',
-                'pjgt.gt.user'
-            ])
+        $laporan_pjgt = LaporanPJGTModel::with(['pjgt.user', 'pjgt.madrasah', 'pjgt.gt.user'])
             ->get()
             ->map(function ($laporan_pjgt) {
                 $laporan_pjgt->tingkat = json_decode($laporan_pjgt->tingkat, true) ?? [];
@@ -128,16 +126,16 @@ class PJGTController extends Controller
                 return $laporan_pjgt;
             });
 
-        return view('admin.data-PJGT.data-laporan-PJGT',compact('laporan_pjgt'));
+        return view('admin.data-PJGT.data-laporan-PJGT', compact('laporan_pjgt'));
     }
     public function profile()
     {
         $pjgt = User::with(['pjgt.madrasah', 'pjgt.gt'])
             ->where('role', 'PJGT')
-            ->where('id',Auth::user()->id)
+            ->where('id', Auth::user()->id)
             ->where('status', 'aktif')
             ->first();
-        return view('PJGT.profile',compact('pjgt'));
+        return view('PJGT.profile', compact('pjgt'));
     }
 
     public function input_laporan()
@@ -156,10 +154,10 @@ class PJGTController extends Controller
         $pjgt = DB::table('table_pjgt')->where('user_id', $user->id)->first();
         $sudahLapor = false;
         if ($pjgt) {
-            $sudahLapor = DB::table('table_laporan_pjgt')->where('pjgt_id', $pjgt->id)
-            ->where('created_at', '>=', $today->copy()
-            ->subMonths(3))
-            ->exists();
+            $sudahLapor = DB::table('table_laporan_pjgt')
+                ->where('pjgt_id', $pjgt->id)
+                ->where('created_at', '>=', $today->copy()->subMonths(3))
+                ->exists();
         }
         return view('PJGT.input-laporan-PJGT', compact('user', 'dalamRentang', 'sudahLapor'));
     }
@@ -291,7 +289,8 @@ class PJGTController extends Controller
 
             return redirect()->back()->with('success', 'Laporan berhasil disimpan');
         } catch (\Exception $e) {
-            return redirect()->back()
+            return redirect()
+                ->back()
                 ->withInput()
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
@@ -302,17 +301,11 @@ class PJGTController extends Controller
         $pjgt = PJGTModel::where('user_id', $user->id)->first();
 
         if (!$pjgt) {
-            return redirect()
-                ->back()
-                ->with('error', 'Data PJGT tidak ditemukan');
+            return redirect()->back()->with('error', 'Data PJGT tidak ditemukan');
         }
 
         $laporan_pjgt = LaporanPJGTModel::where('pjgt_id', $pjgt->id)
-            ->with([
-                'pjgt.user',
-                'pjgt.madrasah',
-                'pjgt.gt.user'
-            ])
+            ->with(['pjgt.user', 'pjgt.madrasah', 'pjgt.gt.user'])
             ->get()
             ->map(function ($laporan_pjgt) {
                 $laporan_pjgt->tingkat = json_decode($laporan_pjgt->tingkat, true) ?? [];

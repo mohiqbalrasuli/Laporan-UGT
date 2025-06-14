@@ -53,6 +53,7 @@ Route::prefix('admin')->middleware('auth','admin')->group(function () {
 });
 Route::prefix('PJGT')->middleware('auth','PJGT')->group(function () {
     Route::get('/profile', [PJGTController::class, 'profile']);
+    Route::post('/update/{id}', [PJGTController::class, 'update']);
     Route::get('/input-laporan',[PJGTController::class,'input_laporan']);
     Route::post('/input-laporan/store',[PJGTController::class,'laporan_store']);
     Route::get('/data-laporan-PJGT',[PJGTController::class,'laporan']);
@@ -60,6 +61,7 @@ Route::prefix('PJGT')->middleware('auth','PJGT')->group(function () {
 });
 Route::prefix('GT')->middleware('auth','GT')->group(function () {
     Route::get('/profile', [GTController::class, 'profile']);
+    Route::post('/update/{id}', [GTController::class, 'update']);
     Route::get('/input-laporan',[GTController::class,'input_laporan']);
     Route::post('/input-laporan/store',[GTController::class,'laporan_store']);
     Route::get('/data-laporan-GT',[GTController::class,'laporan']);

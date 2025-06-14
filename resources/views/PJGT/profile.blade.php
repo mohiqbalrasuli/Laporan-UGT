@@ -1,21 +1,24 @@
 @extends('PJGT.layout.template_PJGT')
 
-@section('title','Profile Penanggung Jawab Guru Tugas')
+@section('title', 'Profile Penanggung Jawab Guru Tugas')
 
 @section('content')
     <div class="container-fluid pt-4 px-4">
         @if (session('success_login'))
-                <div class="alert alert-success mt-2" role="alert">{{ session('success_login') }}</div>
-                @endif
+            <div class="alert alert-success mt-2" role="alert">{{ session('success_login') }}</div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success mt-2" role="alert">{{ session('success') }}</div>
+        @endif
         <div class="row g-4">
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-4">Data PJGT</h6>
                         <div class="dropdown d-flex justify-content-center mb-4">
-                            <button class="btn btn-link p-0 border-0 text-dark" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <i class="fas fa-ellipsis-h"></i> <!-- untuk vertikal -->
+                            <button class="btn btn-link p-0 border-0 text-dark" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+                                <i class="fas fa-edit"></i> <!-- untuk vertikal -->
                                 <!-- Atau ganti dengan fa-ellipsis-h jika mau horizontal -->
                             </button>
                             <ul class="dropdown-menu">
@@ -115,3 +118,44 @@
 @endsection
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-success btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+    id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Edit PJGT</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">Form Edit PJGT</h6>
+            <form action="{{ url('PJGT/update/' . $pjgt->id) }}" method="POST">
+                @csrf
+                <div class="mb-3">
+                    <abel for="exampleInput{{ $pjgt->name }}" class="form-label">Nama PJGT</abel>
+                    <input type="text" class="form-control" value="{{ $pjgt->name }}" name="name"
+                        id="exampleInput{{ $pjgt->name }}">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInput{{ $pjgt->pjgt?->alamat ?? '' }}" class="form-label">Alamat</label>
+                    <input type="text" class="form-control " value="{{ $pjgt->pjgt?->alamat ?? '' }}"
+                        name="alamat" id="exampleInput{{ $pjgt->pjgt?->alamat ?? '' }}">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck{{ $pjgt->id }}">
+                    <label class="form-check-label" for="exampleCheck{{ $pjgt->id }}">Yakin ??</label>
+                </div>
+                <button type="submit" class="btn btn-success mb-4" id="submitBtn{{ $pjgt->id }}"
+                    disabled>Simpan</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkbox = document.getElementById('exampleCheck{{ $pjgt->id }}');
+        const button = document.getElementById('submitBtn{{ $pjgt->id }}');
+
+        checkbox.addEventListener('change', function() {
+            button.disabled = !this.checked;
+        });
+    });
+</script>
