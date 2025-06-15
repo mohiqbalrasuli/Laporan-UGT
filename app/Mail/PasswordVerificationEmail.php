@@ -9,16 +9,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AktivasiGT extends Mailable
+class PasswordVerificationEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $gt;
+
+    public $kode;
     /**
      * Create a new message instance.
      */
-    public function __construct($gt)
+    public function __construct($kode)
     {
-        $this->gt = $gt;
+        $this->kode = $kode;
     }
 
     /**
@@ -27,7 +28,7 @@ class AktivasiGT extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Aktivasi GT',
+            subject: 'Kode Verifikasi Ubah Password',
         );
     }
 
@@ -37,10 +38,7 @@ class AktivasiGT extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.gt.aktivasi',
-            with:[
-                'gt'=>$this->gt,
-            ],
+            view: 'emails.password.password_verification',
         );
     }
 

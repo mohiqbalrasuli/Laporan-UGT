@@ -51,7 +51,7 @@ class AuthController extends Controller
                 case 'PJGT':
                     return redirect('PJGT/profile')->with('success_login', 'Berhasil masuk sebagai PJGT');
                 case 'GT':
-                    return redirect('GT/profile')->with('success_login', 'Berhasil masuk sebagai user');
+                    return redirect('GT/profile')->with('success_login', 'Berhasil masuk sebagai Guru Tugas');
                 default:
                     Auth::logout();
                     return back()->with('error', 'Role pengguna tidak dikenali.');

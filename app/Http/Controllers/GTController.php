@@ -70,9 +70,15 @@ class GTController extends Controller
             $gtModel->save();
         }
 
+        if(Auth::user()->role=='admin'){
         return redirect()
             ->back()
-            ->with('success', $gt->name . ' berhasil diupdate');
+            ->with('success', 'Berhasil mengupdate GT ' . $gt->name);
+        }elseif(Auth::user()->role == 'GT'){
+        return redirect()
+            ->back()
+            ->with('success', 'Data Anda Berhasil Diupdate');
+        }
     }
     public function nonaktif(Request $request, $id)
     {

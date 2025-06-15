@@ -68,10 +68,15 @@ class PJGTController extends Controller
             }
             $pjgtModel->save();
         }
-
+        if(Auth::user()->role=='admin'){
         return redirect()
             ->back()
             ->with('success', 'Berhasil mengupdate PJGT ' . $pjgt->name);
+        }elseif(Auth::user()->role == 'PJGT'){
+        return redirect()
+            ->back()
+            ->with('success', 'Data Anda Berhasil Diupdate');
+        }
     }
 
     public function nonaktif(Request $request, $id)

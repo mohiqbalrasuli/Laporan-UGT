@@ -38,7 +38,7 @@ class AktivasiPJGT extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.pjgt.aktivasi',
+            view: 'emails.pjgt.aktivasi',
             with: [
                 'pjgt' => $this->pjgt,
             ],

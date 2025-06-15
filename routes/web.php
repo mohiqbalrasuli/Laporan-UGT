@@ -58,6 +58,8 @@ Route::prefix('PJGT')->middleware('auth','PJGT')->group(function () {
     Route::post('/input-laporan/store',[PJGTController::class,'laporan_store']);
     Route::get('/data-laporan-PJGT',[PJGTController::class,'laporan']);
     Route::get('/ubah-password',[UbahPasswordController::class,'ubah_password']);
+    Route::post('/ubah-password/submit',[UbahPasswordController::class,'submitUbahPassword']);
+    Route::post('/verifikasi-kode',[UbahPasswordController::class,'verifikasiKode']);
 });
 Route::prefix('GT')->middleware('auth','GT')->group(function () {
     Route::get('/profile', [GTController::class, 'profile']);
@@ -66,4 +68,6 @@ Route::prefix('GT')->middleware('auth','GT')->group(function () {
     Route::post('/input-laporan/store',[GTController::class,'laporan_store']);
     Route::get('/data-laporan-GT',[GTController::class,'laporan']);
     Route::get('/ubah-password',[UbahPasswordController::class,'ubah_password']);
+    Route::post('/ubah-password/submit',[UbahPasswordController::class,'submitUbahPassword']);
+    Route::post('/verifikasi-kode',[UbahPasswordController::class,'verifikasiKode']);
 });
