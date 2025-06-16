@@ -17,7 +17,7 @@ class UbahPasswordController extends Controller
             'PJGT' => 'PJGT.layout.template_PJGT',
             default => 'layouts.default', // fallback layout
         };
-        return view('ubah_password.ubah-password',compact('layout'));
+        return view('ubah_password.ubah-password', compact('layout'));
     }
 
     public function submitUbahPassword(Request $request)
@@ -35,9 +35,11 @@ class UbahPasswordController extends Controller
 
         // Simpan password baru sementara dan generate kode verifikasi
         $kode = rand(100000, 999999);
+
         session([
             'password_baru_hash' => Hash::make($request->password_baru),
             'kode_verifikasi' => $kode,
+            'kode_verifikasi_expired' => now()->addMinutes(10), // misalnya expired 10 menit
         ]);
 
         // Kirim email verifikasi
@@ -48,7 +50,7 @@ class UbahPasswordController extends Controller
             'PJGT' => 'PJGT.layout.template_PJGT',
             default => 'layouts.default', // fallback layout
         };
-        return view('ubah_password.verification_code',compact('layout'));
+        return view('ubah_password.verification_code', compact('layout'));
     }
 
     public function verifikasiKode(Request $request)
@@ -56,9 +58,18 @@ class UbahPasswordController extends Controller
         $request->validate(['kode' => 'required']);
 
         if ($request->kode == session('kode_verifikasi')) {
+
+            $passwordBaru = session('password_baru_hash');
+
+            if (now() > session('kode_verifikasi_expired')) {
+                return back()->with('error', 'Kode verifikasi sudah kadaluarsa');
+            }
+
             $user = Auth::user();
-            $user->password = session('password_baru_hash');
+            $user->password = $passwordBaru;
             $user->save();
+
+            session()->forget(['kode_verifikasi', 'password_baru_hash', 'kode_verifikasi_expired']);
 
             // Hapus sesi setelah sukses
             session()->forget(['password_baru_hash', 'kode_verifikasi']);
