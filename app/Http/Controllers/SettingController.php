@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\AksesFormModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SettingController extends Controller
 {
     public function setting()
     {
         $aksesForm = AksesFormModel::first();
-        return view('admin.setting', compact('aksesForm'));
+        return view('admin.setting.setting',compact('aksesForm'));
     }
+
     public function simpanTanggalPJGT(Request $request, $id)
     {
         $aksesFormpjgt = AksesFormModel::findOrFail($id);
@@ -31,6 +33,6 @@ class SettingController extends Controller
             'tanggal_akhir_gt' => $request->tanggal_berakhir_gt
         ];
         $aksesFormgt->update($data);
-        return back()->with('success', 'Tanggal GT disimpan!'); 
+        return back()->with('success', 'Tanggal GT disimpan!');
     }
 }

@@ -17,7 +17,7 @@ class UbahPasswordController extends Controller
             'PJGT' => 'PJGT.layout.template_PJGT',
             default => 'layouts.default', // fallback layout
         };
-        return view('ubah_password.ubah-password', compact('layout'));
+            return view('ubah_password.ubah-password', compact('layout'));
     }
 
     public function submitUbahPassword(Request $request)
@@ -46,6 +46,7 @@ class UbahPasswordController extends Controller
         Mail::to($user->email)->send(new PasswordVerificationEmail($kode));
 
         $layout = match (Auth::user()->role) {
+            'admin' =>'admin.layout.template_admin',
             'GT' => 'GT.layout.template_GT',
             'PJGT' => 'PJGT.layout.template_PJGT',
             default => 'layouts.default', // fallback layout
@@ -70,10 +71,9 @@ class UbahPasswordController extends Controller
             $user->save();
 
             session()->forget(['kode_verifikasi', 'password_baru_hash', 'kode_verifikasi_expired']);
-
-            // Hapus sesi setelah sukses
-            session()->forget(['password_baru_hash', 'kode_verifikasi']);
-            if (Auth::user()->role == 'PJGT') {
+            if(Auth::user()->role=='admin'){
+                return redirect('/admin/setting')->with('success', 'Password berhasil diubah.');
+            }elseif (Auth::user()->role == 'PJGT') {
                 return redirect('/PJGT/profile')->with('success', 'Password berhasil diubah.');
             } elseif (Auth::user()->role === 'GT') {
                 return redirect('/GT/profile')->with('success', 'Password berhasil diubah.');

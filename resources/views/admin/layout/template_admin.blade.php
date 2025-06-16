@@ -78,7 +78,6 @@
                             class="fa fa-clipboard-list me-2"></i>Laporan GT</a>
                         </div>
                     </div>
-                    <a href="{{ url('admin/setting') }}" class="nav-item nav-link {{ Request::is('admin/setting') ? 'active' : '' }} "><i class="fa fa-cogs me-2"></i>Pengaturan</a>
                 </div>
             </nav>
         </div>
@@ -98,7 +97,7 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Notificatin</span>
+                            <span class="d-none d-lg-inline-flex">Notifikasi</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">
@@ -125,9 +124,9 @@
                             <span class="d-none d-lg-inline-flex">{{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="/logout" class="dropdown-item">Log Out</a>
+                            <a href="#" class="dropdown-item">Profil Saya</a>
+                            <a href="{{ url('admin/setting') }}" class="dropdown-item">Setelan</a>
+                            <a href="/logout" class="dropdown-item">Keluar</a>
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,9 @@
         @endif
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Input Kode Verifikasi</h6>
-                @if (Auth::user()->role === 'GT')
+                @if (Auth::user()->role === 'admin')
+                    <form action="{{ url('admin/verifikasi-kode') }}" method="POST">
+                @elseif (Auth::user()->role === 'GT')
                     <form action="{{ url('GT/verifikasi-kode') }}" method="POST">
                 @elseif (Auth::user()->role === 'PJGT')
                     <form action="{{ url('PJGT/verifikasi-kode') }}" method="POST">

@@ -72,8 +72,9 @@
     height: 100vh;
     overflow-y: auto;
     background: var(--light);
-    transition: 0.5s;
+    transition: all 0.3s ease-in-out;
     z-index: 999;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .content {
@@ -295,4 +296,24 @@
 .testimonial-carousel .owl-dot.active {
     background: var(--dark);
     border-color: var(--primary);
+}
+
+.accordion-button:hover {
+    background-color: inherit !important;
+    color: inherit !important;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+
+/* Hilangkan efek saat accordion dibuka */
+.accordion-button:not(.collapsed) {
+    background-color: inherit !important;
+    color: inherit !important;
+    box-shadow: none !important;
+}
+
+/* Hilangkan efek focus (outline biru saat diklik) */
+.accordion-button:focus {
+    box-shadow: none !important;
+    outline: none !important;
 }

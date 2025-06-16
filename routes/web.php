@@ -50,6 +50,8 @@ Route::prefix('admin')->middleware('auth','admin')->group(function () {
     Route::get('/setting',[SettingController::class,'setting']);
     Route::post('/simpan-tanggal-pjgt/{id}', [SettingController::class, 'simpanTanggalPJGT']);
     Route::post('/simpan-tanggal-gt/{id}', [SettingController::class, 'simpanTanggalGT']);
+    Route::post('/ubah-password/submit',[UbahPasswordController::class,'submitUbahPassword']);
+    Route::post('/verifikasi-kode',[UbahPasswordController::class,'verifikasiKode']);
 });
 Route::prefix('PJGT')->middleware('auth','PJGT')->group(function () {
     Route::get('/profile', [PJGTController::class, 'profile']);

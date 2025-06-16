@@ -7,12 +7,12 @@
     <div class="row g-4">
         <div class="col-12">
             @if ($errors->any())
-            <div class="alert-error">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
+                <div class="alert-error">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Ubah Password</h6>
                 @if (Auth::user()->role === 'GT')
