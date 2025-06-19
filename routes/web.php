@@ -36,6 +36,7 @@ Route::prefix('admin')->middleware('auth','admin')->group(function () {
         Route::get('/PJGT-tidak-aktif',[PJGTController::class,'validasi']);
         Route::post('/validasi/{id}', [PJGTController::class, 'validasi_aktif']);
         Route::get('data-laporan-PJGT',[PJGTController::class,'data_laporan']);
+        Route::get('/export-laporan', [PJGTController::class, 'export_laporan']);
     });
     Route::prefix('data-GT')->group(function () {
         Route::get('/', [GTController::class, 'index']);
@@ -46,6 +47,7 @@ Route::prefix('admin')->middleware('auth','admin')->group(function () {
         Route::get('/GT-tidak-aktif',[GTController::class,'validasi']);
         Route::post('/validasi/{id}', [GTController::class, 'validasi_aktif']);
         Route::get('/data-laporan-GT', [GTController::class, 'data_laporan']);
+        Route::get('/export-laporan', [GTController::class, 'export_laporan']);
     });
     Route::get('/setting',[SettingController::class,'setting']);
     Route::post('/simpan-tanggal-pjgt/{id}', [SettingController::class, 'simpanTanggalPJGT']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LaporanPJGTExport;
 use App\Mail\AktivasiPJGT;
 use App\Models\AksesFormModel;
 use App\Models\LaporanPJGTModel;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PJGTController extends Controller
 {
@@ -321,5 +323,9 @@ class PJGTController extends Controller
             });
 
         return view('PJGT.laporan-PJGT', compact('laporan_pjgt'));
+    }
+    public function export_laporan()
+    {
+        return Excel::download(new LaporanPJGTExport(), 'laporan_pjgt.xlsx');
     }
 }

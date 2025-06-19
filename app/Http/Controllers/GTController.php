@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LaporanGTExport;
 
 class GTController extends Controller
 {
@@ -268,5 +270,9 @@ class GTController extends Controller
             });
 
         return view('GT.laporan-GT', compact('laporan_gt'));
+    }
+    public function export_laporan()
+    {
+        return Excel::download(new LaporanGTExport(), 'laporan_gt.xlsx');
     }
 }

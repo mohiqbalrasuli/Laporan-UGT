@@ -9,7 +9,7 @@
                         <h6 class="mb-4">Data Laporan Penanggung Jawab Guru Tugas</h6>
                         <div class="mb-4">
                             <button type="button" class="btn btn-danger me-2"><i class="fas fa-file-pdf me-2"></i>Export PDF</button>
-                            <button type="button" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Export Spreadsheet</button>
+                            <a href="{{ url('admin/data-PJGT/export-laporan') }}" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Export Spreadsheet</a>
                         </div>
                     </div>
                     <div class="table-responsive">
