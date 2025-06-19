@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LaporanGTExport;
+use Barryvdh\DomPDF\Facade\Pdf;
+use ZipArchive;
 
 class GTController extends Controller
 {
@@ -271,8 +273,38 @@ class GTController extends Controller
 
         return view('GT.laporan-GT', compact('laporan_gt'));
     }
+
     public function export_laporan()
     {
         return Excel::download(new LaporanGTExport(), 'laporan_gt.xlsx');
+    }
+
+    public function exportZipPerLaporanKe($laporanKe)
+    {
+        $laporanSet = LaporanGTModel::with(['gt.user', 'gt.madrasah', 'gt.pjgt.user'])
+            ->where('laporan_ke', $laporanKe)
+            ->get();
+
+        if ($laporanSet->isEmpty()) {
+            return back()->with('error', "Tidak ada laporan ke-$laporanKe.");
+        }
+
+        $zipName = "laporan_ke_{$laporanKe}_" . now()->format('Ymd_His') . ".zip";
+        $zipPath = storage_path("app/$zipName");
+        $zip = new ZipArchive;
+
+        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
+            $pdf = Pdf::loadView('admin.data-GT.laporan_gt_pdf', [
+                'laporanSet' => $laporanSet,
+                'laporanKe' => $laporanKe
+            ])->setPaper('a4', 'portrait');
+
+            $zip->addFromString("Laporan_Ke_{$laporanKe}.pdf", $pdf->output());
+            $zip->close();
+
+            return response()->download($zipPath)->deleteFileAfterSend(true);
+        }
+
+        return back()->with('error', 'Gagal membuat ZIP.');
     }
 }

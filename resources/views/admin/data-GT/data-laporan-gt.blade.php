@@ -10,8 +10,24 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-4">Data Laporan Guru Tugas</h6>
                         <div class="mb-4">
-                            <button type="button" class="btn btn-danger me-2"><i class="fas fa-file-pdf me-2"></i>Export
-                                PDF</button>
+                            @php
+                                $laporanKeList = \App\Models\LaporanGTModel::select('laporan_ke')->distinct()->orderBy('laporan_ke')->pluck('laporan_ke');
+                            @endphp
+
+                            <div class="dropdown me-2 d-inline">
+                                <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-file-pdf me-2"></i>Export PDF
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @foreach($laporanKeList as $laporanKe)
+                                        <li>
+                                            <a class="dropdown-item" href="{{ url('admin/data-GT/laporan/per-laporan-ke/'.$laporanKe .'/zip') }}">
+                                                Laporan Ke-{{ $laporanKe }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                             <a href="{{ url('/admin/data-GT/export-laporan') }}" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Export
                                 Spreadsheet</a>
                         </div>

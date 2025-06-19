@@ -9,6 +9,7 @@ use App\Models\LaporanPJGTModel;
 use App\Models\MadrasahModel;
 use App\Models\PJGTModel;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use ZipArchive;
 
 class PJGTController extends Controller
 {
@@ -324,8 +326,38 @@ class PJGTController extends Controller
 
         return view('PJGT.laporan-PJGT', compact('laporan_pjgt'));
     }
+    
     public function export_laporan()
     {
         return Excel::download(new LaporanPJGTExport(), 'laporan_pjgt.xlsx');
+    }
+
+    public function exportZipPerLaporanKe($laporanKe)
+    {
+        $laporanSet = LaporanPJGTModel::with(['pjgt.user', 'pjgt.madrasah', 'pjgt.gt.user'])
+            ->where('laporan_ke', $laporanKe)
+            ->get();
+
+        if ($laporanSet->isEmpty()) {
+            return back()->with('error', "Tidak ada laporan ke-$laporanKe.");
+        }
+
+        $zipName = "laporan_ke_{$laporanKe}_" . now()->format('Ymd_His') . ".zip";
+        $zipPath = storage_path("app/$zipName");
+        $zip = new ZipArchive;
+
+        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
+            $pdf = Pdf::loadView('admin.data-PJGT.laporan_pjgt_pdf', [
+                'laporanSet' => $laporanSet,
+                'laporanKe' => $laporanKe
+            ])->setPaper('a4', 'portrait');
+
+            $zip->addFromString("Laporan_Ke_{$laporanKe}.pdf", $pdf->output());
+            $zip->close();
+
+            return response()->download($zipPath)->deleteFileAfterSend(true);
+        }
+
+        return back()->with('error', 'Gagal membuat ZIP.');
     }
 }
