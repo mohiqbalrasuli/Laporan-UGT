@@ -21,7 +21,7 @@ class MadrasahController extends Controller
         ];
 
         MadrasahModel::create($data);
-        return redirect()->back()->with('success', 'Madrasah berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Berhasil menambahkan ' . $request->nama_madrasah);
     }
     public function update(Request $request, $id)
     {
@@ -32,12 +32,12 @@ class MadrasahController extends Controller
             'nama_kepala_madrasah' => $request->nama_kepala_madrasah,
         ];
         $madrasah->update($data);
-        return redirect()->back()->with('success', 'Madrasah berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Berhasil memperbarui ' . $request->nama_madrasah);
     }
     public function delete($id)
     {
         $madrasah = MadrasahModel::findOrFail($id);
         $madrasah->delete();
-        return redirect()->back()->with('success', 'Madrasah berhasil dihapus.');
+        return redirect()->back()->with('success', 'Berhasil menghapus ' . $madrasah->nama_madrasah);
     }
 }

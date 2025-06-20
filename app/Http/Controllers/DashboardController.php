@@ -17,6 +17,9 @@ class DashboardController extends Controller
         $pjgt = User::where('role','PJGT')->where('status','aktif')->count();
         $laporan_gt = LaporanGTModel::all()->count();
         $laporan_pjgt = LaporanPJGTModel::all()->count();
-        return view('admin.dashboard',compact('gt','pjgt','madrasah', 'laporan_gt', 'laporan_pjgt'));
+        $laporan_gt_terbaru = LaporanGTModel::with(['gt.user', 'gt.madrasah', 'gt.pjgt.user'])->orderby('created_at', 'desc')->take(5)->get();
+        $laporan_pjgt_terbaru = LaporanPJGTModel::with(['pjgt.user', 'pjgt.madrasah', 'pjgt.gt.user'])->orderby('created_at', 'desc')->take(5)->get();
+
+        return view('admin.dashboard',compact('gt','pjgt','madrasah', 'laporan_gt', 'laporan_pjgt', 'laporan_gt_terbaru', 'laporan_pjgt_terbaru'));
     }
 }

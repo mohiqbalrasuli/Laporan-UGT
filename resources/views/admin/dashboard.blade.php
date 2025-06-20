@@ -63,30 +63,22 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
+                                        <th scope="col">Laporan Ke</th>
                                         <th scope="col">Nama GT</th>
                                         <th scope="col">Nama Madrasah</th>
                                         <th scope="col">Nama PJGT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($laporan_gt_terbaru as $item -> $laporan) )
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>Muhammad</td>
-                                        <td>MDT Al-Barokah</td>
-                                        <td>Lora Hamzah</td>
+                                        <th scope="row">{{ $item + 1 }}</th>
+                                        <td>{{ $item->laporan_ke }}</td>
+                                        <td>{{ $item->gt->user->name }}</td>
+                                        <td>{{ $item->gt->madrasah->nama_madrasah }}</td>
+                                        <td>{{ $item->gt->pjgt->user->name }}</td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Iqbal</td>
-                                        <td>MDT Al-Muttaqin</td>
-                                        <td>Ust Aldi</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Rasuli</td>
-                                        <td>MDT Ainul Yaqin</td>
-                                        <td>Ust. Aziz</td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -102,30 +94,22 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
+                                        <th scope="col">Laporan Ke</th>
                                         <th scope="col">Nama PJGT</th>
                                         <th scope="col">Nama Madrasah</th>
                                         <th scope="col">Nama GT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($laporan_pjgt_terbaru as $item -> $laporan) )
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>Muhammad</td>
-                                        <td>MDT Al-Barokah</td>
-                                        <td>Lora Hamzah</td>
+                                        <th scope="row">{{ $item + 1 }}</th>
+                                        <td>{{ $item->laporan_ke }}</td>
+                                        <td>{{ $item->pjgt->user->name }}</td>
+                                        <td>{{ $item->pjgt->madrasah->nama_madrasah }}</td>
+                                        <td>{{ $item->pjgt->gt->user->name }}</td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Iqbal</td>
-                                        <td>MDT Al-Muttaqin</td>
-                                        <td>Ust Aldi</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Rasuli</td>
-                                        <td>MDT Ainul Yaqin</td>
-                                        <td>Ust. Aziz</td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -134,4 +118,4 @@
             </div>
 @endsection
 <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-success btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+<a href="#" class="btn btn-lg btn-success btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

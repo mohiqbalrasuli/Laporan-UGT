@@ -4,6 +4,11 @@
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
             <div class="col-12">
+                @if (session('success'))
+                    <div class="alert alert-success mt-2" role="alert">{{ session('success') }}</div>
+                @endif
+            </div>
+            <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-4">Data Madrasah</h6>
