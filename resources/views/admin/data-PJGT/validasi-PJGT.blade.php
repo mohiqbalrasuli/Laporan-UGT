@@ -28,6 +28,8 @@
                                     <td>
                                         <button class="btn btn-success" type="button" data-bs-toggle="modal"
                                             data-bs-target="#nonaktifModal{{ $pjgt->id }}">Validasi</button>
+                                        <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                                            data-bs-target="#modalhapus{{ $value->id }}">Hapus</button>
                                     </td>
                                 </tr>
                                 <div class="modal fade" id="nonaktifModal{{ $pjgt->id }}" tabindex="-1"
@@ -53,6 +55,32 @@
                                                     @csrf
                                                     <button type="submit" class="btn btn-success">Validasi</button>
                                                 </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal hapus-->
+                                <div class="modal fade" id="modalhapus{{ $value->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <img src="{{ asset('assets/img/logo.png') }}" width="30px"
+                                                    style="margin-right: 20px" alt="">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus Guru Tugas
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Yakin Menghapus Guru Tugas <span class="fw-bold">{{ $value->name }}</span>
+                                                ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Tutup</button>
+                                                <a href="{{ url('admin/data-GT/delete/' . $value->id) }}" type="button"
+                                                    class="btn btn-success">Hapus</a>
                                             </div>
                                         </div>
                                     </div>

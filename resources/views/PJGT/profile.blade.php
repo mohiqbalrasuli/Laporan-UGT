@@ -67,6 +67,11 @@
                                 <th> : </th>
                                 <td>{{ $pjgt->pjgt->madrasah->alamat_madrasah ?? '-' }}</td>
                             </tr>
+                            <tr>
+                                <th>Email</th>
+                                <th> : </th>
+                                <td>{{ $gt->email }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

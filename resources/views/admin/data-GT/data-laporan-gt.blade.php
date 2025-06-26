@@ -1,4 +1,4 @@
-@extends('admin.layout.template_admin')
+@extends($layout)
 
 @section('title', 'Data Laporan Guru Tugas')
 
@@ -13,7 +13,7 @@
                             @php
                                 $laporanKeList = \App\Models\LaporanGTModel::select('laporan_ke')->distinct()->orderBy('laporan_ke')->pluck('laporan_ke');
                             @endphp
-
+                            @if (Auth::user()->role==='admin')
                             <div class="dropdown me-2 d-inline">
                                 <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">
                                     <i class="fas fa-file-pdf me-2"></i>Export PDF
@@ -30,6 +30,25 @@
                             </div>
                             <a href="{{ url('/admin/data-GT/export-laporan') }}" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Export
                                 Spreadsheet</a>
+                            @elseif (Auth::user()->role==='pengurus')
+                            <div class="dropdown me-2 d-inline">
+                                <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-file-pdf me-2"></i>Export PDF
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @foreach($laporanKeList as $laporanKe)
+                                        <li>
+                                            <a class="dropdown-item" href="{{ url('pengurus/data-GT/laporan/per-laporan-ke/'.$laporanKe .'/zip') }}">
+                                                Laporan Ke-{{ $laporanKe }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <a href="{{ url('pengurus/data-GT/export-laporan') }}" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Export
+                                Spreadsheet</a>
+                            @endif
+
                         </div>
                     </div>
                     <div class="table-responsive">

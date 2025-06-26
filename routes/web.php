@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GTController;
 use App\Http\Controllers\MadrasahController;
+use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\PJGTController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UbahPasswordController;
@@ -28,6 +29,12 @@ Route::prefix('admin')
             Route::post('/store', [MadrasahController::class, 'store']);
             Route::post('/update/{id}', [MadrasahController::class, 'update']);
             Route::get('/delete/{id}', [MadrasahController::class, 'delete']);
+        });
+        Route::prefix('data-pengurus')->group(function () {
+            Route::get('/', [PengurusController::class, 'index']);
+            Route::post('/store', [PengurusController::class, 'store']);
+            Route::post('/update/{id}', [PengurusController::class, 'update']);
+            Route::get('/delete/{id}', [PengurusController::class, 'delete']);
         });
         Route::prefix('data-PJGT')->group(function () {
             Route::get('/', [PJGTController::class, 'index']);
@@ -59,10 +66,34 @@ Route::prefix('admin')
         Route::post('/ubah-password/submit', [UbahPasswordController::class, 'submitUbahPassword']);
         Route::post('/verifikasi-kode', [UbahPasswordController::class, 'verifikasiKode']);
         // notifikasi
-        Route::get('/notifikasi/baca-semua', function () {
-            auth()->user()->unreadNotifications->markAsRead();
-            return back();
-        })->name('notifikasi.baca_semua');
+        // Route::get('/notifikasi/baca-semua', function () {
+        //     auth()->user()->unreadNotifications->markAsRead();
+        //     return back();
+        // })->name('notifikasi.baca_semua');
+    });
+Route::prefix('pengurus')
+    ->middleware('auth', 'pengurus')
+    ->group(function () {
+        Route::get('/profile', [PengurusController::class, 'profile']);
+        Route::post('/update/{id}', [PengurusController::class, 'update']);
+        Route::get('/ubah-password', [UbahPasswordController::class, 'ubah_password']);
+        Route::post('/ubah-password/submit', [UbahPasswordController::class, 'submitUbahPassword']);
+        Route::post('/verifikasi-kode', [UbahPasswordController::class, 'verifikasiKode']);
+        Route::prefix('data-madrasah')->group(function () {
+            Route::get('/', [PengurusController::class, 'madrasah']);
+        });
+        Route::prefix('data-PJGT')->group(function () {
+            Route::get('/', [PengurusController::class, 'pjgt']);
+            Route::get('data-laporan-PJGT', [PJGTController::class, 'data_laporan']);
+            Route::get('/export-laporan', [PJGTController::class, 'export_laporan']);
+            Route::get('/laporan/per-laporan-ke/{laporanKe}/zip', [PJGTController::class, 'exportZipPerLaporanKe']);
+        });
+        Route::prefix('data-GT')->group(function () {
+            Route::get('/', [PengurusController::class, 'gt']);
+            Route::get('/data-laporan-GT', [GTController::class, 'data_laporan']);
+            Route::get('/export-laporan', [GTController::class, 'export_laporan']);
+            Route::get('/laporan/per-laporan-ke/{laporanKe}/zip', [GTController::class, 'exportZipPerLaporanKe']);
+        });
     });
 Route::prefix('PJGT')
     ->middleware('auth', 'PJGT')

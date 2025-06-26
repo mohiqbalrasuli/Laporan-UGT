@@ -50,6 +50,11 @@
                                 <th> : </th>
                                 <td>{{ $gt->gt->status_tugas ?? '-' }}</td>
                             </tr>
+                            <tr>
+                                <th>Email</th>
+                                <th> : </th>
+                                <td>{{ $gt->email }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

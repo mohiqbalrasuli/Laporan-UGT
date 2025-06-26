@@ -134,7 +134,12 @@ class GTController extends Controller
                 $laporan_gt->kegiatan_gt_Diluar_kelas = json_decode($laporan_gt->kegiatan_gt_Diluar_kelas, true) ?? [];
                 return $laporan_gt;
             });
-        return view('admin.data-GT.data-laporan-gt', compact('laporan_gt'));
+            $layout = match (Auth::user()->role) {
+            'admin' => 'admin.layout.template_admin',
+            'pengurus' => 'pengurus.layout.template_pengurus',
+            default => 'layouts.default', // fallback layout
+            };
+        return view('admin.data-GT.data-laporan-gt', compact('laporan_gt','layout'));
     }
 
     public function profile()

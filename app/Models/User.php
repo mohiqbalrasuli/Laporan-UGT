@@ -49,4 +49,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(GTModel::class,'user_id');
     }
+    public function pengurus()
+    {
+        return $this->hasOne(PengurusModel::class,'user_id');
+    }
 }

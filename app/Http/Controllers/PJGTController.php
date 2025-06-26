@@ -134,8 +134,13 @@ class PJGTController extends Controller
                 $laporan_pjgt->waktu_kegiatan = json_decode($laporan_pjgt->waktu_kegiatan, true) ?? [];
                 return $laporan_pjgt;
             });
+            $layout = match (Auth::user()->role) {
+            'admin' => 'admin.layout.template_admin',
+            'pengurus' => 'pengurus.layout.template_pengurus',
+            default => 'layouts.default', // fallback layout
+            };
 
-        return view('admin.data-PJGT.data-laporan-PJGT', compact('laporan_pjgt'));
+        return view('admin.data-PJGT.data-laporan-PJGT', compact('laporan_pjgt','layout'));
     }
     public function profile()
     {
@@ -326,7 +331,7 @@ class PJGTController extends Controller
 
         return view('PJGT.laporan-PJGT', compact('laporan_pjgt'));
     }
-    
+
     public function export_laporan()
     {
         return Excel::download(new LaporanPJGTExport(), 'laporan_pjgt.xlsx');

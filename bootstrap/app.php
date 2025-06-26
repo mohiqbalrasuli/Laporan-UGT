@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\RoleMiddleware::class.':admin',
             'PJGT' => \App\Http\Middleware\RoleMiddleware::class.':PJGT',
             'GT' => \App\Http\Middleware\RoleMiddleware::class.':GT',
+            'pengurus' => \App\Http\Middleware\RoleMiddleware::class.':pengurus',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

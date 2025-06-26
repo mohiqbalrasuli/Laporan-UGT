@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
@@ -42,47 +42,39 @@
                         width="100px">
                 </div>
                 <div id="navbar-nav" class="navbar-nav w-100" style="gap: 5px">
-                    <a href="{{ url('admin/dashboard') }}"
-                        class="nav-item nav-link {{ Request::is('admin/dashboard') ? 'active' : '' }}"><i
-                            class="fa fa-chart-pie me-2"></i>Dashboard</a>
-                    <a href="{{ url('admin/data-pengurus') }}"
-                        class="nav-item nav-link {{ Request::is('admin/data-pengurus') ? 'active' : '' }}"><i
-                            class="fa fa-user me-2"></i>Data Pengurus</a>
-                    <a href="{{ url('admin/data-madrasah') }}"
-                        class="nav-item nav-link {{ Request::is('admin/data-madrasah') ? 'active' : '' }}"><i
+                    <a href="{{ url('pengurus/profile') }}"
+                        class="nav-item nav-link {{ Request::is('GT/profile') ? 'active' : '' }}"><i
+                            class="fa fa-user-tie me-2"></i>Profile</a>
+                    <a href="{{ url('pengurus/data-madrasah') }}"
+                        class="nav-item nav-link {{ Request::is('pengurus/data-madrasah') ? 'active' : '' }}"><i
                             class="fa fa-school me-2"></i>Data Madrasah</a>
                     <div class="nav-item dropdown">
                         <a href="#"
-                            class="nav-link dropdown-toggle {{ Request::is('admin/data-PJGT') || Request::is('admin/data-PJGT/PJGT-tidak-aktif') || Request::is('admin/data-PJGT/data-laporan-PJGT') ? 'active' : '' }}"
+                            class="nav-link dropdown-toggle {{ Request::is('pengurus/data-PJGT') || Request::is('pengurus/data-PJGT/PJGT-tidak-aktif') || Request::is('pengurus/data-PJGT/data-laporan-PJGT') ? 'active' : '' }}"
                             data-bs-toggle="dropdown"><i class="fa fa-users me-2"></i>PJGT</a>
                         <div class="dropdown-menu bg-transparent border-0 rounded-0 rounded-bottom m-0">
-                            <a href="{{ url('admin/data-PJGT') }}"
-                                class="dropdown-item nav-link {{ Request::is('admin/data-PJGT') ? 'active' : '' }}"><i
+                            <a href="{{ url('pengurus/data-PJGT') }}"
+                                class="dropdown-item nav-link {{ Request::is('pengurus/data-PJGT') ? 'active' : '' }}"><i
                                     class="fa fa-user-tie me-2"></i>Data PJGT</a>
-                            <a href="{{ url('admin/data-PJGT/PJGT-tidak-aktif') }}"
-                                class="dropdown-item nav-link {{ Request::is('admin/data-PJGT/PJGT-tidak-aktif') ? 'active' : '' }}"><i
-                                    class="fa fa-user me-2"></i>Validasi PJGT</a>
-                            <a href="{{ url('admin/data-PJGT/data-laporan-PJGT') }}"
-                                class="nav-item nav-link {{ Request::is('admin/data-PJGT/data-laporan-PJGT') ? 'active' : '' }}"><i
+                            <a href="{{ url('pengurus/data-PJGT/data-laporan-PJGT') }}"
+                                class="nav-item nav-link {{ Request::is('pengurus/data-PJGT/data-laporan-PJGT') ? 'active' : '' }}"><i
                                     class="fa fa-clipboard-list me-2"></i>Laporan PJGT</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#"
-                            class="nav-link dropdown-toggle {{ Request::is('admin/data-GT') || Request::is('admin/data-GT/GT-tidak-aktif') || Request::is('admin/data-GT/data-laporan-GT') ? 'active' : '' }}"
+                            class="nav-link dropdown-toggle {{ Request::is('pengurus/data-GT') || Request::is('pengurus/data-GT/GT-tidak-aktif') || Request::is('pengurus/data-GT/data-laporan-GT') ? 'active' : '' }}"
                             data-bs-toggle="dropdown"><i class="fa fa-users me-2"></i>GT</a>
                         <div class="dropdown-menu bg-transparent border-0 rounded-0 rounded-bottom m-0">
-                            <a href="{{ url('admin/data-GT') }}"
-                                class="dropdown-item nav-link {{ Request::is('admin/data-GT') ? 'active' : '' }}"><i
+                            <a href="{{ url('pengurus/data-GT') }}"
+                                class="dropdown-item nav-link {{ Request::is('pengurus/data-GT') ? 'active' : '' }}"><i
                                     class="fa fa-user-tie me-2"></i>Data GT</a>
-                            <a href="{{ url('admin/data-GT/GT-tidak-aktif') }}"
-                                class="dropdown-item nav-link {{ Request::is('admin/data-GT/GT-tidak-aktif') ? 'active' : '' }}"><i
-                                    class="fa fa-user me-2"></i>Validasi GT</a>
-                            <a href="{{ url('admin/data-GT/data-laporan-GT') }}"
-                                class="nav-item nav-link {{ Request::is('admin/data-GT/data-laporan-GT') ? 'active' : '' }}"><i
+                            <a href="{{ url('pengurus/data-GT/data-laporan-GT') }}"
+                                class="nav-item nav-link {{ Request::is('pengurus/data-GT/data-laporan-GT') ? 'active' : '' }}"><i
                                     class="fa fa-clipboard-list me-2"></i>Laporan GT</a>
                         </div>
                     </div>
+                    <a href="{{ url('pengurus/ubah-password') }}" class="nav-item nav-link  {{ Request::is('pengurus/ubah-password') ? 'active' : '' }} "><i class="fa fa-edit me-2"></i>Ubah Password</a>
                 </div>
             </nav>
         </div>
@@ -100,25 +92,12 @@
                     style="margin-left: 10px" width="35px">
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
-                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-bell me-lg-2 position-relative">
-                            </i>
-                            <span class="d-none d-lg-inline-flex">Notifikasi</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Tidak ada notifikasi</a>
-                        </div>
-                    </div>
-
-                    <div class="nav-item dropdown">
-                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-user me-lg-2"></i>
                             <span class="d-none d-lg-inline-flex">{{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Profil Saya</a>
-                            <a href="{{ url('admin/setting') }}" class="dropdown-item">Setelan</a>
-                            <a href="/logout" class="dropdown-item">Keluar</a>
+                            <a href="/logout" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -144,6 +123,9 @@
             <!-- Footer End -->
         </div>
         <!-- Content End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-success btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
     </div>
 

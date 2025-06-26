@@ -48,6 +48,8 @@ class AuthController extends Controller
             switch (Auth::user()->role) {
                 case 'admin':
                     return redirect('admin/dashboard')->with('success_login', 'Berhasil masuk sebagai admin');
+                case 'pengurus':
+                    return redirect('pengurus/profile')->with('success_login', 'Berhasil masuk sebagai pengurus');
                 case 'PJGT':
                     return redirect('PJGT/profile')->with('success_login', 'Berhasil masuk sebagai PJGT');
                 case 'GT':

@@ -15,6 +15,7 @@ class UbahPasswordController extends Controller
         $layout = match (Auth::user()->role) {
             'GT' => 'GT.layout.template_GT',
             'PJGT' => 'PJGT.layout.template_PJGT',
+            'pengurus' => 'pengurus.layout.template_pengurus',
             default => 'layouts.default', // fallback layout
         };
             return view('ubah_password.ubah-password', compact('layout'));
