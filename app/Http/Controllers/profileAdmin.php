@@ -9,7 +9,7 @@ class profileAdmin extends Controller
 {
     public function index()
     {
-        $pengurus = auth()->user();
+        $pengurus = Auth::user();
         return view('admin.profile', compact('pengurus'));
     }
 
