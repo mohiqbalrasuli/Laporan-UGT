@@ -29,7 +29,7 @@
                                 </ul>
                             </div>
                             <a href="{{ url('/admin/data-GT/export-laporan') }}" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Export
-                                Spreadsheet</a>
+                                Excel</a>
                             @elseif (Auth::user()->role==='pengurus')
                             <div class="dropdown me-2 d-inline">
                                 <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">

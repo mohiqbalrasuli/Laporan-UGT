@@ -6,7 +6,12 @@
 </head>
 <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
     <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-        <img src="{{ asset('assets/img/logo.png') }}" alt="LOGO PPU" width="100px">
+        @php
+            $path = public_path('assets/img/image.png');
+            $img = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+        @endphp
+
+        <img src="{{ $img }}" width="100px">
         <h2 style="color: #333;">Assalamu'alaikum wr. wb.</h2>
         <p>Akun Anda sebagai <strong>GT</strong> telah diaktifkan.</p>
 

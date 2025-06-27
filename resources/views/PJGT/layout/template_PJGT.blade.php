@@ -45,6 +45,7 @@
                     <a href="{{ url('PJGT/profile') }}" class="nav-item nav-link {{ Request::is('PJGT/profile') ? 'active' : '' }}"><i class="fa fa-user-tie me-2"></i>Profile</a>
                     <a href="{{ url('PJGT/input-laporan') }}" class="nav-item nav-link {{ Request::is('PJGT/input-laporan') ? 'active' : '' }} "><i class="fa fa-pen me-2"></i>Input Laporan</a>
                     <a href="{{ url('PJGT/data-laporan-PJGT') }}" class="nav-item nav-link {{ Request::is('PJGT/data-laporan-PJGT') ? 'active' : '' }}"><i class="fa fa-file-alt me-2"></i>Data Laporan</a>
+                    <a href="{{ url('PJGT/laporan-masalah') }}" class="nav-item nav-link {{ Request::is('PJGT/laporan-masalah') ? 'active' : '' }}"><i class="fa fa-exclamation-triangle me-2"></i>Laporan Masalah</a>
                     <a href="{{ url('PJGT/ubah-password') }}" class="nav-item nav-link {{ Request::is('PJGT/ubah-password') ? 'active' : '' }}"><i class="fa fa-edit me-2"></i>Ubah Password</a>
                 </div>
             </nav>

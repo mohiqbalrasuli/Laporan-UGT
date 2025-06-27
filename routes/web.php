@@ -3,11 +3,15 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GTController;
+use App\Http\Controllers\LaporanMasalah;
 use App\Http\Controllers\MadrasahController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\PJGTController;
+use App\Http\Controllers\profileAdmin;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UbahPasswordController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -65,11 +69,12 @@ Route::prefix('admin')
         Route::post('/simpan-tanggal-gt/{id}', [SettingController::class, 'simpanTanggalGT']);
         Route::post('/ubah-password/submit', [UbahPasswordController::class, 'submitUbahPassword']);
         Route::post('/verifikasi-kode', [UbahPasswordController::class, 'verifikasiKode']);
+        Route::get('/laporan-masalah', [LaporanMasalah::class, 'index']);
+        Route::get('/profile',[profileAdmin::class, 'index']);
+        Route::post('/update/{id}', [profileAdmin::class, 'update']);
         // notifikasi
-        // Route::get('/notifikasi/baca-semua', function () {
-        //     auth()->user()->unreadNotifications->markAsRead();
-        //     return back();
-        // })->name('notifikasi.baca_semua');
+        Route::get('/notifikasi/baca-semua', [NotificationController::class, 'markAllAsRead'])->name('notifikasi.baca_semua');
+        Route::post('/notifikasi/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('notifikasi.mark_as_read');
     });
 Route::prefix('pengurus')
     ->middleware('auth', 'pengurus')
@@ -106,6 +111,8 @@ Route::prefix('PJGT')
         Route::get('/ubah-password', [UbahPasswordController::class, 'ubah_password']);
         Route::post('/ubah-password/submit', [UbahPasswordController::class, 'submitUbahPassword']);
         Route::post('/verifikasi-kode', [UbahPasswordController::class, 'verifikasiKode']);
+        Route::get('/laporan-masalah', [LaporanMasalah::class, 'indexPJGT']);
+        Route::post('/laporan-masalah/store', [LaporanMasalah::class, 'storeLaporanBermasahPJGT']);
     });
 Route::prefix('GT')
     ->middleware('auth', 'GT')
@@ -118,4 +125,6 @@ Route::prefix('GT')
         Route::get('/ubah-password', [UbahPasswordController::class, 'ubah_password']);
         Route::post('/ubah-password/submit', [UbahPasswordController::class, 'submitUbahPassword']);
         Route::post('/verifikasi-kode', [UbahPasswordController::class, 'verifikasiKode']);
+        Route::get('/laporan-masalah', [LaporanMasalah::class, 'indexGT']);
+        Route::post('/laporan-masalah/store', [LaporanMasalah::class, 'storeLaporanBermasahGT']);
     });

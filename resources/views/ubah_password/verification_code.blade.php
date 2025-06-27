@@ -19,6 +19,8 @@
                     <form action="{{ url('GT/verifikasi-kode') }}" method="POST">
                 @elseif (Auth::user()->role === 'PJGT')
                     <form action="{{ url('PJGT/verifikasi-kode') }}" method="POST">
+                @elseif (Auth::user()->role === 'pengurus')
+                    <form action="{{ url('pengurus/verifikasi-kode') }}" method="POST">
                 @endif
                 @csrf
                     <div class="mb-3">

@@ -19,6 +19,8 @@
                     <form action="{{ url('GT/ubah-password/submit') }}" method="POST">
                 @elseif (Auth::user()->role === 'PJGT')
                     <form action="{{ url('PJGT/ubah-password/submit') }}" method="POST">
+                @elseif (Auth::user()->role === 'pengurus')
+                    <form action="{{ url('pengurus/ubah-password/submit') }}" method="POST">
                 @endif
                     @csrf
                     <div class="mb-3">

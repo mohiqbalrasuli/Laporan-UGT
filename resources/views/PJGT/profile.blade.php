@@ -70,7 +70,7 @@
                             <tr>
                                 <th>Email</th>
                                 <th> : </th>
-                                <td>{{ $gt->email }}</td>
+                                <td>{{ $pjgt->email }}</td>
                             </tr>
                         </tbody>
                     </table>

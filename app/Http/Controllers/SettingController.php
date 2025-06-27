@@ -19,7 +19,7 @@ class SettingController extends Controller
         $aksesFormpjgt = AksesFormModel::findOrFail($id);
         $data=[
             'tanggal_mulai_pjgt' => $request->tanggal_mulai_pjgt,
-            'tanggal_akhir_pjgt' => $request->tanggal_berakhir_pjgt
+            'tanggal_akhir_pjgt' => $request->tanggal_akhir_pjgt
         ];
         $aksesFormpjgt->update($data);
         return back()->with('success', 'Tanggal PJGT disimpan!');
@@ -30,7 +30,7 @@ class SettingController extends Controller
         $aksesFormgt = AksesFormModel::findOrFail($id);
         $data=[
             'tanggal_mulai_gt' => $request->tanggal_mulai_gt,
-            'tanggal_akhir_gt' => $request->tanggal_berakhir_gt
+            'tanggal_akhir_gt' => $request->tanggal_akhir_gt
         ];
         $aksesFormgt->update($data);
         return back()->with('success', 'Tanggal GT disimpan!');

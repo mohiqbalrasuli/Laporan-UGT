@@ -32,25 +32,25 @@
         </div>
     @else
         @if (session('error'))
-        <div class="container-fluid pt-4 px-4">
-            <div class="row g-4">
-                <div class="col-12">
-                    <div class="alert alert-info">
-                        <div class="alert alert-danger mt-2" role="alert">{{ session('error') }}</div>
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            <div class="alert alert-danger mt-2" role="alert">{{ session('error') }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         @elseif (session('success'))
-        <div class="container-fluid pt-4 px-4">
-            <div class="row g-4">
-                <div class="col-12">
-                    <div class="alert alert-info">
-                        <div class="alert alert-success mt-2" role="alert">{{ session('success') }}</div>
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            <div class="alert alert-success mt-2" role="alert">{{ session('success') }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         @endif
         <form action="{{ url('/PJGT/input-laporan/store') }}" method="POST">
             @csrf
@@ -120,7 +120,7 @@
                                 <div class="mb-0">GT Menjadi Guru Wali Kelas</div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="wali_kelas" id="wali1"
-                                        value="1" >
+                                        value="1">
                                     <label class="form-check-label" for="wali1">1</label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -154,7 +154,7 @@
                                 <div class="mb-0">Tingkat</div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="checkbox" id="tingkat1" name="tingkat[]"
-                                        value="Ibtidaiyah" >
+                                        value="Ibtidaiyah">
                                     <label class="form-check-label" for="tingkat1">Ibtidaiyah</label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -167,33 +167,33 @@
                             <div class="mb-3">
                                 <div class="mb-0">GT Menjadi Guru Fak Kelas</div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="fakk1" name="guru_fak_kelas[]"
-                                        value="1" >
+                                    <input class="form-check-input" type="checkbox" id="fakk1"
+                                        name="guru_fak_kelas[]" value="1">
                                     <label class="form-check-label" for="fakk1">1</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="fakk2" name="guru_fak_kelas[]"
-                                        value="2">
+                                    <input class="form-check-input" type="checkbox" id="fakk2"
+                                        name="guru_fak_kelas[]" value="2">
                                     <label class="form-check-label" for="fakk2">2</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="fakk3" name="guru_fak_kelas[]"
-                                        value="3">
+                                    <input class="form-check-input" type="checkbox" id="fakk3"
+                                        name="guru_fak_kelas[]" value="3">
                                     <label class="form-check-label" for="fakk3">3</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="fakk4" name="guru_fak_kelas[]"
-                                        value="4">
+                                    <input class="form-check-input" type="checkbox" id="fakk4"
+                                        name="guru_fak_kelas[]" value="4">
                                     <label class="form-check-label" for="fakk4">4</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="fakk5" name="guru_fak_kelas[]"
-                                        value="5">
+                                    <input class="form-check-input" type="checkbox" id="fakk5"
+                                        name="guru_fak_kelas[]" value="5">
                                     <label class="form-check-label" for="fakk5">5</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="fakk6" name="guru_fak_kelas[]"
-                                        value="6">
+                                    <input class="form-check-input" type="checkbox" id="fakk6"
+                                        name="guru_fak_kelas[]" value="6">
                                     <label class="form-check-label" for="fakk6">6</label>
                                 </div>
                             </div>
@@ -201,18 +201,18 @@
                             <div class="mb-3">
                                 <div class="mb-0">GT Menjadi Guru</div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="guru1"
-                                        name="menjadi_guru[]" value="Banin" >
+                                    <input class="form-check-input" type="checkbox" id="guru1" name="menjadi_guru[]"
+                                        value="Banin">
                                     <label class="form-check-label" for="guru1">Banin (Putra)</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="guru2"
-                                        name="menjadi_guru[]" value="Banat">
+                                    <input class="form-check-input" type="checkbox" id="guru2" name="menjadi_guru[]"
+                                        value="Banat">
                                     <label class="form-check-label" for="guru2">Banat (Putri)</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="guru3"
-                                        name="menjadi_guru[]" value="Banin-Banat">
+                                    <input class="form-check-input" type="checkbox" id="guru3" name="menjadi_guru[]"
+                                        value="Banin-Banat">
                                     <label class="form-check-label" for="guru3">Banin - Banat</label>
                                 </div>
                             </div>
@@ -220,13 +220,13 @@
                             <div class="mb-3">
                                 <div class="mb-0">GT Masuk Madrasah/Sekolah</div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gt_masuk_madrasah" id="hadir1"
-                                        value="Rajin" >
+                                    <input class="form-check-input" type="radio" name="gt_masuk_madrasah"
+                                        id="hadir1" value="Rajin">
                                     <label class="form-check-label" for="hadir1">Rajin</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gt_masuk_madrasah" id="hadir2"
-                                        value="Tidak Rajin">
+                                    <input class="form-check-input" type="radio" name="gt_masuk_madrasah"
+                                        id="hadir2" value="Tidak Rajin">
                                     <label class="form-check-label" for="hadir2">Tidak Rajin</label>
                                 </div>
                             </div>
@@ -307,12 +307,12 @@
                                 <div class="mb-0">Rambut Guru Tugas (Dalam Keadaan)</div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" id="rambut_pendek" name="rambut_gt"
-                                        value="Pendek" >
+                                        value="Pendek">
                                     <label class="form-check-label" for="rambut_pendek">Pendek</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="rambut_panjang"
-                                        name="rambut_gt" value="Melebihi Batas">
+                                    <input class="form-check-input" type="radio" id="rambut_panjang" name="rambut_gt"
+                                        value="Melebihi Batas">
                                     <label class="form-check-label" for="rambut_panjang">Melebihi Batas</label>
                                 </div>
                             </div>
@@ -321,7 +321,7 @@
                                 <div class="mb-0">GT Pernah Bepergian</div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" id="bepergian_ya" name="gt_bepergian"
-                                        value="Ya" >
+                                        value="Ya">
                                     <label class="form-check-label" for="bepergian_ya">Ya</label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -344,7 +344,7 @@
                                 <div class="mb-0">Sebanyak</div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" id="bepergian_1"
-                                        name="berpergian_sebanyak" value="1" >
+                                        name="berpergian_sebanyak" value="1">
                                     <label class="form-check-label" for="bepergian_1">1 kali</label>
                                 </div>
                                 <div class="form-check">
@@ -390,7 +390,7 @@
                                 <div class="mb-0">GT Pernah Pulang Kampung</div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" id="pernah_pulang_ya"
-                                        name="gt_pernah_pulang_kampung" value="ya" >
+                                        name="gt_pernah_pulang_kampung" value="ya">
                                     <label class="form-check-label" for="pernah_pulang_ya">Ya</label>
                                 </div>
                                 <div class="form-check">
@@ -403,28 +403,28 @@
                             <div class="mb-3">
                                 <div class="mb-0">GT Pulang Kampung Sebanyak</div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="pulang_1" name="pulang_kampung_sebanyak"
-                                        value="1" >
+                                    <input class="form-check-input" type="radio" id="pulang_1"
+                                        name="pulang_kampung_sebanyak" value="1">
                                     <label class="form-check-label" for="pulang_1">1 Kali</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="pulang_2" name="pulang_kampung_sebanyak"
-                                        value="2">
+                                    <input class="form-check-input" type="radio" id="pulang_2"
+                                        name="pulang_kampung_sebanyak" value="2">
                                     <label class="form-check-label" for="pulang_2">2 Kali</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="pulang_3" name="pulang_kampung_sebanyak"
-                                        value="3">
+                                    <input class="form-check-input" type="radio" id="pulang_3"
+                                        name="pulang_kampung_sebanyak" value="3">
                                     <label class="form-check-label" for="pulang_3">3 Kali</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="pulang_4" name="pulang_kampung_sebanyak"
-                                        value="4">
+                                    <input class="form-check-input" type="radio" id="pulang_4"
+                                        name="pulang_kampung_sebanyak" value="4">
                                     <label class="form-check-label" for="pulang_4">4 Kali</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="pulang_5" name="pulang_kampung_sebanyak"
-                                        value="5">
+                                    <input class="form-check-input" type="radio" id="pulang_5"
+                                        name="pulang_kampung_sebanyak" value="5">
                                     <label class="form-check-label" for="pulang_5">5 Kali</label>
                                 </div>
                             </div>
@@ -443,7 +443,7 @@
                                 <div class="mb-0">GT Pernah Melakukan Pelanggaran</div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" id="pernah_langgar_ya"
-                                        name="gt_melakukan_pelanggaran" value="ya" >
+                                        name="gt_melakukan_pelanggaran" value="ya">
                                     <label class="form-check-label" for="pernah_langgar_ya">Ya</label>
                                 </div>
                                 <div class="form-check">
@@ -456,7 +456,7 @@
                             <div class="mb-3">
                                 <label for="pelanggran_berupa" class="form-label">Pelanggaran Berupa</label>
                                 <input type="text" class="form-control" id="pelanggran_berupa"
-                                    name="pelanggran_berupa" >
+                                    name="pelanggran_berupa">
                             </div>
                             <!-- Tindakan PJGT -->
                             <div class="mb-3">
@@ -535,9 +535,10 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="hubungan_dengan_kepmad" class="form-label">Hubungan Dengan Kepala Madrasah</label>
-                                <select class="form-select mb-3" id="hubungan_dengan_kepmad" name="hubungan_dengan_kepmad"
-                                    aria-label="Default select">
+                                <label for="hubungan_dengan_kepmad" class="form-label">Hubungan Dengan Kepala
+                                    Madrasah</label>
+                                <select class="form-select mb-3" id="hubungan_dengan_kepmad"
+                                    name="hubungan_dengan_kepmad" aria-label="Default select">
                                     <option selected disabled>--Pilih--</option>
                                     <option value="jarang">Jarang</option>
                                     <option value="sering">Sering</option>
@@ -557,8 +558,8 @@
                             <div class="mb-3">
                                 <label for="hubungan_dengan_wali_murid_masyarakat" class="form-label">Hubungan Dengan Wali
                                     Santri/Murid/Masyarakat</label>
-                                <select class="form-select mb-3" id="hubungan_dengan_wali_murid_masyarakat" name="hubungan_dengan_wali_murid_masyarakat"
-                                    aria-label="Default select">
+                                <select class="form-select mb-3" id="hubungan_dengan_wali_murid_masyarakat"
+                                    name="hubungan_dengan_wali_murid_masyarakat" aria-label="Default select">
                                     <option selected disabled>--Pilih--</option>
                                     <option value="jarang">Jarang</option>
                                     <option value="sering">Sering</option>
@@ -614,7 +615,8 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" id="tanggapan_masyarakat_tidak_baik"
                                         name="tanggapan_masyarakat" value="tidak baik">
-                                    <label class="form-check-label" for="tanggapan_masyarakat_tidak_baik">Tidak Baik</label>
+                                    <label class="form-check-label" for="tanggapan_masyarakat_tidak_baik">Tidak
+                                        Baik</label>
                                 </div>
                             </div>
 
@@ -630,189 +632,56 @@
                             <div id="jmljam1pekan" style="font-size: 10px" class="fst-italic">(*Ditulis Berupa Angka
                             </div>
                             <div id="descSaran" style="font-size: 10px" class="form-text fst-italic mb-4">
-                                (* jika belum ada bisyaroh atau belum sampai pada bulannya, pilih tidak ada dan kosongkan nilai bisyaroh
+                                (* jika belum ada bisyaroh atau belum sampai pada bulannya, pilih tidak ada dan kosongkan
+                                nilai bisyaroh
                             </div>
-                            <div class="mb-3">
-                                <div class="mb-0">Bisyaroh 1</div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_satu_ya" name="bisyaroh_satu"
-                                        value="Ya">
-                                    <label class="form-check-label" for="bisyaroh_satu_ya">Ya</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_satu_tidak" name="bisyaroh_satu"
-                                        value="Tidak">
-                                    <label class="form-check-label" for="bisyaroh_satu_tidak">Tidak</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bisyaroh_satu_sebanyak" class="form-label">Sebanyak</label>
-                                <input type="number" class="form-control" id="bisyaroh_satu_sebanyak"
-                                    name="bisyaroh_satu_sebanyak">
-                            </div>
+                            @php
+                                $namaBisyaroh = [
+                                    1 => 'satu',
+                                    2 => 'dua',
+                                    3 => 'tiga',
+                                    4 => 'empat',
+                                    5 => 'lima',
+                                    6 => 'enam',
+                                    7 => 'tujuh',
+                                    8 => 'delapan',
+                                    9 => 'sembilan',
+                                    10 => 'sepuluh',
+                                ];
+                                $awal = $batch * 3 + 1;
+                                $akhir = $awal + 2;
+                            @endphp
 
-                            <div class="mb-3">
-                                <div class="mb-0">Bisyaroh 2</div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_dua_ya" name="bisyaroh_dua"
-                                        value="Ya">
-                                    <label class="form-check-label" for="bisyaroh_dua_ya">Ya</label>
+                            @for ($i = $awal; $i <= $akhir; $i++)
+                                @php
+                                    $nama = $namaBisyaroh[$i];
+                                @endphp
+
+                                <div class="mb-3">
+                                    <div class="mb-0">Bisyaroh {{ $i }} ({{ ucfirst($nama) }})</div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                            id="bisyaroh_{{ $nama }}_ya" name="bisyaroh_{{ $nama }}"
+                                            value="Ya">
+                                        <label class="form-check-label" for="bisyaroh_{{ $nama }}_ya">Ya</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                            id="bisyaroh_{{ $nama }}_tidak" name="bisyaroh_{{ $nama }}"
+                                            value="Tidak">
+                                        <label class="form-check-label"
+                                            for="bisyaroh_{{ $nama }}_tidak">Tidak</label>
+                                    </div>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_dua_tidak" name="bisyaroh_dua"
-                                        value="Tidak">
-                                    <label class="form-check-label" for="bisyaroh_dua_tidak">Tidak</label>
+
+                                <div class="mb-3">
+                                    <label for="bisyaroh_{{ $nama }}_sebanyak"
+                                        class="form-label">Sebanyak</label>
+                                    <input type="number" class="form-control"
+                                        id="bisyaroh_{{ $nama }}_sebanyak"
+                                        name="bisyaroh_{{ $nama }}_sebanyak">
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bisyaroh_dua_sebanyak" class="form-label">Sebanyak</label>
-                                <input type="number" class="form-control" id="bisyaroh_dua_sebanyak"
-                                    name="bisyaroh_dua_sebanyak">
-                            </div>
-                            <div class="mb-3">
-                                <div class="mb-0">Bisyaroh 3</div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_tiga_ya" name="bisyaroh_tiga"
-                                        value="Ya">
-                                    <label class="form-check-label" for="bisyaroh_tiga_ya">Ya</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_tiga_tidak" name="bisyaroh_tiga"
-                                        value="Tidak">
-                                    <label class="form-check-label" for="bisyaroh_tiga_tidak">Tidak</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bisyaroh_tiga_sebanyak" class="form-label">Sebanyak</label>
-                                <input type="number" class="form-control" id="bisyaroh_tiga_sebanyak"
-                                    name="bisyaroh_tiga_sebanyak">
-                            </div>
-                            <div class="mb-3">
-                                <div class="mb-0">Bisyaroh 4</div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_empat_ya" name="bisyaroh_empat"
-                                        value="Ya">
-                                    <label class="form-check-label" for="bisyaroh_empat_ya">Ya</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_empat_tidak" name="bisyaroh_empat"
-                                        value="Tidak">
-                                    <label class="form-check-label" for="bisyaroh_empat_tidak">Tidak</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bisyaroh_empat_sebanyak" class="form-label">Sebanyak</label>
-                                <input type="number" class="form-control" id="bisyaroh_empat_sebanyak"
-                                    name="bisyaroh_empat_sebanyak">
-                            </div>
-                            <div class="mb-3">
-                                <div class="mb-0">Bisyaroh 5</div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_lima_ya" name="bisyaroh_lima"
-                                        value="Ya">
-                                    <label class="form-check-label" for="bisyaroh_lima_ya">Ya</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_lima_tidak" name="bisyaroh_lima"
-                                        value="Tidak">
-                                    <label class="form-check-label" for="bisyaroh_lima_tidak">Tidak</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bisyaroh_lima_sebanyak" class="form-label">Sebanyak</label>
-                                <input type="number" class="form-control" id="bisyaroh_lima_sebanyak"
-                                    name="bisyaroh_lima_sebanyak">
-                            </div>
-                            <div class="mb-3">
-                                <div class="mb-0">Bisyaroh 6</div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_enam_ya" name="bisyaroh_enam"
-                                        value="Ya">
-                                    <label class="form-check-label" for="bisyaroh_enam_ya">Ya</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_enam_tidak" name="bisyaroh_enam"
-                                        value="Tidak">
-                                    <label class="form-check-label" for="bisyaroh_enam_tidak">Tidak</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bisyaroh_enam_sebanyak" class="form-label">Sebanyak</label>
-                                <input type="number" class="form-control" id="bisyaroh_enam_sebanyak"
-                                    name="bisyaroh_enam_sebanyak">
-                            </div>
-                            <div class="mb-3">
-                                <div class="mb-0">Bisyaroh 7</div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_tujuh_ya" name="bisyaroh_tujuh"
-                                        value="Ya">
-                                    <label class="form-check-label" for="bisyaroh_tujuh_ya">Ya</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_tujuh_tidak" name="bisyaroh_tujuh"
-                                        value="Tidak">
-                                    <label class="form-check-label" for="bisyaroh_tujuh_tidak">Tidak</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bisyaroh_tujuh_sebanyak" class="form-label">Sebanyak</label>
-                                <input type="number" class="form-control" id="bisyaroh_tujuh_sebanyak"
-                                    name="bisyaroh_tujuh_sebanyak">
-                            </div>
-                            <div class="mb-3">
-                                <div class="mb-0">Bisyaroh 8</div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_delapan_ya" name="bisyaroh_delapan"
-                                        value="Ya">
-                                    <label class="form-check-label" for="bisyaroh_delapan_ya">Ya</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_delapan_tidak" name="bisyaroh_delapan"
-                                        value="Tidak">
-                                    <label class="form-check-label" for="bisyaroh_delapan_tidak">Tidak</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bisyaroh_delapan_sebanyak" class="form-label">Sebanyak</label>
-                                <input type="number" class="form-control" id="bisyaroh_delapan_sebanyak"
-                                    name="bisyaroh_delapan_sebanyak">
-                            </div>
-                            <div class="mb-3">
-                                <div class="mb-0">Bisyaroh 9</div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_sembilan_ya" name="bisyaroh_sembilan"
-                                        value="Ya">
-                                    <label class="form-check-label" for="bisyaroh_sembilan_ya">Ya</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_sembilan_tidak" name="bisyaroh_sembilan"
-                                        value="Tidak">
-                                    <label class="form-check-label" for="bisyaroh_sembilan_tidak">Tidak</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bisyaroh_sembilan_sebanyak" class="form-label">Sebanyak</label>
-                                <input type="number" class="form-control" id="bisyaroh_sembilan_sebanyak"
-                                    name="bisyaroh_sembilan_sebanyak">
-                            </div>
-                            <div class="mb-3">
-                                <div class="mb-0">Bisyaroh 10</div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_sepuluh_ya" name="bisyaroh_sepuluh"
-                                        value="Ya">
-                                    <label class="form-check-label" for="bisyaroh_sepuluh_ya">Ya</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="bisyaroh_sepuluh_tidak" name="bisyaroh_sepuluh"
-                                        value="Tidak">
-                                    <label class="form-check-label" for="bisyaroh_sepuluh_tidak">Tidak</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bisyaroh_sepuluh_sebanyak" class="form-label">Sebanyak</label>
-                                <input type="number" class="form-control" id="bisyaroh_sepuluh_sebanyak"
-                                    name="bisyaroh_sepuluh_sebanyak">
-                            </div>
+                            @endfor
                         </div>
                     </div>
                 </div>

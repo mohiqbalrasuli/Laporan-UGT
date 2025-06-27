@@ -50,6 +50,7 @@ class UbahPasswordController extends Controller
             'admin' =>'admin.layout.template_admin',
             'GT' => 'GT.layout.template_GT',
             'PJGT' => 'PJGT.layout.template_PJGT',
+            'pengurus' => 'pengurus.layout.template_pengurus',
             default => 'layouts.default', // fallback layout
         };
         return view('ubah_password.verification_code', compact('layout'));
@@ -78,6 +79,8 @@ class UbahPasswordController extends Controller
                 return redirect('/PJGT/profile')->with('success', 'Password berhasil diubah.');
             } elseif (Auth::user()->role === 'GT') {
                 return redirect('/GT/profile')->with('success', 'Password berhasil diubah.');
+            }elseif (Auth::user()->role === 'pengurus') {
+                return redirect('/pengurus/profile')->with('success', 'Password berhasil diubah.');
             }
         }
 

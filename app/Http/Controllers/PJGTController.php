@@ -173,7 +173,8 @@ class PJGTController extends Controller
                 ->where('created_at', '>=', $today->copy()->subMonths(3))
                 ->exists();
         }
-        return view('PJGT.input-laporan-PJGT', compact('user', 'dalamRentang', 'sudahLapor'));
+        $jumlahLaporan = DB::table('table_laporan_pjgt')->where('pjgt_id', Auth::user())->count();
+        return view('PJGT.input-laporan-PJGT',['batch' => $jumlahLaporan], compact('user', 'dalamRentang', 'sudahLapor',));
     }
 
     public function laporan_store(Request $request)
@@ -225,20 +226,6 @@ class PJGTController extends Controller
                 'bisyaroh_dua_sebanyak' => 'required_if:bisyaroh_dua,Ya|nullable|numeric',
                 'bisyaroh_tiga' => 'required|string|in:Ya,Tidak',
                 'bisyaroh_tiga_sebanyak' => 'required_if:bisyaroh_tiga,Ya|nullable|numeric',
-                'bisyaroh_empat' => 'required|string|in:Ya,Tidak',
-                'bisyaroh_empat_sebanyak' => 'required_if:bisyaroh_empat,Ya|nullable|numeric',
-                'bisyaroh_lima' => 'required|string|in:Ya,Tidak',
-                'bisyaroh_lima_sebanyak' => 'required_if:bisyaroh_lima,Ya|nullable|numeric',
-                'bisyaroh_enam' => 'required|string|in:Ya,Tidak',
-                'bisyaroh_enam_sebanyak' => 'required_if:bisyaroh_enam,Ya|nullable|numeric',
-                'bisyaroh_tujuh' => 'required|string|in:Ya,Tidak',
-                'bisyaroh_tujuh_sebanyak' => 'required_if:bisyaroh_tujuh,Ya|nullable|numeric',
-                'bisyaroh_delapan' => 'required|string|in:Ya,Tidak',
-                'bisyaroh_delapan_sebanyak' => 'required_if:bisyaroh_delapan,Ya|nullable|numeric',
-                'bisyaroh_sembilan' => 'required|string|in:Ya,Tidak',
-                'bisyaroh_sembilan_sebanyak' => 'required_if:bisyaroh_sembilan,Ya|nullable|numeric',
-                'bisyaroh_sepuluh' => 'required|string|in:Ya,Tidak',
-                'bisyaroh_sepuluh_sebanyak' => 'required_if:bisyaroh_sepuluh,Ya|nullable|numeric',
                 'usulan' => 'required|string',
             ]);
 
@@ -276,31 +263,31 @@ class PJGTController extends Controller
                 'hubungan_dengan_murid_diluar' => $request->hubungan_dengan_murid_diluar,
                 'tanggapan_murid' => $request->tanggapan_murid,
                 'tanggapan_masyarakat' => $request->tanggapan_masyarakat,
-                'bisyaroh_satu' => $request->bisyaroh_satu,
+                'bisyaroh_satu' => $request->bisyaroh_satu ?? 'Tidak',
                 'bisyaroh_satu_sebanyak' => $request->bisyaroh_satu_sebanyak,
-                'bisyaroh_dua' => $request->bisyaroh_dua,
+                'bisyaroh_dua' => $request->bisyaroh_dua ?? 'Tidak',
                 'bisyaroh_dua_sebanyak' => $request->bisyaroh_dua_sebanyak,
-                'bisyaroh_tiga' => $request->bisyaroh_tiga,
+                'bisyaroh_tiga' => $request->bisyaroh_tiga ?? 'Tidak',
                 'bisyaroh_tiga_sebanyak' => $request->bisyaroh_tiga_sebanyak,
-                'bisyaroh_empat' => $request->bisyaroh_empat,
+                'bisyaroh_empat' => $request->bisyaroh_empat ?? 'Tidak',
                 'bisyaroh_empat_sebanyak' => $request->bisyaroh_empat_sebanyak,
-                'bisyaroh_lima' => $request->bisyaroh_lima,
+                'bisyaroh_lima' => $request->bisyaroh_lima  ?? 'Tidak',
                 'bisyaroh_lima_sebanyak' => $request->bisyaroh_lima_sebanyak,
-                'bisyaroh_enam' => $request->bisyaroh_enam,
+                'bisyaroh_enam' => $request->bisyaroh_enam  ?? 'Tidak',
                 'bisyaroh_enam_sebanyak' => $request->bisyaroh_enam_sebanyak,
-                'bisyaroh_tujuh' => $request->bisyaroh_tujuh,
+                'bisyaroh_tujuh' => $request->bisyaroh_tujuh  ?? 'Tidak',
                 'bisyaroh_tujuh_sebanyak' => $request->bisyaroh_tujuh_sebanyak,
-                'bisyaroh_delapan' => $request->bisyaroh_delapan,
+                'bisyaroh_delapan' => $request->bisyaroh_delapan  ?? 'Tidak',
                 'bisyaroh_delapan_sebanyak' => $request->bisyaroh_delapan_sebanyak,
-                'bisyaroh_sembilan' => $request->bisyaroh_sembilan,
+                'bisyaroh_sembilan' => $request->bisyaroh_sembilan ?? 'Tidak',
                 'bisyaroh_sembilan_sebanyak' => $request->bisyaroh_sembilan_sebanyak,
-                'bisyaroh_sepuluh' => $request->bisyaroh_sepuluh,
+                'bisyaroh_sepuluh' => $request->bisyaroh_sepuluh ?? 'Tidak',
                 'bisyaroh_sepuluh_sebanyak' => $request->bisyaroh_sepuluh_sebanyak,
                 'usulan' => $request->usulan,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
-
+            LaporanPJGTModel::create($data);
             return redirect()->back()->with('success', 'Laporan berhasil disimpan');
         } catch (\Exception $e) {
             return redirect()

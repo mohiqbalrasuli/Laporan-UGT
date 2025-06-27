@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
     <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
@@ -83,6 +84,9 @@
                                     class="fa fa-clipboard-list me-2"></i>Laporan GT</a>
                         </div>
                     </div>
+                    <a href="{{ url('admin/laporan-masalah') }}"
+                        class="nav-item nav-link {{ Request::is('admin/laporan-masalah') ? 'active' : '' }}"><i
+                            class="fa fa-exclamation-triangle me-2"></i>Laporan Masalah</a>
                 </div>
             </nav>
         </div>
@@ -102,11 +106,53 @@
                     <div class="nav-item dropdown">
                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2 position-relative">
+                                @if (isset($notifikasi) && $notifikasi->count() > 0)
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                        style="font-size: 0.6em;">
+                                        {{ $notifikasi->count() }}
+                                    </span>
+                                @endif
                             </i>
                             <span class="d-none d-lg-inline-flex">Notifikasi</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Tidak ada notifikasi</a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"
+                            style="max-height: 300px; overflow-y: auto; min-width: 300px;">
+                            @if (isset($notifikasi) && $notifikasi->count() > 0)
+                                @foreach ($notifikasi as $notification)
+                                    <a href="{{ $notification->data['url'] }}" class="dropdown-item py-2"
+                                        onclick="markAsRead('{{ $notification->id }}')">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <i class="fa fa-info-circle text-primary me-2"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-bold" style="font-size: 0.9em;">
+                                                    {{ $notification->data['pesan'] }}</div>
+                                                <div class="text-muted" style="font-size: 0.8em;">
+                                                    @if ($notification->data['user_name'])
+                                                        Oleh: {{ $notification->data['user_name'] }}
+                                                        ({{ $notification->data['user_role'] }})
+                                                    @endif
+                                                </div>
+                                                <div class="text-muted" style="font-size: 0.7em;">
+                                                    {{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    @if (!$loop->last)
+                                        <div class="dropdown-divider"></div>
+                                    @endif
+                                @endforeach
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ url('admin/notifikasi/baca-semua') }}"
+                                    class="dropdown-item text-center text-primary">
+                                    <small>Baca Semua Notifikasi</small>
+                                </a>
+                            @else
+                                <a href="#" class="dropdown-item">Tidak ada notifikasi</a>
+                            @endif
                         </div>
                     </div>
 
@@ -116,7 +162,7 @@
                             <span class="d-none d-lg-inline-flex">{{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Profil Saya</a>
+                            <a href="{{ url('admin/profile') }}" class="dropdown-item">Profil Saya</a>
                             <a href="{{ url('admin/setting') }}" class="dropdown-item">Setelan</a>
                             <a href="/logout" class="dropdown-item">Keluar</a>
                         </div>
@@ -134,7 +180,7 @@
                                 Al-Usymuni</a>, All Right Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                            <!--/*** This template is free as long as you keep the footer author's credit link/attribution link/backlink. If you'd like to use the template without the footer author's credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                             Devalopment By <a class="text-success" href="https://moh-iqbal-rasuli.netlify.app/">Moh.
                                 Iqbal Rasuli</a>
                         </div>
@@ -160,6 +206,61 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    <!-- Notification Scripts -->
+    <script>
+        function markAsRead(notificationId) {
+            fetch(`/admin/notifikasi/mark-as-read/${notificationId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove the notification from the dropdown
+                        const notificationElement = document.querySelector(
+                            `[onclick="markAsRead('${notificationId}')"]`);
+                        if (notificationElement) {
+                            notificationElement.remove();
+                        }
+
+                        // Update notification count
+                        updateNotificationCount();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function updateNotificationCount() {
+            const badge = document.querySelector('.fa-bell .badge');
+            const notifications = document.querySelectorAll('.dropdown-item[onclick^="markAsRead"]');
+
+            if (notifications.length === 0) {
+                if (badge) {
+                    badge.remove();
+                }
+                // Show "Tidak ada notifikasi" message
+                const dropdownMenu = document.querySelector('.dropdown-menu');
+                dropdownMenu.innerHTML = '<a href="#" class="dropdown-item">Tidak ada notifikasi</a>';
+            } else {
+                if (badge) {
+                    badge.textContent = notifications.length;
+                } else {
+                    const bell = document.querySelector('.fa-bell');
+                    const newBadge = document.createElement('span');
+                    newBadge.className = 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger';
+                    newBadge.style.fontSize = '0.6em';
+                    newBadge.textContent = notifications.length;
+                    bell.appendChild(newBadge);
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>

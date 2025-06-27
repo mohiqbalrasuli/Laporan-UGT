@@ -21,7 +21,6 @@
                                 <th scope="col">Alamat PJGT</th>
                                 <th scope="col">Nama GT</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -45,6 +45,7 @@
                     <a href="{{ url('GT/profile') }}" class="nav-item nav-link {{ Request::is('GT/profile') ? 'active' : '' }}"><i class="fa fa-user-tie me-2"></i>Profile</a>
                     <a href="{{ url('GT/input-laporan') }}" class="nav-item nav-link {{ Request::is('GT/input-laporan') ? 'active' : '' }}   "><i class="fa fa-pen me-2"></i>Input Laporan</a>
                     <a href="{{ url('GT/data-laporan-GT') }}" class="nav-item nav-link {{ Request::is('GT/data-laporan-GT') ? 'active' : '' }}"><i class="fa fa-file-alt me-2"></i>Data Laporan</a>
+                    <a href="{{ url('GT/laporan-masalah') }}" class="nav-item nav-link {{ Request::is('GT/laporan-masalah') ? 'active' : '' }}"><i class="fa fa-exclamation-triangle me-2"></i>Laporan Masalah</a>
                     <a href="{{ url('GT/ubah-password') }}" class="nav-item nav-link  {{ Request::is('GT/ubah-password') ? 'active' : '' }} "><i class="fa fa-edit me-2"></i>Ubah Password</a>
                 </div>
             </nav>

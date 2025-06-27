@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\User;
 
 class UserActionNotification extends Notification
 {
@@ -16,11 +17,15 @@ class UserActionNotification extends Notification
      */
     protected $pesan;
     protected $url;
+    protected $user;
+    protected $action;
 
-    public function __construct($pesan, $url = '#')
+    public function __construct($pesan, $url = '#', $user = null, $action = null)
     {
         $this->pesan = $pesan;
         $this->url = $url;
+        $this->user = $user;
+        $this->action = $action;
     }
 
     /**
@@ -41,6 +46,11 @@ class UserActionNotification extends Notification
         return [
             'pesan' => $this->pesan,
             'url' => $this->url,
+            'user_id' => $this->user ? $this->user->id : null,
+            'user_name' => $this->user ? $this->user->name : null,
+            'user_role' => $this->user ? $this->user->role : null,
+            'action' => $this->action,
+            'timestamp' => now(),
         ];
     }
 
@@ -52,7 +62,25 @@ class UserActionNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'pesan' => $this->pesan,
+            'url' => $this->url,
+            'user_id' => $this->user ? $this->user->id : null,
+            'user_name' => $this->user ? $this->user->name : null,
+            'user_role' => $this->user ? $this->user->role : null,
+            'action' => $this->action,
+            'timestamp' => now(),
         ];
+    }
+
+    /**
+     * Send notification to all admin users
+     */
+    public static function notifyAdmins($pesan, $url = '#', $user = null, $action = null)
+    {
+        $admins = User::where('role', 'admin')->get();
+
+        foreach ($admins as $admin) {
+            $admin->notify(new self($pesan, $url, $user, $action));
+        }
     }
 }

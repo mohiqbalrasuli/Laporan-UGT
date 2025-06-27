@@ -26,7 +26,7 @@
                                     @endforeach
                                 </ul>
                             </div>
-                            <a href="{{ url('admin/data-PJGT/export-laporan') }}" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Export Spreadsheet</a>
+                            <a href="{{ url('admin/data-PJGT/export-laporan') }}" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Export Excel</a>
                         </div>
                     </div>
                     <div class="table-responsive">

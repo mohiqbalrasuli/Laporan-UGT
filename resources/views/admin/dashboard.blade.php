@@ -70,13 +70,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($laporan_gt_terbaru as $item -> $laporan) )
+                                    @foreach ($laporan_gt_terbaru as $item => $laporan)
                                     <tr>
                                         <th scope="row">{{ $item + 1 }}</th>
-                                        <td>{{ $item->laporan_ke }}</td>
-                                        <td>{{ $item->gt->user->name }}</td>
-                                        <td>{{ $item->gt->madrasah->nama_madrasah }}</td>
-                                        <td>{{ $item->gt->pjgt->user->name }}</td>
+                                        <td>{{ $laporan->laporan_ke }}</td>
+                                        <td>{{ $laporan->gt->user->name }}</td>
+                                        <td>{{ $laporan->gt->madrasah->nama_madrasah }}</td>
+                                        <td>{{ $laporan->gt->pjgt->user->name }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -101,13 +101,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($laporan_pjgt_terbaru as $item -> $laporan) )
+                                    @foreach ($laporan_pjgt_terbaru as $item => $laporan)
                                     <tr>
                                         <th scope="row">{{ $item + 1 }}</th>
-                                        <td>{{ $item->laporan_ke }}</td>
-                                        <td>{{ $item->pjgt->user->name }}</td>
-                                        <td>{{ $item->pjgt->madrasah->nama_madrasah }}</td>
-                                        <td>{{ $item->pjgt->gt->user->name }}</td>
+                                        <td>{{ $laporan->laporan_ke }}</td>
+                                        <td>{{ $laporan->pjgt->user->name }}</td>
+                                        <td>{{ $laporan->pjgt->madrasah->nama_madrasah }}</td>
+                                        <td>{{ $laporan->pjgt->gt->user->name }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
