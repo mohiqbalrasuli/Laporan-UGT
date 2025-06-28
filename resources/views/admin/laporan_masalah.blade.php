@@ -1,4 +1,4 @@
-@extends('admin.layout.template_admin')
+@extends($layout)
 @section('title', 'Laporan Masalah')
 @section('content')
     <div class="container-fluid pt-4 px-4">

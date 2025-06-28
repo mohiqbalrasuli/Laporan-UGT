@@ -46,6 +46,8 @@
                     <a href="{{ url('admin/dashboard') }}"
                         class="nav-item nav-link {{ Request::is('admin/dashboard') ? 'active' : '' }}"><i
                             class="fa fa-chart-pie me-2"></i>Dashboard</a>
+                        <a href="{{ url('admin/pengajuan-gt') }}"
+                            class="nav-item nav-link {{ Request::is('admin/pengajuan-gt') ? 'active' : '' }}"><i class="fa fa-file-signature me-2"></i>Pengajuan GT</a>
                     <a href="{{ url('admin/data-pengurus') }}"
                         class="nav-item nav-link {{ Request::is('admin/data-pengurus') ? 'active' : '' }}"><i
                             class="fa fa-user me-2"></i>Data Pengurus</a>

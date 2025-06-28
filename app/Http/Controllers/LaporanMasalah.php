@@ -15,7 +15,12 @@ class LaporanMasalah extends Controller
     {
         $laporan_pjgt = MasalahPJGT::with(['pjgt', 'pjgt.gt'])->get();
         $laporan_gt = MasalahGT::with(['gt', 'gt.pjgt'])->get();
-        return view('admin.laporan_masalah', compact('laporan_pjgt', 'laporan_gt'));
+        $layout = match (Auth::user()->role) {
+            'admin' => 'admin.layout.template_admin',
+            'pengurus' => 'pengurus.layout.template_pengurus',
+            default => 'layouts.default', // fallback layout
+            };
+        return view('admin.laporan_masalah', compact('laporan_pjgt', 'laporan_gt', 'layout'));
     }
     public function indexPJGT()
     {

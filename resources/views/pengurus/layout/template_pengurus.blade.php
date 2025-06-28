@@ -74,6 +74,9 @@
                                     class="fa fa-clipboard-list me-2"></i>Laporan GT</a>
                         </div>
                     </div>
+                    <a href="{{ url('pengurus/laporan-masalah') }}"
+                        class="nav-item nav-link {{ Request::is('pengurus/laporan-masalah') ? 'active' : '' }}"><i
+                            class="fa fa-exclamation-triangle me-2"></i>Laporan Masalah</a>
                     <a href="{{ url('pengurus/ubah-password') }}" class="nav-item nav-link  {{ Request::is('pengurus/ubah-password') ? 'active' : '' }} "><i class="fa fa-edit me-2"></i>Ubah Password</a>
                 </div>
             </nav>

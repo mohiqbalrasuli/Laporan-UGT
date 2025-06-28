@@ -6,6 +6,7 @@ use App\Http\Controllers\GTController;
 use App\Http\Controllers\LaporanMasalah;
 use App\Http\Controllers\MadrasahController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\PJGTController;
 use App\Http\Controllers\profileAdmin;
@@ -23,6 +24,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'ShowRegister']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/logout', [AuthController::class, 'logout']);
+
+// pengajuan GT
+Route::get('/pengajuan-gt', [PengajuanController::class, 'index']);
+Route::post('/pengajuan-gt/store', [PengajuanController::class, 'store']);
+Route::get('/pengajuan-gt/hasil/{id}', [PengajuanController::class, 'Show']);
+Route::get('/pengajuan-gt/cetak/{id}', [PengajuanController::class, 'cetakPdf']);
 
 Route::prefix('admin')
     ->middleware('auth', 'admin')
@@ -72,6 +79,7 @@ Route::prefix('admin')
         Route::get('/laporan-masalah', [LaporanMasalah::class, 'index']);
         Route::get('/profile',[profileAdmin::class, 'index']);
         Route::post('/update/{id}', [profileAdmin::class, 'update']);
+        Route::get('/pengajuan-gt',[PengajuanController::class,'pengajuanGT']);
         // notifikasi
         Route::get('/notifikasi/baca-semua', [NotificationController::class, 'markAllAsRead'])->name('notifikasi.baca_semua');
         Route::post('/notifikasi/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('notifikasi.mark_as_read');
@@ -99,6 +107,7 @@ Route::prefix('pengurus')
             Route::get('/export-laporan', [GTController::class, 'export_laporan']);
             Route::get('/laporan/per-laporan-ke/{laporanKe}/zip', [GTController::class, 'exportZipPerLaporanKe']);
         });
+        Route::get('/laporan-masalah', [LaporanMasalah::class, 'index']);
     });
 Route::prefix('PJGT')
     ->middleware('auth', 'PJGT')
