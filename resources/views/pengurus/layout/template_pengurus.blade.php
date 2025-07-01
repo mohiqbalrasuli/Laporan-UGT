@@ -45,6 +45,9 @@
                     <a href="{{ url('pengurus/profile') }}"
                         class="nav-item nav-link {{ Request::is('GT/profile') ? 'active' : '' }}"><i
                             class="fa fa-user-tie me-2"></i>Profile</a>
+                    <a href="{{ url('pengurus/pengajuan-gt') }}"
+                        class="nav-item nav-link {{ Request::is('pengurus/pengajuan-gt') ? 'active' : '' }}"><i
+                            class="fa fa-file-signature me-2"></i>Pengajuan GT</a>
                     <a href="{{ url('pengurus/data-madrasah') }}"
                         class="nav-item nav-link {{ Request::is('pengurus/data-madrasah') ? 'active' : '' }}"><i
                             class="fa fa-school me-2"></i>Data Madrasah</a>

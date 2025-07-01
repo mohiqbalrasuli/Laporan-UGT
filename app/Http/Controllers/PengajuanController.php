@@ -6,14 +6,20 @@ use App\Models\pengajuanGt;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PengajuanController extends Controller
 {
     public function pengajuanGT()
     {
+        $layout = match (Auth::user()->role) {
+            'admin' => 'admin.layout.template_admin',
+            'pengurus' => 'pengurus.layout.template_pengurus',
+            default => 'layouts.default', // fallback layout
+        };
         Carbon::setLocale('id');
         $hasilpengajuan = pengajuanGt::all();
-        return view('admin.pengajuan.pengajuan',compact('hasilpengajuan'));
+        return view('admin.pengajuan.pengajuan',compact('hasilpengajuan','layout'));
     }
     public function index()
     {

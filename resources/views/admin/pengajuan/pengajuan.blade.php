@@ -1,4 +1,4 @@
-@extends('admin.layout.template_admin')
+@extends($layout)
 @section('title','Pengajuan Guru Tugas')
 @section('content')
     <div class="container-fluid pt-4 px-4">
@@ -13,7 +13,6 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Tanggal Pengajuan</th>
                                     <th>Nama Madrasah</th>
                                     <th>Alamat Madrasah</th>
                                     <th>Nama Penanggung Jawab</th>
@@ -26,7 +25,6 @@
                                 @foreach ($hasilpengajuan as $key => $pengajuan)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($pengajuan->created_at)->translatedFormat('d F Y - H:i') }} WIB</td>
                                     <td>{{ $pengajuan->nama_madrasah }}</td>
                                     <td>{{ $pengajuan->alamat_madrasah }}</td>
                                     <td>{{ $pengajuan->nama_pjgt }}</td>
@@ -140,6 +138,90 @@
                                         </div>
 
                                         <h6 class="mb-3">Data Murid - Ibtida'iyah dan Awaliyah/Ula</h6>
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Laki-laki Kelas 1</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_1_lk }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Perempuan Kelas 1</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_1_pr }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Kelas 1 (Total)</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_1 }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Laki-laki Kelas 2</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_2_lk }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Perempuan Kelas 2</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_2_pr }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Kelas 2 (Total)</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_2 }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Laki-laki Kelas 3</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_3_lk }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Perempuan Kelas 3</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_3_pr }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Kelas 3 (Total)</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_3 }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Laki-laki Kelas 4</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_4_lk }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Perempuan Kelas 4</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_4_pr }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Kelas 4 (Total)</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_4 }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Laki-laki Kelas 5</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_5_lk }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Perempuan Kelas 5</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_5_pr }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Kelas 5 (Total)</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_5 }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Laki-laki Kelas 6</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_6_lk }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Perempuan Kelas 6</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_6_pr }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-bold">Jumlah Murid Kelas 6 (Total)</label>
+                                                <p>{{ $pengajuan->jumlah_kelas_6 }}</p>
+                                            </div>
+                                        </div>
                                         <div class="row mb-3">
                                             <div class="col-md-4">
                                                 <label class="form-label fw-bold">Jumlah Murid Laki-laki</label>

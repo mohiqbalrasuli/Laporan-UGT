@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
@@ -46,8 +46,9 @@
                     <a href="{{ url('admin/dashboard') }}"
                         class="nav-item nav-link {{ Request::is('admin/dashboard') ? 'active' : '' }}"><i
                             class="fa fa-chart-pie me-2"></i>Dashboard</a>
-                        <a href="{{ url('admin/pengajuan-gt') }}"
-                            class="nav-item nav-link {{ Request::is('admin/pengajuan-gt') ? 'active' : '' }}"><i class="fa fa-file-signature me-2"></i>Pengajuan GT</a>
+                    <a href="{{ url('admin/pengajuan-gt') }}"
+                        class="nav-item nav-link {{ Request::is('admin/pengajuan-gt') ? 'active' : '' }}"><i
+                            class="fa fa-file-signature me-2"></i>Pengajuan GT</a>
                     <a href="{{ url('admin/data-pengurus') }}"
                         class="nav-item nav-link {{ Request::is('admin/data-pengurus') ? 'active' : '' }}"><i
                             class="fa fa-user me-2"></i>Data Pengurus</a>
@@ -105,7 +106,7 @@
                 <img src="{{ asset('assets/img/logo.png') }}" class="logo-mini" alt="Logo MMU"
                     style="margin-left: 10px" width="35px">
                 <div class="navbar-nav align-items-center ms-auto">
-                    <div class="nav-item dropdown">
+                    {{-- <div class="nav-item dropdown">
                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2 position-relative">
                                 @if (isset($notifikasi) && $notifikasi->count() > 0)
@@ -156,7 +157,7 @@
                                 <a href="#" class="dropdown-item">Tidak ada notifikasi</a>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="nav-item dropdown">
                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">

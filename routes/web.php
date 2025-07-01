@@ -80,9 +80,6 @@ Route::prefix('admin')
         Route::get('/profile',[profileAdmin::class, 'index']);
         Route::post('/update/{id}', [profileAdmin::class, 'update']);
         Route::get('/pengajuan-gt',[PengajuanController::class,'pengajuanGT']);
-        // notifikasi
-        Route::get('/notifikasi/baca-semua', [NotificationController::class, 'markAllAsRead'])->name('notifikasi.baca_semua');
-        Route::post('/notifikasi/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('notifikasi.mark_as_read');
     });
 Route::prefix('pengurus')
     ->middleware('auth', 'pengurus')
@@ -107,6 +104,7 @@ Route::prefix('pengurus')
             Route::get('/export-laporan', [GTController::class, 'export_laporan']);
             Route::get('/laporan/per-laporan-ke/{laporanKe}/zip', [GTController::class, 'exportZipPerLaporanKe']);
         });
+        Route::get('/pengajuan-gt',[PengajuanController::class,'pengajuanGT']);
         Route::get('/laporan-masalah', [LaporanMasalah::class, 'index']);
     });
 Route::prefix('PJGT')
