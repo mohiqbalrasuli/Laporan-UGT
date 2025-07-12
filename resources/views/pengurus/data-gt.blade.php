@@ -9,7 +9,7 @@
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h6 class="mb-4">Data Penanggung Jawab Guru Tugas</h6>
+                        <h6 class="mb-4">Data Guru Tugas</h6>
                     </div>
                     <table class="table">
                         <thead>

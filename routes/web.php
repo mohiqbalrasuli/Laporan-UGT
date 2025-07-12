@@ -40,7 +40,7 @@ Route::prefix('admin')
             Route::post('/store', [MadrasahController::class, 'store']);
             Route::post('/update/{id}', [MadrasahController::class, 'update']);
             Route::get('/delete/{id}', [MadrasahController::class, 'delete']);
-        });
+        }); 
         Route::prefix('data-pengurus')->group(function () {
             Route::get('/', [PengurusController::class, 'index']);
             Route::post('/store', [PengurusController::class, 'store']);

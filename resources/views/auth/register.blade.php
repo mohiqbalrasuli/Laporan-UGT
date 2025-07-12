@@ -95,6 +95,8 @@
                                 disabled>Register</button>
                             <p class="text-center mb-0">Sudah Punya Akun ? <a class="text-success"
                                     href="/login">Login</a></p>
+                            <p class="text-center mb-0">Ajukan Guru Tugas  ? <a class="text-success"
+                                    href="/pengajuan-gt">Ajukan</a></p>
                         </form>
                     </div>
                 </div>
