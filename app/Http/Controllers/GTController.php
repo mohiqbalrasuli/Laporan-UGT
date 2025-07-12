@@ -312,4 +312,12 @@ class GTController extends Controller
 
         return back()->with('error', 'Gagal membuat ZIP.');
     }
+    public function deleteLaporanGT($id)
+    {
+        $laporan = LaporanGTModel::findOrFail($id);
+        $laporan->delete();
+        return redirect()
+            ->back()
+            ->with('success', 'Laporan GT berhasil dihapus');
+    }
 }

@@ -63,6 +63,11 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDetail{{ $laporan->id }}" aria-controls="offcanvasDetail">
                                             <i class="fas fa-eye"></i>
                                         </a>
+                                        @if (Auth::user()->role === 'admin')
+                                            <a href="{{ url('admin/data-PJGT/delete-laporan-pjgt/'.$laporan->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus laporan ini?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDetail{{ $laporan->id }}" aria-labelledby="offcanvasDetailLabel">

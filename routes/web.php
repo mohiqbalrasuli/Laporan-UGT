@@ -40,7 +40,7 @@ Route::prefix('admin')
             Route::post('/store', [MadrasahController::class, 'store']);
             Route::post('/update/{id}', [MadrasahController::class, 'update']);
             Route::get('/delete/{id}', [MadrasahController::class, 'delete']);
-        }); 
+        });
         Route::prefix('data-pengurus')->group(function () {
             Route::get('/', [PengurusController::class, 'index']);
             Route::post('/store', [PengurusController::class, 'store']);
@@ -58,6 +58,7 @@ Route::prefix('admin')
             Route::get('data-laporan-PJGT', [PJGTController::class, 'data_laporan']);
             Route::get('/export-laporan', [PJGTController::class, 'export_laporan']);
             Route::get('/laporan/per-laporan-ke/{laporanKe}/zip', [PJGTController::class, 'exportZipPerLaporanKe']);
+            Route::get('/delete-laporan-pjgt/{id}', [PJGTController::class, 'deleteLaporanPJGT']);
         });
         Route::prefix('data-GT')->group(function () {
             Route::get('/', [GTController::class, 'index']);
@@ -70,6 +71,7 @@ Route::prefix('admin')
             Route::get('/data-laporan-GT', [GTController::class, 'data_laporan']);
             Route::get('/export-laporan', [GTController::class, 'export_laporan']);
             Route::get('/laporan/per-laporan-ke/{laporanKe}/zip', [GTController::class, 'exportZipPerLaporanKe']);
+            Route::get('/delete-laporan-gt/{id}', [GTController::class, 'deleteLaporanGT']);
         });
         Route::get('/setting', [SettingController::class, 'setting']);
         Route::post('/simpan-tanggal-pjgt/{id}', [SettingController::class, 'simpanTanggalPJGT']);
@@ -77,6 +79,8 @@ Route::prefix('admin')
         Route::post('/ubah-password/submit', [UbahPasswordController::class, 'submitUbahPassword']);
         Route::post('/verifikasi-kode', [UbahPasswordController::class, 'verifikasiKode']);
         Route::get('/laporan-masalah', [LaporanMasalah::class, 'index']);
+        Route::get('/laporan-masalah/delete-laporan-gt/{id}', [LaporanMasalah::class, 'deleteLaporanMasalahGT']);
+        Route::get('/laporan-masalah/delete-laporan-pjgt/{id}', [LaporanMasalah::class, 'deleteLaporanMasalahPJGT']);
         Route::get('/profile',[profileAdmin::class, 'index']);
         Route::post('/update/{id}', [profileAdmin::class, 'update']);
         Route::get('/pengajuan-gt',[PengajuanController::class,'pengajuanGT']);

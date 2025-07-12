@@ -97,22 +97,22 @@
                             <tr>
                                 <th>Nama GT</th>
                                 <th> : </th>
-                                <td>{{ $pjgt->pjgt->gt->user->name }}</td>
+                                <td>{{ $pjgt->pjgt->gt->user->name ?? "-" }}</td>
                             </tr>
                             <tr>
                                 <th>Alamat Lengkap</th>
                                 <th> : </th>
-                                <td>{{ $pjgt->pjgt->gt->alamat }}</td>
+                                <td>{{ $pjgt->pjgt->gt->alamat ?? "-" }}</td>
                             </tr>
                             <tr>
                                 <th>Asal Kelas</th>
                                 <th> : </th>
-                                <td>{{ $pjgt->pjgt->gt->asal_kelas }}</td>
+                                <td>{{ $pjgt->pjgt->gt->asal_kelas ?? "-" }}</td>
                             </tr>
                             <tr>
                                 <th>Status Tugas</th>
                                 <th> : </th>
-                                <td>{{ $pjgt->pjgt->gt->status_tugas }}</td>
+                                <td>{{ $pjgt->pjgt->gt->status_tugas ?? "-" }}</td>
                             </tr>
                         </tbody>
                     </table>

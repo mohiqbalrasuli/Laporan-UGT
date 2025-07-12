@@ -22,6 +22,18 @@ class LaporanMasalah extends Controller
             };
         return view('admin.laporan_masalah', compact('laporan_pjgt', 'laporan_gt', 'layout'));
     }
+    public function deleteLaporanMasalahGT($id)
+    {
+        $laporan = MasalahGT::findOrFail($id);
+        $laporan->delete();
+        return redirect()->back()->with('success', 'Laporan masalah berhasil dihapus');
+    }
+    public function deleteLaporanMasalahPJGT($id)
+    {
+        $laporan = MasalahPJGT::findOrFail($id);
+        $laporan->delete();
+        return redirect()->back()->with('success', 'Laporan masalah berhasil dihapus');
+    }
     public function indexPJGT()
     {
         return view('PJGT.laporan_masalah');

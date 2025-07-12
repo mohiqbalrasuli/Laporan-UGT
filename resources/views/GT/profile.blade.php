@@ -80,22 +80,22 @@
                             <tr>
                                 <th>Nama PJGT</th>
                                 <th> : </th>
-                                <td>{{ $gt->pjgt->pjgt->user->name ?? '-' }}</td>
+                                <td>{{ $gt->gt->pjgt->user->name ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Nama Madrasah</th>
                                 <th> : </th>
-                                <td>{{ $gt->pjgt->madrasah->nama_madrasah ?? '-' }}</td>
+                                <td>{{ $gt->gt->madrasah->nama_madrasah ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Kepala Madrasah</th>
                                 <th> : </th>
-                                <td>{{ $gt->pjgt->madrasah->nama_kepala_madrasah ?? '-' }}</td>
+                                <td>{{ $gt->gt->madrasah->nama_kepala_madrasah ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <th>Alamat Madrasah</th>
                                 <th> : </th>
-                                <td>{{ $gt->pjgt->madrasah->alamat_madrasah ?? '-' }}</td>
+                                <td>{{ $gt->gt->madrasah->alamat_madrasah ?? '-' }}</td>
                             </tr>
                         </tbody>
                     </table>

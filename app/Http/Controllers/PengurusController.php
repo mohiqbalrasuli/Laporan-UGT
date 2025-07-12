@@ -90,8 +90,8 @@ class PengurusController extends Controller
     }
     public function gt()
     {
-        $gt = User::with(['gt.madrasah', 'gt.gt'])
-            ->where('role', 'GR')
+        $gt = User::with(['gt.madrasah', 'gt.pjgt'])
+            ->where('role', 'GT')
             ->where('status', 'aktif')
             ->get();
 

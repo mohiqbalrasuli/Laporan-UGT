@@ -84,6 +84,11 @@
                                             data-bs-target="#offcanvasDetail{{ $laporan->id }}" aria-controls="offcanvasDetail">
                                             <i class="fas fa-eye"></i>
                                         </a>
+                                        @if (Auth::user()->role === 'admin')
+                                            <a href="{{ url('admin/data-GT/delete-laporan-gt/'.$laporan->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus laporan ini?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDetail{{ $laporan->id }}"
                                         aria-labelledby="offcanvasDetailLabel">

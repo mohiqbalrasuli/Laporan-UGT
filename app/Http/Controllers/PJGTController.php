@@ -352,4 +352,12 @@ class PJGTController extends Controller
 
         return back()->with('error', 'Gagal membuat ZIP.');
     }
+    public function deleteLaporanPJGT($id)
+    {
+        $laporan = LaporanPJGTModel::findOrFail($id);
+        $laporan->delete();
+        return redirect()
+            ->back()
+            ->with('success', 'Laporan PJGT berhasil dihapus');
+    }
 }
