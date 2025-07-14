@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/login', [AuthController::class, 'ShowLogin']);
+Route::get('/login', [AuthController::class, 'ShowLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'ShowRegister']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -31,7 +31,7 @@ Route::get('/pengajuan-gt/hasil/{id}', [PengajuanController::class, 'Show']);
 Route::get('/pengajuan-gt/cetak/{id}', [PengajuanController::class, 'cetakPdf']);
 
 Route::prefix('admin')
-    ->middleware('auth', 'admin')
+    ->middleware('auth', 'role:admin')
     ->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index']);
         Route::prefix('data-madrasah')->group(function () {
@@ -86,7 +86,7 @@ Route::prefix('admin')
         Route::get('/pengajuan-gt/delete/{id}', [PengajuanController::class, 'deletePengajuan']);
     });
 Route::prefix('pengurus')
-    ->middleware('auth', 'pengurus')
+    ->middleware('auth', 'role:pengurus')
     ->group(function () {
         Route::get('/profile', [PengurusController::class, 'profile']);
         Route::post('/update/{id}', [PengurusController::class, 'update']);
@@ -112,7 +112,7 @@ Route::prefix('pengurus')
         Route::get('/laporan-masalah', [LaporanMasalah::class, 'index']);
     });
 Route::prefix('PJGT')
-    ->middleware('auth', 'PJGT')
+    ->middleware('auth', 'role:PJGT')
     ->group(function () {
         Route::get('/profile', [PJGTController::class, 'profile']);
         Route::post('/update/{id}', [PJGTController::class, 'update']);
@@ -126,7 +126,7 @@ Route::prefix('PJGT')
         Route::post('/laporan-masalah/store', [LaporanMasalah::class, 'storeLaporanBermasahPJGT']);
     });
 Route::prefix('GT')
-    ->middleware('auth', 'GT')
+    ->middleware('auth', 'role:GT')
     ->group(function () {
         Route::get('/profile', [GTController::class, 'profile']);
         Route::post('/update/{id}', [GTController::class, 'update']);

@@ -3,13 +3,26 @@
 
 <head>
     <meta charset="utf-8">
-    <title>@yield('title','title default')</title>
+    <title>@yield('title', 'title default')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <!-- Favicon -->
-    <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
+    <!-- Favicon standar -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/favicon-16x16.png') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}">
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/apple-touch-icon.png') }}">
+
+    <!-- Android Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/img/android-chrome-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/img/android-chrome-512x512.png') }}">
+
+    <!-- Web Manifest -->
+    <link rel="manifest" href="{{ asset('assets/img/site.webmanifest') }}">
+
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,11 +55,21 @@
                         width="100px">
                 </div>
                 <div id="navbar-nav" class="navbar-nav w-100" style="gap: 5px">
-                    <a href="{{ url('PJGT/profile') }}" class="nav-item nav-link {{ Request::is('PJGT/profile') ? 'active' : '' }}"><i class="fa fa-user-tie me-2"></i>Profile</a>
-                    <a href="{{ url('PJGT/input-laporan') }}" class="nav-item nav-link {{ Request::is('PJGT/input-laporan') ? 'active' : '' }} "><i class="fa fa-pen me-2"></i>Input Laporan</a>
-                    <a href="{{ url('PJGT/data-laporan-PJGT') }}" class="nav-item nav-link {{ Request::is('PJGT/data-laporan-PJGT') ? 'active' : '' }}"><i class="fa fa-file-alt me-2"></i>Data Laporan</a>
-                    <a href="{{ url('PJGT/laporan-masalah') }}" class="nav-item nav-link {{ Request::is('PJGT/laporan-masalah') ? 'active' : '' }}"><i class="fa fa-exclamation-triangle me-2"></i>Laporan Masalah</a>
-                    <a href="{{ url('PJGT/ubah-password') }}" class="nav-item nav-link {{ Request::is('PJGT/ubah-password') ? 'active' : '' }}"><i class="fa fa-edit me-2"></i>Ubah Password</a>
+                    <a href="{{ url('PJGT/profile') }}"
+                        class="nav-item nav-link {{ Request::is('PJGT/profile') ? 'active' : '' }}"><i
+                            class="fa fa-user-tie me-2"></i>Profile</a>
+                    <a href="{{ url('PJGT/input-laporan') }}"
+                        class="nav-item nav-link {{ Request::is('PJGT/input-laporan') ? 'active' : '' }} "><i
+                            class="fa fa-pen me-2"></i>Input Laporan</a>
+                    <a href="{{ url('PJGT/data-laporan-PJGT') }}"
+                        class="nav-item nav-link {{ Request::is('PJGT/data-laporan-PJGT') ? 'active' : '' }}"><i
+                            class="fa fa-file-alt me-2"></i>Data Laporan</a>
+                    <a href="{{ url('PJGT/laporan-masalah') }}"
+                        class="nav-item nav-link {{ Request::is('PJGT/laporan-masalah') ? 'active' : '' }}"><i
+                            class="fa fa-exclamation-triangle me-2"></i>Laporan Masalah</a>
+                    <a href="{{ url('PJGT/ubah-password') }}"
+                        class="nav-item nav-link {{ Request::is('PJGT/ubah-password') ? 'active' : '' }}"><i
+                            class="fa fa-edit me-2"></i>Ubah Password</a>
                 </div>
             </nav>
         </div>
@@ -60,11 +83,11 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0 text-success">
                     <i class="fa fa-bars"></i>
                 </a>
-                <img src="{{ asset('assets/img/logo.png') }}" class="logo-mini" alt="Logo MMU" style="margin-left: 10px"
-                    width="35px">
+                <img src="{{ asset('assets/img/logo.png') }}" class="logo-mini" alt="Logo MMU"
+                    style="margin-left: 10px" width="35px">
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
-                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-user me-lg-2"></i>
                             <span class="d-none d-lg-inline-flex">{{ Auth::user()->name }}</span>
                         </a>
@@ -81,7 +104,8 @@
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; 2025 <a class=" text-success" href="https://alusymuni.ponpes.id/">Pondok Pesantren Al-Usymuni</a>, All Right Reserved.
+                            &copy; 2025 <a class=" text-success" href="https://alusymuni.ponpes.id/">Pondok Pesantren
+                                Al-Usymuni</a>, All Right Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
