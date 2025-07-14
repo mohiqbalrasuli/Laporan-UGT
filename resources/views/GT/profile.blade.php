@@ -4,14 +4,16 @@
 
 @section('content')
     <div class="container-fluid pt-4 px-4">
-        @if (session('success_login'))
-            <div class="alert alert-success mt-2" role="alert">{{ session('success_login') }}</div>
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success mt-2" role="alert">{{ session('success') }}</div>
-        @endif
         <div class="row g-4">
             <div class="col-12">
+                @if (session('success_login'))
+                    <div class="alert alert-success mt-2" role="alert">{{ session('success_login') }}</div>
+                @endif
+                @if (session('success'))
+                    <div class="alert alert-success mt-2" role="alert">{{ session('success') }}</div>
+                @elseif (session('error'))
+                    <div class="alert alert-success mt-2" role="alert">{{ session('error') }}</div>
+                @endif
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-4">Data Guru Tugas</h6>
@@ -142,8 +144,7 @@
                     <select class="form-select" name="asal_kelas" id="exampleInputasalkelas">
                         <option disabled {{ is_null($gt->gt?->asal_kelas) ? 'selected' : '' }}>Pilih Asal Kelas
                         </option>
-                        <option
-                            value="MMU Ibtidaiyah"{{ $gt->gt?->asal_kelas == 'MMU Ibtidaiyah' ? 'selected' : '' }}>
+                        <option value="MMU Ibtidaiyah"{{ $gt->gt?->asal_kelas == 'MMU Ibtidaiyah' ? 'selected' : '' }}>
                             MMU Ibtidaiyah</option>
                         <option value="MMU Tsanawiyah"
                             {{ $gt->gt?->asal_kelas == 'MMU Tsanawiyah' ? 'selected' : '' }}>MMU Tsanawiyah</option>

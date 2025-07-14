@@ -6,6 +6,15 @@
             @if (session('success'))
                 <div class="alert alert-success mt-2">{{ session('success') }}</div>
             @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
@@ -50,12 +59,12 @@
                                                         data-bs-target="#offcanvasScrolling{{ $value->id }}"
                                                         aria-controls="offcanvasScrolling"
                                                         class="dropdown-item">Edit</button></li>
-                                                    <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#nonaktif{{ $value->id }}">Nonaktifkan</button>
-                                                    </li>
-                                                    <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#modalhapus{{ $value->id }}">Hapus</button>
-                                                    </li>
+                                                <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#nonaktif{{ $value->id }}">Nonaktifkan</button>
+                                                </li>
+                                                <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#modalhapus{{ $value->id }}">Hapus</button>
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>
@@ -80,7 +89,8 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Tutup</button>
-                                                <form action="{{ url('admin/data-GT/nonaktif/'.$value->id) }}" method="POST">
+                                                <form action="{{ url('admin/data-GT/nonaktif/' . $value->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     <button type="submit" class="btn btn-success">Nonaktifkan</button>
                                                 </form>
@@ -147,10 +157,18 @@
                                                         Tugas</label>
                                                     <select class="form-select" name="status_tugas"
                                                         id="exampleInputstatustugas">
-                                                        <option disabled {{ is_null($value->gt?->status_tugas) ? 'selected' : '' }}>Pilih Status Tugas</option>
-                                                        <option value="Wajib" {{ $value->gt?->status_tugas == 'Wajib' ? 'selected' : '' }}>Wajib</option>
-                                                        <option value="Qodla" {{ $value->gt?->status_tugas == 'Qodla' ? 'selected' : '' }}>Qodla</option>
-                                                        <option value="Tathowwu" {{ $value->gt?->status_tugas == 'Tathowwu' ? 'selected' : '' }}>Tathowwu</option>
+                                                        <option disabled
+                                                            {{ is_null($value->gt?->status_tugas) ? 'selected' : '' }}>
+                                                            Pilih Status Tugas</option>
+                                                        <option value="Wajib"
+                                                            {{ $value->gt?->status_tugas == 'Wajib' ? 'selected' : '' }}>
+                                                            Wajib</option>
+                                                        <option value="Qodla"
+                                                            {{ $value->gt?->status_tugas == 'Qodla' ? 'selected' : '' }}>
+                                                            Qodla</option>
+                                                        <option value="Tathowwu"
+                                                            {{ $value->gt?->status_tugas == 'Tathowwu' ? 'selected' : '' }}>
+                                                            Tathowwu</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
@@ -158,9 +176,15 @@
                                                         Kelas</label>
                                                     <select class="form-select" name="asal_kelas"
                                                         id="exampleInputasalkelas">
-                                                        <option disabled {{ is_null($value->gt?->asal_kelas) ? 'selected' : '' }}>Pilih Asal Kelas</option>
-                                                        <option value="MMU Ibtidaiyah"{{ $value->gt?->asal_kelas == 'MMU Ibtidaiyah' ? 'selected' : '' }} >MMU Ibtidaiyah</option>
-                                                        <option value="MMU Tsanawiyah" {{ $value->gt?->asal_kelas == 'MMU Tsanawiyah' ? 'selected' : '' }}>MMU Tsanawiyah</option>
+                                                        <option disabled
+                                                            {{ is_null($value->gt?->asal_kelas) ? 'selected' : '' }}>Pilih
+                                                            Asal Kelas</option>
+                                                        <option
+                                                            value="MMU Ibtidaiyah"{{ $value->gt?->asal_kelas == 'MMU Ibtidaiyah' ? 'selected' : '' }}>
+                                                            MMU Ibtidaiyah</option>
+                                                        <option value="MMU Tsanawiyah"
+                                                            {{ $value->gt?->asal_kelas == 'MMU Tsanawiyah' ? 'selected' : '' }}>
+                                                            MMU Tsanawiyah</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">

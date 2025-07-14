@@ -6,6 +6,15 @@
             @if (session('success'))
                 <div class="alert alert-success mt-2">{{ session('success') }}</div>
             @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
@@ -34,7 +43,7 @@
                                     <td>{{ $value->pjgt->no_induk ?? '-' }}</td>
                                     <td>{{ $value->name }}</td>
                                     <td>{{ $value->pjgt->madrasah->nama_madrasah ?? '-' }}</td>
-                                    <td>{{ $value->pjgt->alamat ??'-' }}</td>
+                                    <td>{{ $value->pjgt->alamat ?? '-' }}</td>
                                     <td>{{ $value->pjgt->gt->user->name ?? '-' }}</td>
                                     <td><span class="btn btn-success">{{ $value->status }}</span></td>
                                     <td>
@@ -50,9 +59,11 @@
                                                         aria-controls="offcanvasScrolling"
                                                         class="dropdown-item">Edit</button></li>
                                                 <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#nonaktifModal{{ $value->id }}">Nonaktifkan</button></li>
+                                                        data-bs-target="#nonaktifModal{{ $value->id }}">Nonaktifkan</button>
+                                                </li>
                                                 <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModalhapus{{ $value->id }}">Hapus</button></li>
+                                                        data-bs-target="#exampleModalhapus{{ $value->id }}">Hapus</button>
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>
@@ -76,7 +87,8 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Tutup</button>
-                                                <form action="{{ url('admin/data-PJGT/nonaktif/'.$value->id) }}" method="POST">
+                                                <form action="{{ url('admin/data-PJGT/nonaktif/' . $value->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     <button type="submit" class="btn btn-success">Nonaktifkan</button>
                                                 </form>
@@ -84,8 +96,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal fade" id="exampleModalhapus{{ $value->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true">
+                                <div class="modal fade" id="exampleModalhapus{{ $value->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -122,26 +134,31 @@
                                                 method="POST">
                                                 @csrf
                                                 <div class="mb-3">
-                                                    <abel for="exampleInput{{ $value->pjgt?->no_induk ?? '' }}" class="form-label">No. Induk</abel>
+                                                    <abel for="exampleInput{{ $value->pjgt?->no_induk ?? '' }}"
+                                                        class="form-label">No. Induk</abel>
                                                     <input type="number" class="form-control"
                                                         value="{{ $value->pjgt?->no_induk ?? '' }}" name="no_induk"
                                                         id="exampleInput{{ $value->pjgt?->no_induk ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <abel for="exampleInput{{ $value->name }}" class="form-label">Nama PJGT</abel>
+                                                    <abel for="exampleInput{{ $value->name }}" class="form-label">Nama
+                                                        PJGT</abel>
                                                     <input type="text" class="form-control"
                                                         value="{{ $value->name }}" name="name"
                                                         id="exampleInput{{ $value->name }}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->pjgt?->alamat ?? '' }}" class="form-label">Alamat</label>
+                                                    <label for="exampleInput{{ $value->pjgt?->alamat ?? '' }}"
+                                                        class="form-label">Alamat</label>
                                                     <input type="text" class="form-control "
                                                         value="{{ $value->pjgt?->alamat ?? '' }}" name="alamat"
                                                         id="exampleInput{{ $value->pjgt?->alamat ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->pjgt?->gt_id }}" class="form-label">Guru Tugas</label>
-                                                    <select class="form-select" name="gt_id" id="exampleInput{{ $value->pjgt?->gt_id }}">
+                                                    <label for="exampleInput{{ $value->pjgt?->gt_id }}"
+                                                        class="form-label">Guru Tugas</label>
+                                                    <select class="form-select" name="gt_id"
+                                                        id="exampleInput{{ $value->pjgt?->gt_id }}">
                                                         <option disabled selected>Pilih Guru Tugas</option>
                                                         @foreach ($gt as $item)
                                                             <option value="{{ $item->gt->id }}"
@@ -152,7 +169,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleInput{{ $value->pjgt?->madrasah_id }}" class="form-label">Madrasah</label>
+                                                    <label for="exampleInput{{ $value->pjgt?->madrasah_id }}"
+                                                        class="form-label">Madrasah</label>
                                                     <select class="form-select" name="madrasah_id"
                                                         id="exampleInput{{ $value->pjgt?->madrasah_id }}">
                                                         <option disabled selected>Pilih Madrasah</option>
@@ -165,11 +183,13 @@
                                                     </select>
                                                 </div>
                                                 <div class="mb-3 form-check">
-                                                    <input type="checkbox" class="form-check-input" id="exampleCheck{{ $value->id }}">
-                                                    <label class="form-check-label" for="exampleCheck{{ $value->id }}">Yakin ??</label>
+                                                    <input type="checkbox" class="form-check-input"
+                                                        id="exampleCheck{{ $value->id }}">
+                                                    <label class="form-check-label"
+                                                        for="exampleCheck{{ $value->id }}">Yakin ??</label>
                                                 </div>
-                                                <button type="submit" class="btn btn-success mb-4" id="submitBtn{{ $value->id }}"
-                                                    disabled>Simpan</button>
+                                                <button type="submit" class="btn btn-success mb-4"
+                                                    id="submitBtn{{ $value->id }}" disabled>Simpan</button>
                                             </form>
                                         </div>
                                     </div>

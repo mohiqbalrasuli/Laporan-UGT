@@ -4,21 +4,26 @@
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
             <div class="col-12">
+                @if (session('success'))
+                    <div class="alert alert-success mt-2">{{ session('success') }}</div>
+                @elseif (session('error'))
+                    <div class="alert alert-success mt-2">{{ session('error') }}</div>
+                @endif
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-4">Data Pengajuan Guru Tugas</h6>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Nama Madrasah</th>
-                                    <th>Alamat Madrasah</th>
-                                    <th>Nama Penanggung Jawab</th>
-                                    <th>Kepala Madrasah</th>
-                                    <th>Guru Tugas yang Diajukan</th>
-                                    <th>Aksi</th>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Nama Madrasah</th>
+                                    <th scope="col">Alamat Madrasah</th>
+                                    <th scope="col">Nama Penanggung Jawab</th>
+                                    <th scope="col">Kepala Madrasah</th>
+                                    <th scope="col">Guru Tugas yang Diajukan</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,10 +35,15 @@
                                     <td>{{ $pengajuan->nama_pjgt }}</td>
                                     <td>{{ $pengajuan->kepala_madrasah }}</td>
                                     <td>{{ $pengajuan->gt_yang_diajukan }} orang</td>
-                                    <td>
+                                    <td class="d-flex gap-2">
                                         <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDetail{{ $pengajuan->id }}" aria-controls="offcanvasDetail">
                                             <i class="fas fa-eye"></i>
                                         </a>
+                                        @if ( Auth::user()->role == 'admin' )
+                                            <a href="{{ url('admin/pengajuan-gt/delete/' . $pengajuan->id ) }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan ini?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDetail{{ $pengajuan->id }}" aria-labelledby="offcanvasDetailLabel">

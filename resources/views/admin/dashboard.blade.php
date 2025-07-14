@@ -74,9 +74,9 @@
                                     <tr>
                                         <th scope="row">{{ $item + 1 }}</th>
                                         <td>{{ $laporan->laporan_ke }}</td>
-                                        <td>{{ $laporan->gt->user->name }}</td>
-                                        <td>{{ $laporan->gt->madrasah->nama_madrasah }}</td>
-                                        <td>{{ $laporan->gt->pjgt->user->name }}</td>
+                                        <td>{{ $laporan->gt->user->name ?? "-" }}</td>
+                                        <td>{{ $laporan->gt->madrasah->nama_madrasah ?? "-" }}</td>
+                                        <td>{{ $laporan->gt->pjgt->user->name ?? "-" }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -105,9 +105,9 @@
                                     <tr>
                                         <th scope="row">{{ $item + 1 }}</th>
                                         <td>{{ $laporan->laporan_ke }}</td>
-                                        <td>{{ $laporan->pjgt->user->name }}</td>
-                                        <td>{{ $laporan->pjgt->madrasah->nama_madrasah }}</td>
-                                        <td>{{ $laporan->pjgt->gt->user->name }}</td>
+                                        <td>{{ $laporan->pjgt->user->name ?? "-" }}</td>
+                                        <td>{{ $laporan->pjgt->madrasah->nama_madrasah ?? "-" }}</td>
+                                        <td>{{ $laporan->pjgt->gt->user->name ?? "-" }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

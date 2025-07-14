@@ -3,10 +3,19 @@
 @section('content')
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
-            @if (session('success'))
-                <div class="alert alert-success mt-2">{{ session('success') }}</div>
-            @endif
             <div class="col-12">
+                @if (session('success'))
+                    <div class="alert alert-success mt-2">{{ session('success') }}</div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-4">Data Pengurus UGT</h6>
@@ -63,14 +72,15 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Yakin Menghapus Pengurus UGT <span class="fw-bold">{{ $value->name }}</span>
+                                                Yakin Menghapus Pengurus UGT <span
+                                                    class="fw-bold">{{ $value->name }}</span>
                                                 ?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Tutup</button>
-                                                <a href="{{ url('admin/data-pengurus/delete/' . $value->id) }}" type="button"
-                                                    class="btn btn-success">Hapus</a>
+                                                <a href="{{ url('admin/data-pengurus/delete/' . $value->id) }}"
+                                                    type="button" class="btn btn-success">Hapus</a>
                                             </div>
                                         </div>
                                     </div>
@@ -92,9 +102,8 @@
                                                 <div class="mb-3">
                                                     <abel for="exampleInput{{ $value->name }}" class="form-label">Nama
                                                         GT</abel>
-                                                    <input type="text" class="form-control"
-                                                        value="{{ $value->name }}" name="name"
-                                                        id="exampleInput{{ $value->name }}">
+                                                    <input type="text" class="form-control" value="{{ $value->name }}"
+                                                        name="name" id="exampleInput{{ $value->name }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleInput{{ $value->pengurus->alamat ?? '' }}"

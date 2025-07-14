@@ -35,6 +35,23 @@ class PJGTController extends Controller
     }
     public function store(Request $request)
     {
+        // Validate the request data
+        $data = $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:8',
+            ],
+            [
+                // Pesan kustom dalam Bahasa Indonesia
+                'name.required' => 'Nama wajib diisi.',
+                'email.required' => 'Email wajib diisi.',
+                'email.email' => 'Format email tidak valid.',
+                'email.unique' => 'Email sudah digunakan.',
+                'password.required' => 'Kata sandi wajib diisi.',
+                'password.min' => 'Kata sandi minimal 8 karakter.',
+            ],
+        );
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

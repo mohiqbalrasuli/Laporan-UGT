@@ -5,7 +5,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GTController;
 use App\Http\Controllers\LaporanMasalah;
 use App\Http\Controllers\MadrasahController;
-use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\PJGTController;
@@ -79,11 +78,12 @@ Route::prefix('admin')
         Route::post('/ubah-password/submit', [UbahPasswordController::class, 'submitUbahPassword']);
         Route::post('/verifikasi-kode', [UbahPasswordController::class, 'verifikasiKode']);
         Route::get('/laporan-masalah', [LaporanMasalah::class, 'index']);
-        Route::get('/laporan-masalah/delete-laporan-gt/{id}', [LaporanMasalah::class, 'deleteLaporanMasalahGT']);
-        Route::get('/laporan-masalah/delete-laporan-pjgt/{id}', [LaporanMasalah::class, 'deleteLaporanMasalahPJGT']);
+        Route::get('/delete-laporan-masalah-pjgt/{id}', [LaporanMasalah::class, 'deleteLaporanMasalahGT']);
+        Route::get('/delete-laporan-masalah-gt/{id}', [LaporanMasalah::class, 'deleteLaporanMasalahPJGT']);
         Route::get('/profile',[profileAdmin::class, 'index']);
         Route::post('/update/{id}', [profileAdmin::class, 'update']);
         Route::get('/pengajuan-gt',[PengajuanController::class,'pengajuanGT']);
+        Route::get('/pengajuan-gt/delete/{id}', [PengajuanController::class, 'deletePengajuan']);
     });
 Route::prefix('pengurus')
     ->middleware('auth', 'pengurus')

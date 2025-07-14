@@ -18,8 +18,16 @@ class PengajuanController extends Controller
             default => 'layouts.default', // fallback layout
         };
         Carbon::setLocale('id');
-        $hasilpengajuan = pengajuanGt::all();
-        return view('admin.pengajuan.pengajuan',compact('hasilpengajuan','layout'));
+        $hasilpengajuan = pengajuanGt::whereYear('created_at', Carbon::now()->year)
+                              ->orderBy('created_at', 'desc')
+                              ->get();
+        return view('admin.pengajuan.pengajuan', compact('hasilpengajuan', 'layout'));
+    }
+    public function deletePengajuan($id)
+    {
+        $pengajuan = pengajuanGt::findOrFail($id);
+        $pengajuan->delete();
+        return redirect()->back()->with('success', 'Pengajuan berhasil dihapus.');
     }
     public function index()
     {
@@ -28,7 +36,7 @@ class PengajuanController extends Controller
 
     public function store(Request $request)
     {
-            // Validasi data
+        // Validasi data
         $request->validate([
             'nama_madrasah' => 'required|string',
             'alamat_madrasah' => 'required|string',
@@ -71,7 +79,7 @@ class PengajuanController extends Controller
             'jumlah_kelas_6_pr' => 'required|integer',
             'gt_yang_diajukan' => 'required|integer',
             'rencana_mengajar_kelas' => 'required|string',
-            'lain_lain' => 'nullable|string'
+            'lain_lain' => 'nullable|string',
         ]);
 
         // Simpan data ke database (asumsikan modelnya bernama PendaftaranMadrasah)
@@ -122,8 +130,7 @@ class PengajuanController extends Controller
         $pendaftaran = pengajuanGt::create($data);
 
         // Redirect ke halaman hasil pendaftaran
-        return redirect('/pengajuan-gt/hasil/'.$pendaftaran->id)->with('success', 'Data pendaftaran berhasil disimpan!');
-
+        return redirect('/pengajuan-gt/hasil/' . $pendaftaran->id)->with('success', 'Data pendaftaran berhasil disimpan!');
     }
 
     public function Show($id)
@@ -133,13 +140,12 @@ class PengajuanController extends Controller
         return view('pengajuan_gt.hasil', compact('hasil'));
     }
     public function cetakPdf($id)
-{
-    $data = PengajuanGT::findOrFail($id);
-    Carbon::setLocale('id');
+    {
+        $data = PengajuanGT::findOrFail($id);
+        Carbon::setLocale('id');
 
-    $pdf = Pdf::loadView('pengajuan_gt.hasilpdf', compact('data'))
-              ->setPaper('a4', 'portrait');
+        $pdf = Pdf::loadView('pengajuan_gt.hasilpdf', compact('data'))->setPaper('a4', 'portrait');
 
-    return $pdf->download('pengajuan gt '.$data->nama_pjgt.'.pdf');
-}
+        return $pdf->download('pengajuan gt ' . $data->nama_pjgt . '.pdf');
+    }
 }

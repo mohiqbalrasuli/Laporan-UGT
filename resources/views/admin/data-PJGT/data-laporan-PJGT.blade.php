@@ -4,6 +4,11 @@
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
             <div class="col-12">
+                @if (session('success'))
+                    <div class="alert alert-success mt-2">{{ session('success') }}</div>
+                @elseif (session('error'))
+                    <div class="alert alert-success mt-2">{{ session('error') }}</div>
+                @endif
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-4">Data Laporan Penanggung Jawab Guru Tugas</h6>

@@ -4,6 +4,11 @@
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
             <div class="col-12">
+                @if (session('success'))
+                    <div class="alert alert-success mt-2">{{ session('success') }}</div>
+                @elseif (session('error'))
+                    <div class="alert alert-success mt-2">{{ session('error') }}</div>
+                @endif
                 <div class="bg-light rounded h-100 p-4">
                     <h6 class="mb-4">Laporan GT Bermasalah</h6>
                     <table class="table">
@@ -21,13 +26,13 @@
                             @foreach ($laporan_pjgt as $item)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $item->pjgt->user->name }}</td>
-                                    <td>{{ $item->pjgt->gt->user->name }}</td>
+                                    <td>{{ $item->pjgt->user->name ?? '-' }}</td>
+                                    <td>{{ $item->pjgt->gt->user->name ?? '-' }}</td>
                                     <td>{{ $item->Subjek }}</td>
                                     <td>{{ $item->Isi }}</td>
                                     <td>
                                         @if (Auth::user()->role == 'admin')
-                                            <a href="{{ url('/laporan-masalah/delete-laporan-gt/'.$item->id) }}" class="btn btn-danger btn-sm">Hapus</a>
+                                            <a href="{{ url('admin/delete-laporan-masalah-gt/'.$item->id) }}" class="btn btn-danger btn-sm">Hapus</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -58,13 +63,13 @@
                             @foreach ($laporan_gt as $item)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $item->gt->user->name }}</td>
-                                    <td>{{ $item->gt->pjgt->user->name }}</td>
+                                    <td>{{ $item->gt->user->name ?? "-" }}</td>
+                                    <td>{{ $item->gt->pjgt->user->name ?? "-" }}</td>
                                     <td>{{ $item->Subjek }}</td>
                                     <td>{{ $item->Isi }}</td>
                                     <td>
                                         @if (Auth::user()->role == 'admin')
-                                            <a href="{{ url('/laporan-masalah/delete-laporan-pjgt/'.$item->id) }}" class="btn btn-danger btn-sm">Hapus</a>
+                                            <a href="{{ url('admin/delete-laporan-masalah-pjgt/'.$item->id) }}" class="btn btn-danger btn-sm">Hapus</a>
                                         @endif
                                     </td>
                                 </tr>

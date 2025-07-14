@@ -2,14 +2,16 @@
 @section('title', 'Profile Pengurus UGT')
 @section('content')
     <div class="container-fluid pt-4 px-4">
-        @if (session('success_login'))
-            <div class="alert alert-success mt-2" role="alert">{{ session('success_login') }}</div>
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success mt-2" role="alert">{{ session('success') }}</div>
-        @endif
         <div class="row g-4">
             <div class="col-12">
+                @if (session('success_login'))
+                    <div class="alert alert-success mt-2" role="alert">{{ session('success_login') }}</div>
+                @endif
+                @if (session('success'))
+                    <div class="alert alert-success mt-2" role="alert">{{ session('success') }}</div>
+                @if (session('error'))
+                    <div class="alert alert-success mt-2" role="alert">{{ session('error'))') }}</div>
+                @endif
                 <div class="bg-light rounded h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-4">Data Guru Tugas</h6>
@@ -69,9 +71,9 @@
                         id="exampleInput{{ $pengurus->name }}">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInput{{ $pengurus->prngurus ?->alamat ?? '' }}" class="form-label">Alamat</label>
-                    <input type="text" class="form-control " value="{{ $pengurus->pengurus ?->alamat ?? '' }}"
-                        name="alamat" id="exampleInput{{ $pengurus->prngurus ?->alamat ?? '' }}">
+                    <label for="exampleInput{{ $pengurus->prngurus?->alamat ?? '' }}" class="form-label">Alamat</label>
+                    <input type="text" class="form-control " value="{{ $pengurus->pengurus?->alamat ?? '' }}"
+                        name="alamat" id="exampleInput{{ $pengurus->prngurus?->alamat ?? '' }}">
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck{{ $pengurus->id }}">

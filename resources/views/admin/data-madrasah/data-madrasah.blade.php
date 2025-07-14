@@ -5,7 +5,9 @@
         <div class="row g-4">
             <div class="col-12">
                 @if (session('success'))
-                    <div class="alert alert-success mt-2" role="alert">{{ session('success') }}</div>
+                    <div class="alert alert-success mt-2">{{ session('success') }}</div>
+                @elseif (session('error'))
+                    <div class="alert alert-success mt-2">{{ session('error') }}</div>
                 @endif
             </div>
             <div class="col-12">

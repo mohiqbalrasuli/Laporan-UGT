@@ -19,18 +19,18 @@ class LaporanMasalah extends Controller
             'admin' => 'admin.layout.template_admin',
             'pengurus' => 'pengurus.layout.template_pengurus',
             default => 'layouts.default', // fallback layout
-            };
+        };
         return view('admin.laporan_masalah', compact('laporan_pjgt', 'laporan_gt', 'layout'));
-    }
-    public function deleteLaporanMasalahGT($id)
-    {
-        $laporan = MasalahGT::findOrFail($id);
-        $laporan->delete();
-        return redirect()->back()->with('success', 'Laporan masalah berhasil dihapus');
     }
     public function deleteLaporanMasalahPJGT($id)
     {
         $laporan = MasalahPJGT::findOrFail($id);
+        $laporan->delete();
+        return redirect()->back()->with('success', 'Laporan masalah berhasil dihapus');
+    }
+    public function deleteLaporanMasalahGT($id)
+    {
+        $laporan = MasalahGT::findOrFail($id);
         $laporan->delete();
         return redirect()->back()->with('success', 'Laporan masalah berhasil dihapus');
     }
@@ -41,20 +41,20 @@ class LaporanMasalah extends Controller
 
     public function storeLaporanBermasahPJGT(Request $request)
     {
-         $user = Auth::user();
-            $pjgt = PJGTModel::where('user_id', $user->id)->first();
-            if (!$pjgt) {
-                return redirect()->back()->with('error', 'Data PJGT tidak ditemukan');
-            }
-            $data = [
-                'pjgt_id' => $pjgt->id,
-                'Subjek' => $request->Subjek,
-                'Isi' => $request->Isi,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-            MasalahPJGT::create($data);
-            return redirect()->back()->with('success', 'Laporan masalah berhasil dikirim');
+        $user = Auth::user();
+        $pjgt = PJGTModel::where('user_id', $user->id)->first();
+        if (!$pjgt) {
+            return redirect()->back()->with('error', 'Data PJGT tidak ditemukan');
+        }
+        $data = [
+            'pjgt_id' => $pjgt->id,
+            'Subjek' => $request->Subjek,
+            'Isi' => $request->Isi,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+        MasalahPJGT::create($data);
+        return redirect()->back()->with('success', 'Laporan masalah berhasil dikirim');
     }
     public function indexGT()
     {
@@ -63,19 +63,19 @@ class LaporanMasalah extends Controller
 
     public function storeLaporanBermasahGT(Request $request)
     {
-         $user = Auth::user();
-            $gt = GTModel::where('user_id', $user->id)->first();
-            if (!$gt) {
-                return redirect()->back()->with('error', 'Data GT tidak ditemukan');
-            }
-            $data = [
-                'gt_id' => $gt->id,
-                'Subjek' => $request->Subjek,
-                'Isi' => $request->Isi,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-            MasalahGT::create($data);
-            return redirect()->back()->with('success', 'Laporan masalah berhasil dikirim');
+        $user = Auth::user();
+        $gt = GTModel::where('user_id', $user->id)->first();
+        if (!$gt) {
+            return redirect()->back()->with('error', 'Data GT tidak ditemukan');
+        }
+        $data = [
+            'gt_id' => $gt->id,
+            'Subjek' => $request->Subjek,
+            'Isi' => $request->Isi,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+        MasalahGT::create($data);
+        return redirect()->back()->with('success', 'Laporan masalah berhasil dikirim');
     }
 }
